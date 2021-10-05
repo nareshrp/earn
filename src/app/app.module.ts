@@ -9,9 +9,10 @@ import { SidebarModule } from 'ng-sidebar';
 import { TemplateModule } from './shared/template/template.module';
 import { MetismenuAngularModule } from '@metismenu/angular';
 import { NgbDropdown, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { DEFAULT_TIMEOUT, HttpInterceptorService } from './shared/services/http-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,10 @@ import { ToastrModule } from 'ngx-toastr';
     ToastrModule.forRoot(), // ToastrModule added
     SidebarModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
+    { provide: DEFAULT_TIMEOUT, useValue: 60000 },
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })

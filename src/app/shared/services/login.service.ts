@@ -1,8 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { catchError } from 'rxjs/operators';
-import { Observable, throwError } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,20 +16,8 @@ export class LoginService {
       "username": username.trim(),
       "password": password
     }
-    return this.http.post(environment.apiUrl + "/validationUser/", body).pipe(catchError(this.handleError));
+    return this.http.post(environment.apiUrl + "/api/earnin/signin", body);
   }
 
-  handleError(error: HttpErrorResponse) {
-    let msg = '';
-    if (error.error instanceof ErrorEvent) {
-      // client-side error
-      msg = error.error.message;
 
-    } else {
-      // server-side error
-      msg = `Error Code: ${error.status}\nMessage: ${error.message}`;
-
-    }
-    return throwError(msg);
-  }
 }

@@ -55,30 +55,18 @@ export class LoginComponent implements OnInit {
     this._loginServices.validateUser(data).pipe(finalize(() => {
       this.spinner.hide();
     })).subscribe((res: any) => {
-
+      console.log("res", res);
       if (res.statusCode == 200) {
-        let userInfo = res.data;
+        let userInfo = res.result;
         console.log("userInfo", userInfo);
         // localStorage.setItem('usernameInfo', JSON.stringify(userInfo));
-        localStorage.setItem('username', userInfo[0].username);
-        if (userInfo[0].org_id === '0') {
-          localStorage.setItem('role', "admin");
-          localStorage.setItem('org_id', "0");
-        }
-        else {
-          localStorage.setItem('role', "user");
-          localStorage.setItem('org_id', userInfo[0].org_id);
-        }
-
+        localStorage.setItem('userId', userInfo.userId);
+        localStorage.setItem('role', userInfo.role);
+        localStorage.setItem('hashToken', userInfo.accessToken);
         this.toastr.showSuccess("Login Successfully", "Success")
         this.routerServices.navigate(['/']);
       }
-    },
-      error => {
-
-        this.errorMsg = error;
-        this.toastr.showError(this.errorMsg, "Error");
-      });
+    });
 
 
 
