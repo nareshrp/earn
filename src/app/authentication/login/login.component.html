@@ -55,8 +55,7 @@
                     <input type="password" class="form-control" formControlName="password" placeholder="Enter password"
                       aria-label="Password" aria-describedby="password-addon"
                       [ngClass]="{ 'is-invalid': (submitted && form.password.errors) || (form.password.touched && form.password.errors) }">
-                    <button class="btn btn-light " type="button" id="password-addon"><i
-                        class="mdi mdi-eye-outline"></i></button>
+
                   </div>
                   <div *ngIf="submitted||(form.password.touched && form.password.invalid)">
                     <small class="form-text error-message" *ngIf="form.password.errors"> Password is required</small>
@@ -85,8 +84,24 @@
 
       </div>
     </div>
+    <div class="row justify-content-center">
+      <div class="mt-2 text-center">
+
+        <div>
+          <p>Don't have an account ? <a [routerLink]="['/user/signup']" class="fw-medium text-primary"> Signup
+              now </a>
+          </p>
+
+          <p>Are you Vendor ? <a [routerLink]="['/vendor/login']" class="fw-medium text-primary"> Login
+              here </a>
+          </p>
+
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
 
 <ngx-spinner bdColor="rgba(253,254,255,0.8)" size="medium" color="#0c62db" type="ball-clip-rotate-pulse"
   [fullScreen]="true">

@@ -1,0 +1,129 @@
+<div class="account-pages my-5 pt-sm-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6 col-xl-5">
+        <div class="card overflow-hidden">
+          <div class="bg-primary bg-soft">
+            <div class="row">
+              <div class="col-7">
+                <div class="text-primary p-4">
+                  <h5 class="text-primary">Register</h5>
+                  <p>Get your free Skote account now.</p>
+                </div>
+              </div>
+              <div class="col-5 align-self-end">
+                <img src="assets/images/profile-img.png" alt="" class="img-fluid">
+              </div>
+            </div>
+          </div>
+          <div class="card-body pt-0">
+            <div>
+              <a href="index.html">
+                <div class="avatar-md profile-user-wid mb-4">
+                  <span class="avatar-title rounded-circle bg-light">
+                    <img src="assets/images/logo.svg" alt="" class="rounded-circle" height="34">
+                  </span>
+                </div>
+              </a>
+            </div>
+            <div class="p-2">
+              <form [formGroup]="userSignUpForm">
+                <div class="form-group required mb-3">
+                  <label for="formrow-firstname-input" class="form-label">Name</label>
+                  <input type="text" class="form-control" formControlName="name" placeholder="Enter Name"
+                    [ngClass]="{ 'is-invalid': (submitted && form.name.errors) || (form.name.touched && form.name.errors) }">
+                  <div *ngIf="submitted||(form.name.touched && form.name.invalid)">
+                    <small class="form-text error-message" *ngIf="form.name.errors"> Name is required</small>
+                  </div>
+                </div>
+
+                <div class="form-group required mb-3">
+                  <label for="formrow-firstname-input" class="form-label">Role</label>
+                  <select class="form-control" formControlName="role"
+                    [ngClass]="{ 'is-invalid': (submitted && form.name.errors) || (form.name.touched && form.name.errors) }">
+                    <option *ngFor="let row of rolesList" [value]="row.role">{{row.role}}</option>
+                  </select>
+
+                  <div *ngIf="submitted||(form.name.touched && form.name.invalid)">
+                    <small class="form-text error-message" *ngIf="form.name.errors"> Name is required</small>
+                  </div>
+                </div>
+
+                <div class="form-group required mb-3">
+                  <label for="formrow-firstname-input" class="form-label">Email</label>
+                  <input type="email" class="form-control" formControlName="emailId" placeholder="Enter Email ID"
+                    [ngClass]="{ 'is-invalid': (submitted && form.emailId.errors) || (form.emailId.touched && form.emailId.errors) }">
+                  <div *ngIf="submitted||(form.emailId.touched && form.emailId.invalid)">
+                    <small class="form-text error-message" *ngIf="form.emailId.errors?.required">
+                      Email is required</small>
+                    <small class="form-text error-message" *ngIf="form.emailId.errors?.email"> Email must be a
+                      valid email address</small>
+                  </div>
+                </div>
+
+                <div class="form-group required mb-3">
+                  <label for="formrow-firstname-input" class="form-label">Phone</label>
+                  <div class="input-group auth-pass-inputgroup">
+                    <input type="text" class="form-control" formControlName="phone" placeholder="Enter Mobile Number"
+                      [ngClass]="{ 'is-invalid': (submitted && form.phone.errors) || (form.phone.touched && form.phone.errors) }">
+                    <button class="btn btn-light" type="button" *ngIf="!isMobileVerify"
+                      (click)="phoneNumberVerify()">Verify</button>
+                    <button class="btn btn-success waves-effect waves-light" type="button" *ngIf="isMobileVerify"><i
+                        class="far fa-check-circle"></i></button>
+
+                  </div>
+                  <div *ngIf="submitted||(form.phone.touched && form.phone.invalid)">
+                    <small class="form-text error-message" *ngIf="form.phone.errors?.required"> Mobile Number is
+                      required</small>
+                    <small class="form-text error-message" *ngIf="form.phone.errors?.pattern"> Please,
+                      Enter 10 digit Mobile Number.</small>
+                  </div>
+                </div>
+
+                <div class="form-group mb-3" *ngIf="isOtp">
+                  <label for="otp" class="form-label">OTP</label>
+                  <div class="input-group auth-pass-inputgroup">
+                    <input type="text" class="form-control" formControlName="otp" placeholder="Enter OTP">
+                    <button class="btn btn-light" type="button" (click)="otpVerify()">Verify</button>
+                  </div>
+                </div>
+
+
+
+
+                <div class="form-group required mb-3">
+                  <label for="formrow-firstname-input" class="form-label">Password</label>
+                  <input type="password" class="form-control" formControlName="password" placeholder="Enter password"
+                    [ngClass]="{ 'is-invalid': (submitted && form.password.errors) || (form.password.touched && form.password.errors) }">
+                  <div *ngIf="submitted||(form.password.touched && form.password.invalid)">
+                    <small class="form-text error-message" *ngIf="form.password.errors"> Password is required</small>
+                  </div>
+                </div>
+
+                <div class="mt-4 d-grid">
+
+                  <button type="submit" class="btn btn-primary w-md" (click)="onSubmit()">Register</button>
+                </div>
+
+              </form>
+            </div>
+
+          </div>
+        </div>
+        <div class="mt-5 text-center">
+
+          <div>
+            <p>Already have an account ? <a [routerLink]="['/login']" routerLinkActive="router-link-active"
+                class="fw-medium text-primary"> Login</a> </p>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(253,254,255,0.8)" size="medium" color="#0c62db" type="ball-clip-rotate-pulse"
+  [fullScreen]="true">
+  <p style="color: #007bff"> Loading... </p>
+</ngx-spinner>

@@ -8,7 +8,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
+
   ],
   imports: [
     CommonModule,

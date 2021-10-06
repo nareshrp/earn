@@ -9,7 +9,7 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient, private routerServices: Router) { }
   canActivate(): boolean {
-    if (window.localStorage.getItem('username')) {
+    if (window.localStorage.getItem('userId')) {
       return true;
     }
     else {

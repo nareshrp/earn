@@ -1,6 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 @import '../src/assets/css/icons.min.css';
 @import '../src/assets/css/app.css';
+body{
+  background: #f8f8fb;
+  font-family:"Poppins",sans-serif;
+  font-size:0.8125rem;
+  color: #495057;
+}
 .common-layout .page-container{
   height: 100vh;
 }

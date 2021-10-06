@@ -21,6 +21,16 @@ const routes: Routes = [
     component: CommonLayoutComponent,
     children: CommonLayout_ROUTES
   },
+  {
+    path: 'user',
+    component: FullLayoutComponent,
+    children: FullLayout_ROUTES
+  },
+  {
+    path: 'vendor',
+    component: FullLayoutComponent,
+    children: FullLayout_ROUTES
+  },
 ];
 
 @NgModule({

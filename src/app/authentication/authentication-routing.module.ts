@@ -8,8 +8,22 @@ const routes: Routes = [
     component: LoginComponent,
     data: {
       title: 'Login'
-    }
+    },
   },
+  {
+    path: 'signup',
+    loadChildren: () => import('../authentication/user-signup/user-signup.module').then(m => m.UserSignupModule),
+  },
+  {
+    path: 'vendor',
+    loadChildren: () => import('../authentication/vendor/vendor.module').then(m => m.VendorModule),
+  },
+  {
+    path: 'vendor-signup',
+    loadChildren: () => import('../authentication/vendor/vendor.module').then(m => m.VendorModule),
+  },
+
+
 ];
 
 @NgModule({

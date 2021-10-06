@@ -19,5 +19,15 @@ export class LoginService {
     return this.http.post(environment.apiUrl + "/api/earnin/signin", body);
   }
 
+  verifyMobile(mobileNumber: any) {
+    return this.http.post(environment.apiUrl + "/api/earnin/signup/otp", mobileNumber);
+  }
+  verifyOTP(body: any) {
+    return this.http.post(environment.apiUrl + "/api/earnin/signup/verify", body);
+  }
+  userSignUp(body: any) {
+    return this.http.post(environment.apiUrl + "/api/earnin/signup", body);
+  }
+
 
 }
