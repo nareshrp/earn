@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { DEFAULT_TIMEOUT, HttpInterceptorService } from './shared/services/http-interceptor.service';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +29,11 @@ import { DEFAULT_TIMEOUT, HttpInterceptorService } from './shared/services/http-
     MetismenuAngularModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(), // ToastrModule added
-    SidebarModule.forRoot()
+    SidebarModule.forRoot(),
+    // AgmCoreModule.forRoot({
+    //   apiKey: 'AIzaSyAhDYjKC1B1VjPSEgfCtsAjJRDZHbOrlCg',
+    //   libraries: ['places']
+    // })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },

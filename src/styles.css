@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '../src/assets/css/icons.min.css';
 @import '../src/assets/css/app.css';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 body{
   background: #f8f8fb;
   font-family:"Poppins",sans-serif;
@@ -42,7 +43,7 @@ body{
     background-clip: padding-box;
     border: 0 solid rgba(0,0,0,.15);
     border-radius: .25rem;
-    webkit-box-shadow: 0 1rem 3rem rgb(0 0 0 / 18%);
+    -webkit-box-shadow: 0 1rem 3rem rgb(0 0 0 / 18%);
     box-shadow: 0 1rem 3rem rgb(0 0 0 / 18%);
     -webkit-animation-name: DropDownSlide;
     animation-name: DropDownSlide;
@@ -101,4 +102,24 @@ body{
 }
 .error-message {
   color: #ec4116;
+}
+.form-control {
+  display: block;
+  width: 100%;
+  padding: .47rem .75rem;
+  font-size: .8125rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: .25rem;
+  -webkit-transition: border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+  transition: border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
 }
