@@ -165,7 +165,7 @@ export class VendorSignupComponent implements OnInit {
   onSubmit() {
     // this.spinner.show();
     console.log(this.vendorSignUpForm)
-    // this.spinner.show();
+     this.spinner.show();
     this.submitted = true;
     if (this.vendorSignUpForm.invalid) {
       return;

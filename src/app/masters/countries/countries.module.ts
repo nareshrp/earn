@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { CountriesRoutingModule } from './countries-routing.module';
 import { CountriesComponent } from './countries.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -11,7 +13,10 @@ import { CountriesComponent } from './countries.component';
   ],
   imports: [
     CommonModule,
-    CountriesRoutingModule
+    CountriesRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgxSpinnerModule,
   ]
 })
 export class CountriesModule { }

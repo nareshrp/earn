@@ -26,36 +26,42 @@
                     <label class="form-check-label" for="checkAll"></label>
                   </div>
                 </th>
-                <th class="align-middle">Organization Name</th>
-                <th class="align-middle">Email</th>
+                <th class="align-middle">Business Name</th>
+                <th class="align-middle">Business Phone</th>
+                <th class="align-middle">Contact Person</th>
                 <th class="align-middle">Phone</th>
-                <th class="align-middle">State</th>
-                <th class="align-middle">Zip Code</th>
-                <th class="align-middle">Action</th>
+                <th class="align-middle">Category</th>
+                <th class="align-middle">Address</th>
+                <!-- <th class="align-middle">Status</th> -->
+                <th class="align-middle" style="width: 150px;">Actions</th>
               </tr>
             </thead>
             <tbody>
-              <!-- <tr *ngFor="let row of orgList">
+              <tr *ngFor="let row of vendorsList">
                 <td>
                   <div class="form-check font-size-16">
                     <input class="form-check-input" type="checkbox" id="orderidcheck01">
                     <label class="form-check-label" for="orderidcheck01"></label>
                   </div>
                 </td>
-                <td><a href="javascript: void(0);" class="text-body fw-bold">{{row.org_name}}</a> </td>
-                <td>{{row.email}}</td>
+                <td><a href="javascript: void(0);" class="text-body fw-bold">{{row.bName}}</a> </td>
+                <td>{{row.bPhone}}</td>
+                <td>{{row.firstName}}</td>
                 <td>{{row.phone}}</td>
-                <td>{{row.state}}</td>
-                <td>{{row.zip}}</td>
+                <td>{{row.bCategory}}</td>
+                <td>{{row.bLoc.address}}</td>
+                <!-- <td>{{row.status}}</td> -->
 
                 <td>
-                  <div class="d-flex gap-3">
+                  <!-- <div class="d-flex gap-3">
                     <a href="javascript:void(0);" class="text-success" (click)="editRow(row.id)"><i
                         class="mdi mdi-pencil font-size-18"></i></a>
                     <a href="javascript:void(0);" class="text-danger"><i class="mdi mdi-delete font-size-18"></i></a>
-                  </div>
+                  </div> -->
+                  <button class="btn btn-primary waves-effect waves-light btn-sm margin-right3" (click)="approveVendor(row.userId)">Approve </button>
+                  <button class="btn btn-danger waves-effect waves-light btn-sm" (click)="rejectVendor()">Reject  </button>
                 </td>
-              </tr> -->
+              </tr>
             </tbody>
           </table>
         </div>

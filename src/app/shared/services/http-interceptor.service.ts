@@ -69,7 +69,8 @@ export class HttpInterceptorService implements HttpInterceptor {
     const accessToken = localStorage.getItem('hashToken');
     if (accessToken) {
       return req.clone({
-        headers: req.headers.set('Authorization', `Bearer ${accessToken}`)
+        // headers: req.headers.set('Authorization', `Bearer ${accessToken}`)
+        headers: req.headers.set('token', `${accessToken}`)
       });
     } else {
       return req;

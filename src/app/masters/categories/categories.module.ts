@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { CategoriesRoutingModule } from './categories-routing.module';
 import { CategoriesComponent } from './categories.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -11,7 +13,10 @@ import { CategoriesComponent } from './categories.component';
   ],
   imports: [
     CommonModule,
-    CategoriesRoutingModule
+    CategoriesRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgxSpinnerModule,
   ]
 })
 export class CategoriesModule { }

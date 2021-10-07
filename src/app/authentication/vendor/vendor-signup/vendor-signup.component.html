@@ -134,7 +134,7 @@
                       <label class="form-label">Target Audience</label>
                       <select class="form-control" formControlName="targAud"
                         [ngClass]="{ 'is-invalid': (submitted && form.targAud.errors) || (form.targAud.touched && form.targAud.errors) }">
-                        <option *ngFor="let row of businessCategoryList" [value]="row.name">{{row.name}}</option>
+                        <option *ngFor="let row of targetAudienceList" [value]="row.name">{{row.name}}</option>
                       </select>
                       <div *ngIf="submitted||(form.targAud.touched && form.targAud.invalid)">
                         <small class="form-text error-message" *ngIf="form.targAud.errors"> Target Audience is

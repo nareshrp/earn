@@ -40,11 +40,14 @@ export class VendorsListComponent implements OnInit {
 
   getPendingVendorsList() {
     this.spinner.show();
-    this._adminServices.getVendorList(this.role).pipe(finalize(() => {
+    this._adminServices.getVendorList(this.userId).pipe(finalize(() => {
       this.spinner.hide();
     })).subscribe((res: any) => {
-      this.vendorsList = res.data
+      
       console.log("vendorsList", res);
+      if(res.statusCode){
+        this.vendorsList = res.result;
+      }
     },
       error => {
         this.errorMsg = error;
@@ -52,6 +55,27 @@ export class VendorsListComponent implements OnInit {
 
       }
     )
+  }
+  approveVendor(id:any){
+    let data={
+      "userId":id
+    }
+    this.spinner.show();
+      this._adminServices.pendingApproval(this.userId, data).pipe(finalize(() => {
+        this.spinner.hide();
+      })).subscribe((res: any) => {
+        
+        console.log("approveVendor", res);
+        if(res.statusCode){
+        this.getPendingVendorsList();
+        this.toastr.showSuccess("Success", this.errorMsg);
+        }
+      
+      });
+  }
+  
+  rejectVendor(){
+
   }
 
 }

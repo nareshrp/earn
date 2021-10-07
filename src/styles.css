@@ -235,3 +235,9 @@ body{
   border-color: #4053ad;
 }
 .form-control{ font-size: inherit;}
+.margin-right3{ margin-right: 3px;}
+.card-title {
+  font-size: 15px;
+  margin: 0 0 7px 0;
+  font-weight: 600;
+}
