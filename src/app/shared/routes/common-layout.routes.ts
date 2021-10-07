@@ -6,6 +6,15 @@ export const CommonLayout_ROUTES: Routes = [
     path: 'dashboard',
     loadChildren: () => import('../../dashboard/dashboard.module').then(m => m.DashboardModule),
     canActivate: [AuthenticationGuard],
-
-  }
+  },
+  {
+    path: 'masters',
+    loadChildren: () => import('../../masters/masters.module').then(m => m.MastersModule),
+    canActivate: [AuthenticationGuard],
+  },
+  {
+    path: 'vendors',
+    loadChildren: () => import('../../vendors-list/vendors-list.module').then(m => m.VendorsListModule),
+    canActivate: [AuthenticationGuard],
+  },
 ];

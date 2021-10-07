@@ -1,133 +1,200 @@
 <div class="account-pages my-2 pt-sm-5">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6 col-xl-8">
-          <div class="card overflow-hidden">
-            <div class="bg-primary bg-soft">
-              <div class="row">
-                <div class="col-7">
-                  <div class="text-primary p-4">
-                    <h5 class="text-primary">Vendor Register</h5>
-                    <p>Get your Earnin Vendor account now.</p>
-                  </div>
-                </div>
-                <div class="col-5 align-self-end">
-                  <img src="assets/images/profile-img.png" alt="" class="img-fluid">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6 col-xl-8">
+        <div class="card overflow-hidden">
+          <div class="bg-primary bg-soft">
+            <div class="row">
+              <div class="col-7">
+                <div class="text-primary p-4">
+                  <h5 class="text-primary">Vendor Register</h5>
+                  <p>Get your Earnin Vendor account now.</p>
                 </div>
               </div>
-            </div>
-            <div class="card-body pt-0">
-              <div>
-                <a href="index.html">
-                  <div class="avatar-md profile-user-wid mb-4">
-                    <span class="avatar-title rounded-circle bg-light">
-                      <img src="assets/images/logo.svg" alt="" class="rounded-circle" height="34">
-                    </span>
-                  </div>
-                </a>
+              <div class="col-5 align-self-end">
+                <img src="assets/images/profile-img.png" alt="" class="img-fluid">
               </div>
-              <div class="p-2">
-                <form [formGroup]="vendorSignUpForm">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="form-group required mb-3">
-                                <label  class="form-label">Business Name</label>
-                                <input type="text" class="form-control" formControlName="bName" placeholder="Enter Business Name"
-                                  [ngClass]="{ 'is-invalid': (submitted && form.bName.errors) || (form.bName.touched && form.bName.errors) }">
-                                <div *ngIf="submitted||(form.bName.touched && form.bName.invalid)">
-                                  <small class="form-text error-message" *ngIf="form.bName.errors"> Business Name is required</small>
-                                </div>
-                              </div>
-                        </div>
-
-                        <div class="col-6">
-                            <div class="form-group required mb-3">
-                                <label  class="form-label">Business Phone</label>
-                                <input type="text" class="form-control" formControlName="bPhone" placeholder="Enter Business Phone"
-                                  [ngClass]="{ 'is-invalid': (submitted && form.bPhone.errors) || (form.bPhone.touched && form.bPhone.errors) }">
-                                  <div *ngIf="submitted||(form.bPhone.touched && form.bPhone.invalid)">
-                                    <small class="form-text error-message" *ngIf="form.bPhone.errors?.required"> Business Phone is
-                                      required</small>
-                                    <small class="form-text error-message" *ngIf="form.bPhone.errors?.pattern"> Please,
-                                      Enter 10 digit Mobile Number.</small>
-                                  </div>
-                              </div>
-                        </div>
-                     
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="form-group required mb-3">
-                                <label  class="form-label">Contact Person Name</label>
-                                <input type="text" class="form-control" formControlName="name" placeholder="Enter Contact Person Name"
-                                  [ngClass]="{ 'is-invalid': (submitted && form.name.errors) || (form.name.touched && form.name.errors) }">
-                                <div *ngIf="submitted||(form.name.touched && form.name.invalid)">
-                                  <small class="form-text error-message" *ngIf="form.name.errors"> Contact Person Name is required</small>
-                                </div>
-                              </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group required mb-3">
-                                <label  class="form-label">Contact Person No</label>
-                                <input type="text" class="form-control" formControlName="phone" placeholder="Enter Contact Person No"
-                                  [ngClass]="{ 'is-invalid': (submitted && form.phone.errors) || (form.phone.touched && form.phone.errors) }">
-                                  <div *ngIf="submitted||(form.phone.touched && form.phone.invalid)">
-                                    <small class="form-text error-message" *ngIf="form.phone.errors?.required"> Contact Person Number is
-                                      required</small>
-                                    <small class="form-text error-message" *ngIf="form.phone.errors?.pattern"> Please,
-                                      Enter 10 digit Mobile Number.</small>
-                                  </div>
-                              </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom"  (mapClick)="onChoseLocation($event)">
-                                <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
-                                  ></agm-marker>
-                              </agm-map>
-
-                              <h5>Address: {{address}}</h5>
-  <div>Latitude: {{latitude}}</div>
-  <div>Longitude: {{longitude}}</div>
-                        </div>
-                    </div>
-                 
-  
-              
-  
-               
-  
-              
-  
-                 
-  
-  
-  
-                  <div class="mt-4 d-grid">
-  
-                    <button type="submit" class="btn btn-primary w-md" (click)="onSubmit()">Register</button>
-                  </div>
-  
-                </form>
-              </div>
-  
             </div>
           </div>
-          <div class="mt-5 text-center">
-  
+          <div class="card-body pt-0">
             <div>
-              <p>Already have vendor account ? <a [routerLink]="['/vendor/login']" routerLinkActive="router-link-active"
-                  class="fw-medium text-primary"> Login</a> </p>
-  
+              <a href="index.html">
+                <div class="avatar-md profile-user-wid mb-4">
+                  <span class="avatar-title rounded-circle bg-light">
+                    <img src="assets/images/logo.svg" alt="" class="rounded-circle" height="34">
+                  </span>
+                </div>
+              </a>
             </div>
+            <div class="p-2">
+              <form [formGroup]="vendorSignUpForm">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group required mb-3">
+                      <label class="form-label">Business Name</label>
+                      <input type="text" class="form-control" formControlName="bName" placeholder="Enter Business Name"
+                        [ngClass]="{ 'is-invalid': (submitted && form.bName.errors) || (form.bName.touched && form.bName.errors) }">
+                      <div *ngIf="submitted||(form.bName.touched && form.bName.invalid)">
+                        <small class="form-text error-message" *ngIf="form.bName.errors"> Business Name is
+                          required</small>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <div class="form-group required mb-3">
+                      <label class="form-label">Business Phone</label>
+                      <input type="text" class="form-control" formControlName="bPhone"
+                        placeholder="Enter Business Phone"
+                        [ngClass]="{ 'is-invalid': (submitted && form.bPhone.errors) || (form.bPhone.touched && form.bPhone.errors) }">
+                      <div *ngIf="submitted||(form.bPhone.touched && form.bPhone.invalid)">
+                        <small class="form-text error-message" *ngIf="form.bPhone.errors?.required"> Business Phone is
+                          required</small>
+                        <small class="form-text error-message" *ngIf="form.bPhone.errors?.pattern"> Please,
+                          Enter 10 digit Mobile Number.</small>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group required mb-3">
+                      <label class="form-label">Contact Person Name</label>
+                      <input type="text" class="form-control" formControlName="name"
+                        placeholder="Enter Contact Person Name"
+                        [ngClass]="{ 'is-invalid': (submitted && form.name.errors) || (form.name.touched && form.name.errors) }">
+                      <div *ngIf="submitted||(form.name.touched && form.name.invalid)">
+                        <small class="form-text error-message" *ngIf="form.name.errors"> Contact Person Name is
+                          required</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group required mb-3">
+                      <label for="formrow-firstname-input" class="form-label">Contact Person No</label>
+                      <div class="input-group auth-pass-inputgroup">
+                        <input type="text" class="form-control" formControlName="phone"
+                          placeholder="Enter Mobile Number"
+                          [ngClass]="{ 'is-invalid': (submitted && form.phone.errors) || (form.phone.touched && form.phone.errors) }">
+                        <button class="btn btn-primary waves-effect waves-light btn-sm" type="button"
+                          *ngIf="!isMobileVerify" (click)="phoneNumberVerify()">Verify</button>
+                        <button class="btn btn-success waves-effect waves-light btn-sm" type="button"
+                          *ngIf="isMobileVerify"><i class="far fa-check-circle"></i></button>
+
+                      </div>
+                      <div *ngIf="submitted||(form.phone.touched && form.phone.invalid)">
+                        <small class="form-text error-message" *ngIf="form.phone.errors?.required"> Mobile Number is
+                          required</small>
+                        <small class="form-text error-message" *ngIf="form.phone.errors?.pattern"> Please,
+                          Enter 10 digit Mobile Number.</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group mb-3" *ngIf="isOtp">
+                    <label for="otp" class="form-label">OTP</label>
+                    <div class="input-group auth-pass-inputgroup">
+                      <input type="text" class="form-control" formControlName="otp" placeholder="Enter OTP">
+                      <button class="btn btn-light btn-sm" type="button" (click)="otpVerify()">Verify</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 googlemap mb-3">
+                    <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom"
+                      (mapReady)="mapReadyHandler($event)">
+                      <agm-marker *ngIf="locationChosen" [latitude]="latitude" [longitude]="longitude"
+                        [markerDraggable]="true"></agm-marker>
+                    </agm-map>
+
+                    <div><strong>Address</strong> : {{address}}</div>
+                    <!-- <div>Latitude: {{latitude}}</div>
+                    <div>Longitude: {{longitude}}</div> -->
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group required mb-3">
+                      <label class="form-label">Business Category</label>
+                      <select class="form-control" formControlName="bCategory"
+                        [ngClass]="{ 'is-invalid': (submitted && form.bCategory.errors) || (form.bCategory.touched && form.bCategory.errors) }">
+                        <option *ngFor="let row of businessCategoryList" [value]="row.name">{{row.name}}</option>
+                      </select>
+                      <div *ngIf="submitted||(form.bCategory.touched && form.bCategory.invalid)">
+                        <small class="form-text error-message" *ngIf="form.bCategory.errors"> Business Category is
+                          required</small>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <div class="form-group required mb-3">
+                      <label class="form-label">Target Audience</label>
+                      <select class="form-control" formControlName="targAud"
+                        [ngClass]="{ 'is-invalid': (submitted && form.targAud.errors) || (form.targAud.touched && form.targAud.errors) }">
+                        <option *ngFor="let row of businessCategoryList" [value]="row.name">{{row.name}}</option>
+                      </select>
+                      <div *ngIf="submitted||(form.targAud.touched && form.targAud.invalid)">
+                        <small class="form-text error-message" *ngIf="form.targAud.errors"> Target Audience is
+                          required</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group required mb-3">
+                      <label class="form-label">Audience Age</label>
+                      <select class="form-control" formControlName="audAge"
+                        [ngClass]="{ 'is-invalid': (submitted && form.audAge.errors) || (form.audAge.touched && form.audAge.errors) }">
+                        <option *ngFor="let row of audienceAgeList" [value]="row.name">{{row.name}}</option>
+                      </select>
+                      <div *ngIf="submitted||(form.audAge.touched && form.audAge.invalid)">
+                        <small class="form-text error-message" *ngIf="form.audAge.errors"> Target Audience is
+                          required</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="mt-4 d-grid">
+
+                  <button type="submit" class="btn btn-primary waves-effect waves-light btn-sm"
+                    (click)="onSubmit()">Register <i class="mdi mdi-arrow-right ms-1"></i></button>
+                </div>
+
+              </form>
+            </div>
+
           </div>
-  
         </div>
+        <div class="mt-5 text-center">
+
+          <div>
+            <p>Already have vendor account ? <a [routerLink]="['/vendor/login']" routerLinkActive="router-link-active"
+                class="fw-medium text-primary"> Login</a> </p>
+
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
-  <ngx-spinner bdColor="rgba(253,254,255,0.8)" size="medium" color="#0c62db" type="ball-clip-rotate-pulse"
-    [fullScreen]="true">
-    <p style="color: #007bff"> Loading... </p>
-  </ngx-spinner>
+</div>
+<ngx-spinner bdColor="rgba(253,254,255,0.8)" size="medium" color="#0c62db" type="ball-clip-rotate-pulse"
+  [fullScreen]="true">
+  <p style="color: #007bff"> Loading... </p>
+</ngx-spinner>

@@ -8,6 +8,8 @@ import { ThemeConstantService } from 'src/app/shared/services/theme-constant.ser
 })
 export class CommonLayoutComponent implements OnInit {
 
+  role: any;
+  userId: any;
   _opened: boolean = true;
   isFolded: boolean = false;
 
@@ -97,11 +99,14 @@ export class CommonLayoutComponent implements OnInit {
   constructor(private themeService: ThemeConstantService) { }
 
   ngOnInit(): void {
+    this.role = localStorage.getItem('role');
+    this.userId = localStorage.getItem('userId');
     this.themeService.isMenuFoldedEvent.subscribe((getVal: any) => {
       console.log("getVal", getVal);
       this.isFolded = getVal;
       this._toggleOpened(getVal);
-    })
+    });
+
   }
 
 

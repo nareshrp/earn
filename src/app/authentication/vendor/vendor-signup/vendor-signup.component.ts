@@ -19,17 +19,20 @@ export class VendorSignupComponent implements OnInit {
   isOtp: boolean = false;
   isMobileVerify: boolean = false;
   rolesList: any = [{ id: 1, role: "admin" }, { id: 2, role: "user" }, { id: 3, role: "vendor" }];
-  
+
   latitude: number;
   longitude: number;
-  zoom: number=8;
-  address: string='';
- geoCoder:any;
-//  locationChosen=false;
+  zoom: number = 18;
+  address: string = '';
+  geoCoder: any;
+  locationChosen = false;
   @ViewChild('search')
   public searchElementRef!: ElementRef;
-
-  
+  map: any;
+  mapClickListener: any;
+  businessCategoryList: any = [{ id: 1, name: "Fashion" }, { id: 2, name: "Grocery" }, { id: 3, name: "Medical" }];
+  targetAudienceList: any = [{ id: 1, name: "Male" }, { id: 2, name: "Female" }, { id: 3, name: "All" }];
+  audienceAgeList: any = [{ id: 1, name: "0 to 20" }, { id: 2, name: "20 to 40" }, { id: 3, name: "40 to 60" }];
   constructor(
     private fb: FormBuilder,
     private _loginServices: LoginService,
@@ -39,14 +42,14 @@ export class VendorSignupComponent implements OnInit {
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone
   ) {
-    this.latitude=17.4264979;
-    this.longitude=78.45113220000007;
+    this.latitude = 17.4264979;
+    this.longitude = 78.45113220000007;
     this.vendorSignUpForm = this.fb.group({
       bName: [null, [Validators.required]],
       bPhone: [null, [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
-      bCategory: [null,[Validators.required]],
-      audAge: [null,[Validators.required]],
-      targAud: [null],
+      bCategory: [null, [Validators.required]],
+      audAge: [null, [Validators.required]],
+      targAud: [null, [Validators.required]],
       name: [null, [Validators.required]],
       bLoc: [null],
       phone: [null, [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
@@ -58,17 +61,33 @@ export class VendorSignupComponent implements OnInit {
 
   ngOnInit() {
     this.mapsAPILoader.load().then(() => {
-    this.setCurrentLocation();
+      this.setCurrentLocation();
       this.geoCoder = new google.maps.Geocoder;
     });
   }
 
-  onChoseLocation(event:any){
-      console.log("event", event.coords);
-      this.latitude=event.coords.lat;
-      this.longitude=event.coords.lng;
-      // this.locationChosen=true;
+  // onChoseLocation(event:any){
+  //     console.log("event", event.coords);
+  //     this.latitude=event.coords.lat;
+  //     this.longitude=event.coords.lng;
+  //     // this.locationChosen=true;
+  // }
+
+  public mapReadyHandler(map: google.maps.Map): void {
+    this.map = map;
+    this.mapClickListener = this.map.addListener('click', (e: google.maps.MouseEvent) => {
+      this.ngZone.run(() => {
+        // Here we can get correct event
+        this.locationChosen = true;
+        console.log(e.latLng.lat(), e.latLng.lng());
+        this.latitude = e.latLng.lat();
+        this.longitude = e.latLng.lng();
+        this.getAddress(this.latitude, this.longitude);
+      });
+    });
   }
+
+
   setCurrentLocation() {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -76,12 +95,13 @@ export class VendorSignupComponent implements OnInit {
         this.longitude = position.coords.longitude;
         this.zoom = 8;
         this.getAddress(this.latitude, this.longitude);
+
       });
     }
   }
 
-  getAddress(latitude:any, longitude:any) {
-    this.geoCoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results:any, status:any) => {
+  getAddress(latitude: any, longitude: any) {
+    this.geoCoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results: any, status: any) => {
       if (status === 'OK') {
         if (results[0]) {
           this.zoom = 12;
@@ -92,7 +112,7 @@ export class VendorSignupComponent implements OnInit {
       } else {
         window.alert('Geocoder failed due to: ' + status);
       }
-    
+
     });
   }
 
@@ -143,26 +163,31 @@ export class VendorSignupComponent implements OnInit {
     });
   }
   onSubmit() {
-    this.spinner.show();
+    // this.spinner.show();
     console.log(this.vendorSignUpForm)
     // this.spinner.show();
     this.submitted = true;
     if (this.vendorSignUpForm.invalid) {
       return;
     }
-    // if (this.isMobileVerify === true) {
-    //   delete this.vendorSignUpForm.value['otp'];
-    //   console.log("form Value", this.vendorSignUpForm.value);
-    //   this._loginServices.userSignUp(this.vendorSignUpForm.value).pipe(finalize(() => {
-    //     this.spinner.hide();
-    //   })).subscribe((resp: any) => {
-    //     console.log("User signup", resp);
-    //     if (resp.statusCode === 200) {
-    //       this.toastr.showSuccess(resp.message, 'Success');
-    //       this.routerServices.navigate(['/login']);
-    //     }
-    //   });
-    // }
+
+    if (this.isMobileVerify === true) {
+      delete this.vendorSignUpForm.value['otp'];
+      let addressBlock = {
+        address: this.address
+      }
+      this.vendorSignUpForm.value['bLoc'] = addressBlock;
+      console.log("form Value", this.vendorSignUpForm.value);
+      this._loginServices.userSignUp(this.vendorSignUpForm.value).pipe(finalize(() => {
+        this.spinner.hide();
+      })).subscribe((resp: any) => {
+        console.log("User signup", resp);
+        if (resp.statusCode === 200) {
+          this.toastr.showSuccess(resp.message, 'Success');
+          this.routerServices.navigate(['/vendor/login']);
+        }
+      });
+    }
 
 
   }

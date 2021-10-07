@@ -66,8 +66,8 @@
                   <div class="input-group auth-pass-inputgroup">
                     <input type="text" class="form-control" formControlName="phone" placeholder="Enter Mobile Number"
                       [ngClass]="{ 'is-invalid': (submitted && form.phone.errors) || (form.phone.touched && form.phone.errors) }">
-                    <button class="btn btn-light" type="button" *ngIf="!isMobileVerify"
-                      (click)="phoneNumberVerify()">Verify</button>
+                    <button class="btn btn-primary waves-effect waves-light btn-sm" type="button"
+                      *ngIf="!isMobileVerify" (click)="phoneNumberVerify()">Verify</button>
                     <button class="btn btn-success waves-effect waves-light" type="button" *ngIf="isMobileVerify"><i
                         class="far fa-check-circle"></i></button>
 
@@ -84,7 +84,8 @@
                   <label for="otp" class="form-label">OTP</label>
                   <div class="input-group auth-pass-inputgroup">
                     <input type="text" class="form-control" formControlName="otp" placeholder="Enter OTP">
-                    <button class="btn btn-light" type="button" (click)="otpVerify()">Verify</button>
+                    <button class="btn btn-primary waves-effect waves-light btn-sm" type="button"
+                      (click)="otpVerify()">Verify</button>
                   </div>
                 </div>
 
@@ -102,7 +103,9 @@
 
                 <div class="mt-4 d-grid">
 
-                  <button type="submit" class="btn btn-primary w-md" (click)="onSubmit()">Register</button>
+                  <button type="submit" class="btn btn-primary waves-effect waves-light btn-sm"
+                    (click)="onSubmit()">Register <i class="mdi mdi-arrow-right ms-1"></i></button>
+
                 </div>
 
               </form>
