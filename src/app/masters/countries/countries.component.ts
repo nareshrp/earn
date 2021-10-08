@@ -20,6 +20,10 @@ export class CountriesComponent implements OnInit {
   countryCaodeValue:any;
   role:any;
   userId:any;
+  countryList:any;
+  isRowEdit:boolean=false;
+  rowId:any;
+  updatedCode:any;
   constructor(
     private activatedRouterServices: ActivatedRoute,
     private spinner: NgxSpinnerService,
@@ -30,7 +34,7 @@ export class CountriesComponent implements OnInit {
   ) { 
     this.countryForm = this.fb.group({
       name: [null, [Validators.required]],
-      code: [null, [Validators.required]],
+      code: [null],
     });
   }
 
@@ -39,6 +43,7 @@ export class CountriesComponent implements OnInit {
     this.userId = localStorage.getItem("userId");
     this.getPageTitle();
     this.getCountryCodeData();
+    this.getCountryList();
   }
 
   get form() { return this.countryForm.controls; }
@@ -53,7 +58,7 @@ export class CountriesComponent implements OnInit {
         
         if(result.statusCode===200){
           this.countryCodes=result.result;
-          console.log("country codes",  this.countryCodes);
+          // console.log("country codes",  this.countryCodes);
         }
     });
   }
@@ -62,8 +67,9 @@ export class CountriesComponent implements OnInit {
       console.log(value);
       this.countryCaodeValue = this.countryCodes.filter((item:any)=>{
         return item.code===value;
-      });
-      console.log("country value", this.countryCaodeValue);
+      })[0];
+      this.countryForm.controls['code'].setValue(this.countryCaodeValue.phone_code);
+      // console.log("country value", this.countryCaodeValue);
     
   }
 
@@ -80,10 +86,62 @@ export class CountriesComponent implements OnInit {
       if(res.statusCode===200){
         this.toastr.showSuccess(res.message, 'Success');
         this.countryForm.reset();
+        this.getCountryList();
       }
     })
+  }
 
+  getCountryList(){
+    this.spinner.show();
+    this._adminService.getCountry(this.userId).pipe(finalize(() => {
+      this.spinner.hide();
+    })).subscribe((res:any)=>{
 
+      if(res.statusCode===200){
+       this.countryList=res.result;  
+       console.log("country countryList", this.countryList);
+      }
+    })
+  }
+  editRow(row:any){
+    this.isRowEdit=true;
+    console.log("row id", row.id);
+    console.log("row", row);
+    this.rowId=row.id;
+    // this.countryForm.controls['code'].setValue(row.code);
+    this.updatedCode=this.countryCodes.filter((item:any)=>{
+      return item.code===row.name;
+    })[0].phone_code;
+   
+   this.countryForm.controls['name'].setValue(row.name);
+   this.countryForm.controls['code'].setValue(this.updatedCode);
+    // this.selectCountry(row.name);
+    console.log("rowupdated form value", this.countryForm.value);
+    console.log("updatedCode", this.updatedCode);
+  
+    
+  }
+  rowDelete(id:any){
+      this._adminService.deleteCountry(this.userId,id).subscribe((result:any)=>{
+        if(result.statusCode===200){
+          this.toastr.showSuccess(result.message, 'Success');
+        }
+      });
+  }
+
+  updateRow(){
+    this.isRowEdit=false;
+    let data={
+      "name" :this.countryForm.value['name'],
+      "code" : this.updatedCode
+    }
+    console.log("ser data", data);
+    this._adminService.editCountry(this.userId, this.rowId, data).subscribe((result:any)=>{
+      if(result.statusCode===200){
+        this.toastr.showSuccess(result.message, 'Success');
+        this.getCountryList();
+      }
+    });
   }
 
 }

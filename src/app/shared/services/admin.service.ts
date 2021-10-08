@@ -24,4 +24,14 @@ export class AdminService {
   addCountry(userId:any, body:any){
     return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/country", body);
   }
+  getCountry(userId:any){
+    return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/country");
+  }
+  editCountry(userId:any, cId:any, body:any){
+    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/country/"+cId, body);
+  }
+  deleteCountry(userId:any, cId:any){
+    return this.http.delete(environment.apiUrl + "/api/earnin/users/" + userId + "/country/"+cId);
+  }
+
 }
