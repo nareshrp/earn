@@ -14,24 +14,23 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 export class CitiesComponent implements OnInit {
   pageTitle: any;
   cityForm: FormGroup;
-  countryCodes:any;
-  isRowEdit:boolean=false;
-  role:any;
-  userId:any;
+  countryCodes: any;
+  isRowEdit: boolean = false;
+  role: any;
+  userId: any;
   submitted = false;
-  countryList:any;
-  cityList:any;
-
-  rowId:any;
-  updatedCountryId:any;
+  countryList: any;
+  cityList: any;
+  rowId: any;
+  updatedCountryId: any;
   constructor(
     private activatedRouterServices: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private toastr: NotificationService,
     private fb: FormBuilder,
-   public routerServices: Router,
-   private _adminService: AdminService,
-  ) { 
+    public routerServices: Router,
+    private _adminService: AdminService,
+  ) {
     this.cityForm = this.fb.group({
       name: [null, [Validators.required]],
       countryId: [null],
@@ -55,7 +54,7 @@ export class CitiesComponent implements OnInit {
   }
   // getCountryCodeData(){
   //   this._adminService.getCountryCode().subscribe((result:any)=>{
-        
+
   //       if(result.statusCode===200){
   //         this.countryCodes=result.result;
   //         console.log("country codes",  this.countryCodes);
@@ -64,64 +63,74 @@ export class CitiesComponent implements OnInit {
   // }
 
 
-  getCountryList(){
-       this._adminService.getCountry(this.userId).pipe(finalize(() => {
-     
-    })).subscribe((res:any)=>{
+  getCountryList() {
+    this._adminService.getCountry(this.userId).pipe(finalize(() => {
 
-      if(res.statusCode===200){
-       this.countryList=res.result;  
-       console.log("country countryList", this.countryList);
+    })).subscribe((res: any) => {
+
+      if (res.statusCode === 200) {
+        this.countryList = res.result;
+        console.log("country countryList", this.countryList);
       }
     })
   }
 
-  getAllMyCities(){
+  getAllMyCities() {
     this.spinner.show();
     this._adminService.getAllCities(this.userId).pipe(finalize(() => {
       this.spinner.hide();
-    })).subscribe((res:any)=>{
+    })).subscribe((res: any) => {
 
-      if(res.statusCode===200){
-       this.cityList=res.result;  
-       console.log("cityList", this.cityList);
+      if (res.statusCode === 200) {
+        this.cityList = res.result;
+        console.log("cityList", this.cityList);
       }
     })
   }
 
-  editRow(row:any){
-    this.isRowEdit=true;
+  editRow(row: any) {
+    this.isRowEdit = true;
     console.log("row id", row.id);
     console.log("row", row);
-    this.rowId=row.id;
-    
-    this.updatedCountryId=this.countryList.filter((item:any)=>{
-      console.log("item", item);
-      return item.code===row.countryId;
-    });
-
+    this.rowId = row.id;
+    this.updatedCountryId = this.countryList.filter((item: any) => {
+      // console.log("item", item);
+      return item.code === row.countryId;
+    })[0];
     console.log("updatedCountryId", this.updatedCountryId);
-   
-   this.cityForm.controls['name'].setValue(row.name);
-  //  this.countryId.controls['code'].setValue(this.updatedCode);
-  //   // this.selectCountry(row.name);
-  //   console.log("rowupdated form value", this.countryForm.value);
-  //   console.log("updatedCode", this.updatedCode);
-  
-    
+    this.cityForm.controls['name'].setValue(row.name);
+    this.cityForm.controls['countryId'].setValue(this.updatedCountryId.code);
+    //  this.countryId.controls['code'].setValue(this.updatedCode);
+    //   // this.selectCountry(row.name);
+    //   console.log("rowupdated form value", this.countryForm.value);
+    //   console.log("updatedCode", this.updatedCode);
+
+
+  }
+  updateRow() {
+    this.isRowEdit = false;
+    delete this.cityForm.value['countryId'];
+    console.log("update data", this.cityForm.value);
+    this._adminService.updateCity(this.userId, this.rowId, this.cityForm.value).subscribe((res: any) => {
+      console.log("res", res);
+      if (res.statusCode === 200) {
+        this.getAllMyCities();
+        this.cityForm.reset();
+      }
+    })
   }
 
-  rowDelete(id:any){
-    this._adminService.deleteCity(this.userId,id).subscribe((result:any)=>{
-      if(result.statusCode===200){
+  rowDelete(id: any) {
+    this._adminService.deleteCity(this.userId, id).subscribe((result: any) => {
+      if (result.statusCode === 200) {
         this.toastr.showSuccess(result.message, 'Success');
         this.getAllMyCities();
       }
     });
-}
+  }
 
 
-  onSubmit(){
+  onSubmit() {
     this.submitted = true;
     this.spinner.show();
     if (this.cityForm.invalid) {
@@ -130,12 +139,12 @@ export class CitiesComponent implements OnInit {
 
     this._adminService.addCity(this.userId, this.cityForm.value).pipe(finalize(() => {
       this.spinner.hide();
-    })).subscribe((res:any)=>{
-      if(res.statusCode===200){
+    })).subscribe((res: any) => {
+      if (res.statusCode === 200) {
         this.toastr.showSuccess(res.message, 'Success');
         this.cityForm.reset();
         this.getAllMyCities();
-       
+
       }
     })
   }

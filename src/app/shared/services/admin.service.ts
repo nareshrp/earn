@@ -7,45 +7,61 @@ import { environment } from 'src/environments/environment';
 })
 export class AdminService {
 
-  
+
   constructor(private http: HttpClient) { }
   getVendorList(role: any) {
     return this.http.get(environment.apiUrl + "/api/earnin/users/" + role + "/approve?status=pending");
   }
 
-  pendingApproval(userId:any, body:any){
+  pendingApproval(userId: any, body: any) {
     return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/approve", body);
   }
 
-  getCountryCode(){
+  getCountryCode() {
     return this.http.get(environment.apiUrl + "/api/earnin/countrycode/");
   }
 
-  addCountry(userId:any, body:any){
+  addCountry(userId: any, body: any) {
     return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/country", body);
   }
-  getCountry(userId:any){
+  getCountry(userId: any) {
     return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/country");
   }
-  editCountry(userId:any, cId:any, body:any){
-    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/country/"+cId, body);
+  editCountry(userId: any, cId: any, body: any) {
+    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/country/" + cId, body);
   }
-  deleteCountry(userId:any, cId:any){
-    return this.http.delete(environment.apiUrl + "/api/earnin/users/" + userId + "/country/"+cId);
+  deleteCountry(userId: any, cId: any) {
+    return this.http.delete(environment.apiUrl + "/api/earnin/users/" + userId + "/country/" + cId);
   }
 
-  addCity(userId:any, body:any){
+  addCity(userId: any, body: any) {
     return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/city", body);
   }
-  getAllCities(userId:any){
+  getAllCities(userId: any) {
     return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/city",);
   }
-  updateCity(userId:any, cityId:any, body:any){
-    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/city/"+cityId, body);
+  updateCity(userId: any, cityId: any, body: any) {
+    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/city/" + cityId, body);
   }
 
-  deleteCity(userId:any, cityId:any){
-    return this.http.delete(environment.apiUrl + "/api/earnin/users/" + userId + "/city/"+cityId);
+  deleteCity(userId: any, cityId: any) {
+    return this.http.delete(environment.apiUrl + "/api/earnin/users/" + userId + "/city/" + cityId);
+  }
+
+  addCategory(userId: any, body: any) {
+    return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/category", body);
+  }
+
+  getCategory(userId: any) {
+    return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/category");
+  }
+
+  updateCategory(userId: any, categoryId: any, body: any) {
+    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/category/" + categoryId, body);
+  }
+
+  deleteCategory(userId: any, categoryId: any) {
+    return this.http.delete(environment.apiUrl + "/api/earnin/users/" + userId + "/category/" + categoryId);
   }
 
 }
