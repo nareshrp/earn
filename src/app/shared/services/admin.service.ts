@@ -34,4 +34,18 @@ export class AdminService {
     return this.http.delete(environment.apiUrl + "/api/earnin/users/" + userId + "/country/"+cId);
   }
 
+  addCity(userId:any, body:any){
+    return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/city", body);
+  }
+  getAllCities(userId:any){
+    return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/city",);
+  }
+  updateCity(userId:any, cityId:any, body:any){
+    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/city/"+cityId, body);
+  }
+
+  deleteCity(userId:any, cityId:any){
+    return this.http.delete(environment.apiUrl + "/api/earnin/users/" + userId + "/city/"+cityId);
+  }
+
 }

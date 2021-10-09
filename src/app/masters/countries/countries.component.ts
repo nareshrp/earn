@@ -58,7 +58,7 @@ export class CountriesComponent implements OnInit {
         
         if(result.statusCode===200){
           this.countryCodes=result.result;
-          // console.log("country codes",  this.countryCodes);
+          console.log("country codes",  this.countryCodes);
         }
     });
   }
@@ -122,6 +122,8 @@ export class CountriesComponent implements OnInit {
     
   }
   rowDelete(id:any){
+    console.log("delete", id);
+    
       this._adminService.deleteCountry(this.userId,id).subscribe((result:any)=>{
         if(result.statusCode===200){
           this.toastr.showSuccess(result.message, 'Success');
