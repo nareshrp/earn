@@ -139,7 +139,34 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.spinner.show();
-    console.log("phoneLogin form", this.phoneLoginForm.value);
+let data ={
+  phone:this.phoneLoginForm.value['phone'],
+  code:this.phoneLoginForm.value['phoneOtp'],
+}
+console.log('data', data);
+
+this._loginServices.loginVerifyOTP(data).pipe(finalize(()=>{
+  this.spinner.hide();
+})).subscribe((result:any)=>{
+     
+    if(result.statusCode === 200){
+      console.log('res', result);
+      this.isOtpFormGroup = true;
+      this.toastr.showSuccess(result.message, 'Success');    
+      let userInfo = result.result;
+      localStorage.setItem('userId', userInfo.userId);
+      localStorage.setItem('role', userInfo.role);
+      localStorage.setItem('hashToken', userInfo.accessToken);
+      this.routerServices.navigate(['/']);
+    }
+      else{
+        this.toastr.showError(result.message, 'Error')
+      }
+});
+
+
+
+  
   }
 
 

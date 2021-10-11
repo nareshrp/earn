@@ -104,8 +104,8 @@
     <div class="input-group auth-pass-inputgroup">
       <input type="text" class="form-control" formControlName="phoneOtp" placeholder="Enter OTP"
       [ngClass]="{ 'is-invalid': (phSubmitted && formph.phoneOtp.errors) || (formph.phoneOtp.touched && formph.phoneOtp.errors) }">
-      <button class="btn btn-primary waves-effect waves-light btn-sm" type="button"
-        (click)="phoneOtpVerify()">Verify</button>
+      <!-- <button class="btn btn-primary waves-effect waves-light btn-sm" type="button"
+        (click)="phoneOtpVerify()">Verify</button> -->
     </div>
 
      <div *ngIf="phSubmitted||(formph.phoneOtp.touched && formph.phoneOtp.invalid)">
