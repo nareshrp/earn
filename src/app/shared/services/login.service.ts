@@ -30,4 +30,13 @@ export class LoginService {
   }
 
 
+
+  loginVerifyMobile(mobileNumber: any) {
+    return this.http.post(environment.apiUrl + "/api/earnin/signin", mobileNumber);
+  }
+  
+  loginVerifyOTP(body: any) {
+    return this.http.post(environment.apiUrl + "/api/earnin/signin/token", body);
+  }
+
 }

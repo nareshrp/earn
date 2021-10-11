@@ -241,3 +241,7 @@ body{
   margin: 0 0 7px 0;
   font-weight: 600;
 }
+
+.vendorLogin form{width: 90%;}
+.loginRightBorder{border-right:solid 1px #d4dbf9;}
+.formPhoneLogin{float: right;}

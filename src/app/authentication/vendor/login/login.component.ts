@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { finalize } from 'rxjs/operators';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 
@@ -12,8 +13,12 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  phoneLoginForm: FormGroup;
   submitted = false;
+  phSubmitted = false;
   errorMsg = '';
+  isOtpFormGroup: boolean = false;
+ // isMobileVerify: boolean = false;
   constructor(
     private fb: FormBuilder,
     private _loginServices: LoginService,
@@ -25,14 +30,26 @@ export class LoginComponent implements OnInit {
       userName: [null, [Validators.required]],
       password: [null, [Validators.required]]
     });
+
+    this.phoneLoginForm = this.fb.group({   
+      phone:  ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$"),
+      Validators.minLength(10), Validators.maxLength(10)]],
+      phoneOtp: [null, [Validators.required]]
+    });
+
   }
 
+
+
+  
   ngOnInit(): void {
 
   }
 
   // convenience getter for easy access to form fields
-  get form() { return this.loginForm.controls; }
+  get form() {return this.loginForm.controls;}
+  get formph(){ return this.phoneLoginForm.controls; }
+
 
   onSubmit() {
     this.submitted = true;
@@ -64,15 +81,68 @@ export class LoginComponent implements OnInit {
         this.routerServices.navigate(['/']);
       }
     });
-
-
-
   }
 
 
 
-}
-function finalize(arg0: () => void): import("rxjs").OperatorFunction<Object, unknown> {
-  throw new Error('Function not implemented.');
+  phoneNumberVerify() {
+    //this.isOtpFormGroup = true;    
+    // console.log('', this.phoneLoginForm.value)
+
+    this.spinner.show();
+     console.log("Phone", this.phoneLoginForm.value['phone']);
+   
+      if (this.phoneLoginForm.value['phone'] != null) {
+            let data = {
+              phone: this.phoneLoginForm.value['phone']
+            }
+            this._loginServices.loginVerifyMobile(data).pipe(finalize(() => {
+              this.spinner.hide();
+            })).subscribe((result: any) => {
+              console.log("result", result);
+              if (result.statusCode === 200) {
+              this.isOtpFormGroup = true;
+                this.toastr.showSuccess(result.message, 'Success');
+              }
+              else {
+                this.toastr.showError(result.message, 'Error');
+              }
+            });
+      }
+  }
+
+  phoneOtpVerify(){
+    this.spinner.show();
+    console.log("phoneOtp", this.phoneLoginForm.value['phoneOtp']);
+    if (this.phoneLoginForm.value['phoneOtp'] != null) {
+      let data = {
+        phone: this.phoneLoginForm.value['phoneOtp']
+      }
+      this._loginServices.loginVerifyOTP(data).pipe(finalize(() => {
+        this.spinner.hide();
+      })).subscribe((result: any) => {
+        console.log("phoneOtp", result);
+        if (result.statusCode === 200) {
+        this.isOtpFormGroup = true;
+          this.toastr.showSuccess(result.message, 'Success');
+        }
+        else {
+          this.toastr.showError(result.message, 'Error');
+        }
+      });
+    }    
+  }
+
+  onPhoneFormSubmit(){
+    this.phSubmitted = true;
+    if (this.phoneLoginForm.invalid) {
+      return;
+    }
+    this.spinner.show();
+    console.log("phoneLogin form", this.phoneLoginForm.value);
+  }
+
+
+
 }
 

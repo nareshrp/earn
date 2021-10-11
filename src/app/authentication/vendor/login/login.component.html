@@ -1,7 +1,7 @@
-<div class="login-section">
+<div class="login-section vendorLogin">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-md-8 col-lg-6 col-xl-5">
+      <div class="col-md-12 col-lg-10 col-xl-9">
         <div class="card overflow-hidden">
           <div class="bg-primary bg-soft">
             <div class="row">
@@ -16,6 +16,7 @@
               </div>
             </div>
           </div>
+
           <div class="card-body pt-0">
             <div class="auth-logo">
               <a href="#" class="auth-logo-light">
@@ -33,10 +34,10 @@
                 </div>
               </a>
             </div>
-            <div class="p-2">
+            <div class="row p-2">
+
+<div class="col-sm-6 loginRightBorder">
               <form [formGroup]="loginForm">
-
-
                 <div class="form-group mb-3">
                   <label for="username" class="form-label">Username</label>
                   <input type="text" class="form-control" id="username" formControlName="userName"
@@ -46,7 +47,6 @@
                   <div *ngIf="submitted||(form.userName.touched && form.userName.invalid)">
                     <small class="form-text error-message" *ngIf="form.userName.errors"> Username is required</small>
                   </div>
-
                 </div>
 
                 <div class="form-group mb-3">
@@ -73,10 +73,55 @@
                   <button class="btn btn-primary waves-effect waves-light btn-sm" (click)="onSubmit()">Log In <i
                       class="mdi mdi-arrow-right ms-1"></i></button>
                 </div>
-
-
-
               </form>
+</div>
+
+<!-- Phone Login -->
+<div class="col-sm-6">
+  <form [formGroup]="phoneLoginForm" class="formPhoneLogin">
+    <div class="form-group required mb-3">
+      <label for="formrow-firstname-input" class="form-label">Phone</label>
+      <div class="input-group auth-pass-inputgroup">
+        <input type="text" class="form-control" formControlName="phone" placeholder="Enter Mobile Number"
+          [ngClass]="{ 'is-invalid': (phSubmitted && formph.phone.errors) || (formph.phone.touched && formph.phone.errors) }">
+       
+          <button class="btn btn-primary waves-effect waves-light btn-sm" type="button"
+         (click)="phoneNumberVerify()">Verify</button>
+         <!-- <button class="btn btn-success waves-effect waves-light" type="button" *ngIf="isMobileVerify"><i
+          class="far fa-check-circle"></i></button> -->
+      </div>
+
+      <div *ngIf="phSubmitted||(formph.phone.touched && formph.phone.invalid)">
+        <small class="form-text error-message" *ngIf="formph.phone.errors?.required"> Mobile Number is
+          required</small>
+        <small class="form-text error-message" *ngIf="formph.phone.errors?.pattern"> Please,
+          Enter 10 digit Mobile Number.</small>
+      </div>
+    </div>
+
+    <div class="form-group mb-3" *ngIf="isOtpFormGroup">
+      <label class="form-label">OTP</label>
+    <div class="input-group auth-pass-inputgroup">
+      <input type="text" class="form-control" formControlName="phoneOtp" placeholder="Enter OTP"
+      [ngClass]="{ 'is-invalid': (phSubmitted && formph.phoneOtp.errors) || (formph.phoneOtp.touched && formph.phoneOtp.errors) }">
+      <button class="btn btn-primary waves-effect waves-light btn-sm" type="button"
+        (click)="phoneOtpVerify()">Verify</button>
+    </div>
+
+     <div *ngIf="phSubmitted||(formph.phoneOtp.touched && formph.phoneOtp.invalid)">
+        <small class="form-text error-message" *ngIf="formph.phoneOtp.errors">  OTP is required</small>
+      </div> 
+    </div>
+
+
+    <div class="mt-3 d-grid" *ngIf="isOtpFormGroup">
+      <button class="btn btn-primary waves-effect waves-light btn-sm" (click)="onPhoneFormSubmit()">Log In <i
+          class="mdi mdi-arrow-right ms-1"></i></button>
+    </div>
+  </form>
+</div>
+
+
             </div>
 
           </div>
