@@ -69,9 +69,34 @@
                     <li><a [routerLink]="['/vendors']" routerLinkActive="router-link-active">Vendors List </a></li>
                   </ul>
                 </li>
+                <li>
+                  <a href="javascript: void(0);" class="has-arrow waves-effect">
+                    <i class="bx bx-store"></i>
+                    <span>Deals</span>
+                  </a>
+                  <ul class="sub-menu" aria-expanded="false">
+                    <li><a [routerLink]="['/deals']" routerLinkActive="router-link-active">Deals List </a></li>
+                    <li><a [routerLink]="['/deals/create-deal']" routerLinkActive="router-link-active">Create Deal </a></li>
+                  
+
+                  </ul>
+                </li>
 
               </ng-container>
+              <ng-container *ngIf="role=='vendor'">
+                <li>
+                  <a href="javascript: void(0);" class="has-arrow waves-effect">
+                    <i class="bx bx-store"></i>
+                    <span>Deals</span>
+                  </a>
+                  <ul class="sub-menu" aria-expanded="false">
+                    <li><a [routerLink]="['/deals']" routerLinkActive="router-link-active">Deals List </a></li>
+                    <li><a [routerLink]="['/deals/create-deal']" routerLinkActive="router-link-active">Create Deal </a></li>
+                  
 
+                  </ul>
+                </li>
+              </ng-container>
 
             </ul>
           </div>

@@ -17,4 +17,9 @@ export const CommonLayout_ROUTES: Routes = [
     loadChildren: () => import('../../vendors-list/vendors-list.module').then(m => m.VendorsListModule),
     canActivate: [AuthenticationGuard],
   },
+  {
+    path: 'deals',
+    loadChildren: () => import('../../deals/deals.module').then(m => m.DealsModule),
+    canActivate: [AuthenticationGuard],
+  },
 ];

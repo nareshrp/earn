@@ -245,3 +245,4 @@ body{
 .vendorLogin form{width: 90%;}
 .loginRightBorder{border-right:solid 1px #d4dbf9;}
 .formPhoneLogin{float: right;}
+.card-footer { background-color: rgb(220 220 235); border: none;}

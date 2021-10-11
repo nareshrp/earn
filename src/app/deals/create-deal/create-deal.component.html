@@ -1,0 +1,225 @@
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0 font-size-18">{{pageTitle}}</h4>
+            <div class="page-title-right">
+                <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
+            (click)="backNavigation()"><i class="mdi mdi-arrow-left me-1"></i> Back to List</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Title End -->
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <form [formGroup]="createDealForm">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group required">
+                                <label class="form-label">Select Vendor</label>
+                                <select class="form-control" formControlName="vendorId">
+                                    <option value="">Vendor 1</option>
+                                    <option value="">Vendor 2</option>
+                                    <option value="">Vendor 3</option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-12 googlemap mb-3">
+                            <h4 class="card-title">Map your offer radius</h4>
+                            <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom"
+                                (mapReady)="mapReadyHandler($event)">
+                                <agm-marker *ngIf="locationChosen" [latitude]="latitude" [longitude]="longitude"
+                                    [markerDraggable]="true"></agm-marker>
+                            </agm-map>
+
+                            <div><strong>Address</strong> : {{address}}</div>
+                            <!-- <div>Latitude: {{latitude}}</div>
+                          <div>Longitude: {{longitude}}</div> -->
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+                          <div class="col-12">
+                              <hr>
+                            </div>
+                      </div> -->
+                    <div class="row">
+                        <!-- <div class="col-12">
+                            <h4 class="card-title">Select Date Range</h4>
+                        </div> -->
+                        <div class="col-md-4">
+                            <div class="form-group required">
+                                <label class="form-label">From Date & Time</label>
+                                <input class="form-control" type="datetime-local" formControlName="fromDate">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group required">
+                                <label class="form-label">To Date & Time</label>
+                                <input class="form-control" type="datetime-local" formControlName="toDate">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group required">
+                                <label class="form-label">Offer Title</label>
+                                <input class="form-control" type="text" formControlName="offerTitle">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <h4 class="card-title">Deal image Upload</h4>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group required">
+                                <label class="form-label">Deal Image</label>
+                                <input class="form-control" type="file" formControlName="dealmg" >
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mt-4">
+                                <button class="btn btn-primary waves-effect waves-light  margin-right3 ms-1">Upload <i
+                                    class="mdi mdi-cloud-upload-outline"></i></button>
+                                    <button class="btn btn-danger waves-effect waves-light " >Cancel <i
+                                        class="mdi mdi-close-circle-outline
+                                        ms-1"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group required">
+                                <label class="form-label">Page Content</label>
+                                <textarea class="form-control" formControlName="dealContent" ></textarea>
+                            </div>
+                        </div>
+                     </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                             <div  class="form-group">
+                               <strong>Choose share type</strong> 
+                                <div class="form-check form-check-inline" style="margin-left:5px ;">
+                                    <input class="form-check-input" type="checkbox"  value="option1">
+                                    <label class="form-check-label">Dedicated Video</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox"  value="option2">
+                                    <label class="form-check-label" >Deal Image to share</label>
+                                  </div>
+                             </div>
+                        </div>
+                     </div>
+
+
+                     <div class="row">
+                        <div class="col-md-12">
+                            <h4 class="card-title">Dedicated Video Instructions   </h4>
+                            <div class="form-group required">
+                                <label class="form-label">Dedicated Video Instructions and video Content                                </label>
+                                <textarea class="form-control" formControlName="dealContent" ></textarea>
+                            </div>
+                        </div>
+                     </div>
+
+                     <div class="row">
+                        <div class="col-md-12">
+                            <h4 class="card-title">Video assets for influencers </h4>
+                         </div>
+                         <div class="col-md-4">
+                            <div class="form-group required">
+                                <label class="form-label">Upload Video Assets for influencers</label>
+                                <input class="form-control" type="file" formControlName="dealmg" >
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mt-4">
+                                <button class="btn btn-primary waves-effect waves-light  margin-right3 ms-1">Upload <i
+                                    class="mdi mdi-cloud-upload-outline"></i></button>
+                                    <button class="btn btn-danger waves-effect waves-light " >Cancel <i
+                                        class="mdi mdi-close-circle-outline
+                                        ms-1"></i></button>
+                            </div>
+                        </div>
+                     </div>
+
+                     <div class="row">
+                        <div class="col-md-12">
+                            <h4 class="card-title">Image Share Instructions</h4>
+                         </div>
+                         <div class="col-md-4">
+                            <div class="form-group required">
+                                <label class="form-label">Campaign Budget</label>
+                                <textarea class="form-control" formControlName="dealmg" placeholder="Please write content to share <link><coupon code>"></textarea>
+                            </div>
+                        </div>
+                         <div class="col-md-4">
+                            <div class="form-group required">
+                                <label class="form-label">Upload image to share</label>
+                                <input class="form-control" type="file" formControlName="dealmg" >
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mt-4">
+                                <button class="btn btn-primary waves-effect waves-light  margin-right3 ms-1">Upload <i
+                                    class="mdi mdi-cloud-upload-outline"></i></button>
+                                    <button class="btn btn-danger waves-effect waves-light " >Cancel <i
+                                        class="mdi mdi-close-circle-outline
+                                        ms-1"></i></button>
+                            </div>
+                        </div>
+                      
+                     </div>
+                     <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group required">
+                                <label class="form-label">Campaign Budget</label>
+                                <input class="form-control" type="text" formControlName="" placeholder="Budget">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group required">
+                                <label class="form-label">Bid for each coin</label>
+                                <input class="form-control" type="text" formControlName="" placeholder="Devide coins (in INR)" >
+                                <small>500 coins as per your budget</small>
+                            </div>
+                        </div>
+
+                     </div>
+                     <div class="row">
+                        <div class="col-md-12">
+                            <h4 class="card-title">I Agree Temers & Conditions, Refund policy</h4>
+                            <div class="form-check" style="margin-left:5px ;">
+                            <input class="form-check-input" type="checkbox"  value="option1">
+                            <label class="form-check-label">I Agree Temers & Conditions, Refund policy</label>
+                          </div></div>
+                    </div>
+
+
+
+
+
+                </form>
+            </div>
+            <!-- end card body -->
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-12 text-right">
+                        <button class="btn btn-success waves-effect waves-light  margin-right3 ms-1">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end card -->
+    </div>
+</div>
