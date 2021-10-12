@@ -7,13 +7,14 @@ import { CreateDealComponent } from './create-deal/create-deal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AgmCoreModule } from '@agm/core';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 
 @NgModule({
   declarations: [
     DealsListComponent,
     CreateDealComponent,
-    
+
   ],
   imports: [
     CommonModule,
@@ -23,8 +24,9 @@ import { AgmCoreModule } from '@agm/core';
     NgxSpinnerModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyD2cnz4AK40h9R1Hy199mHtSbTBKJTEbwk',
-      libraries: ['places']
-    })
+      libraries: ['geometry']
+    }),
+    CKEditorModule
   ]
 })
 export class DealsModule { }
