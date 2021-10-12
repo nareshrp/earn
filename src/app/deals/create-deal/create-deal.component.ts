@@ -6,6 +6,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular';
+import { VendorService } from 'src/app/shared/services/vendor.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-deal',
@@ -26,13 +28,19 @@ export class CreateDealComponent implements OnInit {
   zoom: number = 18;
   address: string = '';
   geoCoder: any;
-  locationChosen = false;
+  // locationChosen = false;
   @ViewChild('search')
   public searchElementRef!: ElementRef;
 
   map: any;
   mapClickListener: any;
-
+  files: any = [];
+  vfiles: any = [];
+  shareImgfiles: any = [];
+  dealImgObj:any;
+  videoAssetsObj:any;
+  sharedTypeList:any=[];
+  acceptTerms:boolean=false;
   constructor(
     private activatedRouterServices: ActivatedRoute,
     private spinner: NgxSpinnerService,
@@ -40,7 +48,8 @@ export class CreateDealComponent implements OnInit {
     private fb: FormBuilder,
     public routerServices: Router,
     private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private vendorService: VendorService,
   ) {
     this.latitude = 17.4264979;
     this.longitude = 78.45113220000007;
@@ -95,7 +104,7 @@ export class CreateDealComponent implements OnInit {
     this.mapClickListener = this.map.addListener('click', (e: google.maps.MouseEvent) => {
       this.ngZone.run(() => {
         // Here we can get correct event
-        this.locationChosen = true;
+        // this.locationChosen = true;
         console.log(e.latLng.lat(), e.latLng.lng());
         this.latitude = e.latLng.lat();
         this.longitude = e.latLng.lng();
@@ -136,8 +145,122 @@ export class CreateDealComponent implements OnInit {
     this.routerServices.navigate(['/deals'])
   }
 
+  /* File Upload Logic */
+  // We will create multiple form controls inside defined form controls photos.
+
+  detectFiles(event: any, imgType:any) {
+    console.log("imgType", imgType);
+    let files = event.target.files;
+    console.log("files", files);
+    if (files) {
+      for (let file of files) {
+        let reader = new FileReader();
+        reader.onload = (e: any) => {
+          //file.imgUrl = e.target.result;
+          if(imgType=='dealmg'){
+            this.files.push(file);
+          }else if(imgType=='vAssets'){
+            this.vfiles.push(file);
+          }else{
+            this.shareImgfiles.push(file);
+          }
+
+        
+          //console.log(e.target.result)
+        }
+        reader.readAsDataURL(file);
+      }
+    }
+  }
+
+  uploadDealImg(){
+    this.spinner.show();
+    var fd: any = new FormData();
+    console.log(this.files[0])
+    fd.append('files', this.files[0]);
+    console.log("uploadDealImg fd",fd);
+    this.vendorService.fileUpload(this.userId, fd).pipe(finalize(() => {
+     this.spinner.hide();
+      // Success Tost Message
+      // this.toastr.showSuccess("File Successfully Created !!", "Successfully");
+    })).subscribe((result:any)=>{
+        console.log("result", result);
+        if(result.result.statusCode===200){
+          this.dealImgObj={
+                            fileName:result.result.fileName,
+                            filePath:result.result.filePath
+                          };
+
+          this.toastr.showSuccess(result.message, "Successfully");
+        
+        }
+    });
+  }
+
+  uploadVideoAssets(){
+    this.spinner.show();
+    var fd: any = new FormData();
+    console.log(this.vfiles[0])
+    fd.append('files', this.vfiles[0]);
+    console.log("uploadVideoAssets fd",fd);
+    this.vendorService.fileUpload(this.userId, fd).pipe(finalize(() => {
+      this.spinner.hide();
+       // Success Tost Message
+       // this.toastr.showSuccess("File Successfully Created !!", "Successfully");
+     })).subscribe((result:any)=>{
+         
+         if(result.result.statusCode===200){
+           this.videoAssetsObj={
+                             fileName:result.result.fileName,
+                             filePath:result.result.filePath
+                           };
+ 
+           this.toastr.showSuccess(result.message, "Successfully");
+         
+         }
+     });
+  }
+
+  sharetype(event:any){
+   let val=event.target.value;
+   if(event.target.checked){
+       console.log(event.target.value);
+       this.sharedTypeList.push(val);
+    }else{
+      let el = this.sharedTypeList.find((itm:any) => itm===val);
+      if(el)
+      this.sharedTypeList.splice(this.sharedTypeList.indexOf(el),1);
+    }
+  
+    console.log("sharedTypeList", this.sharedTypeList);
+  }
+  termsCheck(event:any){
+    if(event.target.checked){
+      this.createDealForm.value['consentPolicy']=true;
+    }
+    else{
+      this.createDealForm.value['consentPolicy']=false;
+    }
+
+  }
+
   onSaveDeal() {
+    this.spinner.show();
+    console.log("DealObj", this.dealImgObj);
+    console.log("videoAssetsObj", this.videoAssetsObj);
+    this.createDealForm.value['dealmg']=this.dealImgObj;
+    this.createDealForm.value['vAssets']=this.videoAssetsObj;
+    this.createDealForm.value['sharedType']=this.sharedTypeList;
+    this.createDealForm.value['vendorId']=this.userId;
     console.log("Form Value", this.createDealForm.value);
+    this.vendorService.createDeal(this.userId, this.createDealForm.value).pipe(finalize(() => {
+      this.spinner.hide();
+    
+     })).subscribe((res:any)=>{
+          console.log(res);
+     });
+    
+
   }
 
 
