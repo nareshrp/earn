@@ -2,6 +2,9 @@
 @import '../src/assets/css/icons.min.css';
 @import '../src/assets/css/app.css';
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+*{
+  outline: none;
+}
 body{
   background: #f8f8fb;
   font-family:"Poppins",sans-serif;
@@ -15,6 +18,56 @@ body{
   width: 250px;
   background: #2a3042;
 
+}
+
+body[data-sidebar=dark].vertical-collpsed .vertical-menu #sidebar-menu>ul ul {
+  background-color: #2a3042;
+}
+body[data-sidebar=dark].vertical-collpsed .vertical-menu #sidebar-menu ul li.mm-active .active {
+  color: #fff!important;
+}
+body[data-sidebar=dark].vertical-collpsed .vertical-menu #sidebar-menu ul li.mm-active .active i {
+  color: #fff!important;
+}
+body[data-sidebar=dark] .mm-active {
+  color: #fff!important;
+}
+body[data-sidebar=dark] .mm-active>a {
+  color: #fff!important;
+}
+body[data-sidebar=dark] .mm-active>a i {
+  color: #fff!important;
+}
+body[data-sidebar=dark] .mm-active>i {
+  color: #fff!important;
+}
+body[data-sidebar=dark] .mm-active .active {
+  color: #fff!important;
+}
+body[data-sidebar=dark] .mm-active .active i {
+  color: #fff!important;
+}
+body[data-sidebar=dark] .menu-title {
+  color: #6a7187;
+}
+body[data-layout=horizontal] .main-content {
+  margin-left: 0!important;
+}
+body[data-sidebar-size=small] .navbar-brand-box {
+  width: 160px;
+}
+body[data-sidebar-size=small] .vertical-menu {
+  width: 160px;
+  text-align: center;
+}
+body[data-sidebar-size=small] .vertical-menu .badge, body[data-sidebar-size=small] .vertical-menu .has-arrow:after {
+  display: none!important;
+}
+body[data-sidebar-size=small] .main-content {
+  margin-left: 160px;
+}
+body[data-sidebar-size=small] .footer {
+  left: 160px;
 }
 
 /* main styles */
@@ -246,3 +299,27 @@ body{
 .loginRightBorder{border-right:solid 1px #d4dbf9;}
 .formPhoneLogin{float: right;}
 .card-footer { background-color: rgb(220 220 235); border: none;}
+#sidebar-menu ul li ul.sub-menu li a {
+  color: #79829c;
+}
+.vertical-collpsed .vertical-menu #sidebar-menu>ul ul{
+  background-color: #293042;
+}
+.vertical-collpsed .vertical-menu #sidebar-menu>ul>li:hover>a{
+  background-color: #293042;
+}
+
+.vertical-collpsed .vertical-menu #sidebar-menu>ul>li:hover>a {
+  background: #2e3548;
+  color: #fff;
+}
+
+.vertical-collpsed .vertical-menu #sidebar-menu>ul>li:hover>ul a:hover {
+  color: #fff;
+}
+.vertical-collpsed .vertical-menu #sidebar-menu>ul>li:hover>ul a {
+  color: #79829c;
+}
+.vertical-collpsed .vertical-menu #sidebar-menu>ul>li:hover>a i {
+  color: #fff;
+}

@@ -9,10 +9,13 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
 })
 export class HeaderComponent implements OnInit {
   isFolded: boolean = false;
-
-  constructor(private themeService: ThemeConstantService, private _authService:AuthenticationService) { }
+  userInfo: any;
+  constructor(private themeService: ThemeConstantService, private _authService: AuthenticationService) { }
 
   ngOnInit(): void {
+    let data: any = localStorage.getItem("userInfo");
+    this.userInfo = JSON.parse(data);
+
   }
 
   toggleFold(val: any) {
@@ -20,8 +23,8 @@ export class HeaderComponent implements OnInit {
     this.themeService.isMenuFoldedEvent.next(val);
   }
 
-    onLogout(){    
-      this._authService.logout();
-    }
+  onLogout() {
+    this._authService.logout();
+  }
 
 }

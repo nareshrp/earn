@@ -21,36 +21,34 @@
                 <label class="form-label">Select Vendor</label>
                 <select class="form-control" formControlName="vendorId" (change)="getVendorId($event)">
                   <option [value]="row.userId" *ngFor="let row of vendorList;">{{row.firstName}}</option>
-                  </select>
+                </select>
 
               </div>
             </div>
           </div>
-
-
           <div class="row">
             <div class="col-12 googlemap mb-3">
               <h4 class="card-title">Map your offer radius</h4>
               <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapReady)="mapReadyHandler($event)">
-                <agm-marker  [latitude]="latitude" [longitude]="longitude"
-                  [markerDraggable]="true"></agm-marker>
-                  <!-- *ngIf="locationChosen" -->
-                <agm-circle [latitude]="latitude" [longitude]="longitude" [radius]="5000" [fillColor]="'red'"
-                  [circleDraggable]="true" [editable]="true">
+                <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"></agm-marker>
+                <!-- *ngIf="locationChosen" -->
+                <agm-circle [latitude]="latitude" [longitude]="longitude" [radius]="radius" [fillColor]="'red'"
+                  [circleDraggable]="true" [editable]="true" (centerChange)="centerChange($event)">
                 </agm-circle>
 
               </agm-map>
 
               <div><strong>Address</strong> : {{address}}</div>
               <div>Latitude: {{latitude}}</div>
-                          <div>Longitude: {{longitude}}</div>
+              <div>Longitude: {{longitude}}</div>
+              <div>Radius: {{radius}}</div>
             </div>
           </div>
           <div class="row">
-                          <div class="col-12">
-                              <hr>
-                            </div>
-                      </div>
+            <div class="col-12">
+              <hr>
+            </div>
+          </div>
           <div class="row">
             <!-- <div class="col-12">
                             <h4 class="card-title">Select Date Range</h4>
@@ -86,16 +84,17 @@
             <div class="col-md-4">
               <div class="form-group required">
                 <label class="form-label">Deal Image</label>
-                <input class="form-control" type="file" formControlName="dealmg" (change)="detectFiles($event, 'dealmg')"
-                accept=".png, .jpg, .jpeg">
+                <input class="form-control" type="file" formControlName="dealmg"
+                  (change)="detectFiles($event, 'dealmg')" accept=".png, .jpg, .jpeg">
                 <!-- <img *ngFor="let item of files" src={{item.imgUrl}} alt="" style="width: 60px;" id="img"> -->
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group mt-4">
-                <button class="btn btn-primary waves-effect waves-light  margin-right3 ms-1" (click)="uploadDealImg()">Upload <i
-                    class="mdi mdi-cloud-upload-outline"></i></button>
-                <button class="btn btn-danger waves-effect waves-light ">Cancel <i class="mdi mdi-close-circle-outline
+                <button class="btn btn-primary waves-effect waves-light  margin-right3 btn-sm ms-1"
+                  (click)="uploadDealImg()">Upload <i class="mdi mdi-cloud-upload-outline"></i></button>
+                <button class="btn btn-secondary waves-effect waves-light btn-sm" (click)="resetBtn('dealmg')">Cancel <i
+                    class="mdi mdi-close-circle-outline
                                         ms-1"></i></button>
               </div>
             </div>
@@ -105,7 +104,8 @@
               <div class="form-group required">
                 <label class="form-label">Page Content</label>
                 <!-- <textarea class="form-control" formControlName="dealContent" ></textarea> -->
-                <ckeditor [editor]="Editor" (change)="onChangeDealContent($event)"></ckeditor>
+                <ckeditor [editor]="Editor" formControlName="dealContent" (change)="onChangeDealContent($event)">
+                </ckeditor>
               </div>
             </div>
           </div>
@@ -132,7 +132,8 @@
               <div class="form-group required">
                 <label class="form-label">Dedicated Video Instructions and video Content </label>
                 <!-- <textarea class="form-control" formControlName="dealContent"></textarea> -->
-                <ckeditor [editor]="Editor" (change)="onChangeVideoInstContent($event)"></ckeditor>
+                <ckeditor [editor]="Editor" formControlName="vedInstr" (change)="onChangeVideoInstContent($event)">
+                </ckeditor>
               </div>
             </div>
           </div>
@@ -144,14 +145,16 @@
             <div class="col-md-4">
               <div class="form-group required">
                 <label class="form-label">Upload Video Assets for influencers</label>
-                <input class="form-control" type="file" formControlName="vAssets" (change)="detectFiles($event, 'vAssets')">
+                <input class="form-control" type="file" formControlName="vAssets"
+                  (change)="detectFiles($event, 'vAssets')">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group mt-4">
-                <button class="btn btn-primary waves-effect waves-light  margin-right3 ms-1" (click)="uploadVideoAssets()">Upload <i
-                    class="mdi mdi-cloud-upload-outline"></i></button>
-                <button class="btn btn-danger waves-effect waves-light ">Cancel <i class="mdi mdi-close-circle-outline
+                <button class="btn btn-primary waves-effect waves-light  margin-right3 btn-sm ms-1"
+                  (click)="uploadVideoAssets()">Upload <i class="mdi mdi-cloud-upload-outline"></i></button>
+                <button class="btn btn-secondary waves-effect waves-light btn-sm" (click)="resetBtn('vAssets')">Cancel
+                  <i class="mdi mdi-close-circle-outline
                                         ms-1"></i></button>
               </div>
             </div>
@@ -176,9 +179,9 @@
             </div>
             <div class="col-md-4">
               <div class="form-group mt-4">
-                <button class="btn btn-primary waves-effect waves-light  margin-right3 ms-1">Upload <i
+                <button class="btn btn-primary waves-effect waves-light  margin-right3 ms-1 btn-sm">Upload <i
                     class="mdi mdi-cloud-upload-outline"></i></button>
-                <button class="btn btn-danger waves-effect waves-light ">Cancel <i class="mdi mdi-close-circle-outline
+                <button class="btn btn-secondary waves-effect waves-light btn-sm">Cancel <i class="mdi mdi-close-circle-outline
                                         ms-1"></i></button>
               </div>
             </div>
@@ -194,7 +197,8 @@
             <div class="col-md-4">
               <div class="form-group required">
                 <label class="form-label">Bid for each coin</label>
-                <input class="form-control" type="text" formControlName="bidPerCoin" placeholder="Devide coins (in INR)">
+                <input class="form-control" type="text" formControlName="bidPerCoin"
+                  placeholder="Devide coins (in INR)">
                 <small>500 coins as per your budget</small>
               </div>
             </div>

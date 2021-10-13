@@ -36,90 +36,90 @@
             </div>
             <div class="row p-2">
 
-<div class="col-sm-6 loginRightBorder">
-              <form [formGroup]="loginForm">
-                <div class="form-group mb-3">
-                  <label for="username" class="form-label">Username</label>
-                  <input type="text" class="form-control" id="username" formControlName="userName"
-                    placeholder="Enter username"
-                    [ngClass]="{ 'is-invalid': (submitted && form.userName.errors) || (form.userName.touched && form.userName.errors) }">
+              <div class="col-sm-6 loginRightBorder">
+                <form [formGroup]="loginForm">
+                  <div class="form-group mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" formControlName="userName"
+                      placeholder="Enter username"
+                      [ngClass]="{ 'is-invalid': (submitted && form.userName.errors) || (form.userName.touched && form.userName.errors) }">
 
-                  <div *ngIf="submitted||(form.userName.touched && form.userName.invalid)">
-                    <small class="form-text error-message" *ngIf="form.userName.errors"> Username is required</small>
+                    <div *ngIf="submitted||(form.userName.touched && form.userName.invalid)">
+                      <small class="form-text error-message" *ngIf="form.userName.errors"> Username is required</small>
+                    </div>
                   </div>
-                </div>
 
-                <div class="form-group mb-3">
-                  <label class="form-label">Password</label>
-                  <div class="input-group auth-pass-inputgroup">
-                    <input type="password" class="form-control" formControlName="password" placeholder="Enter password"
-                      aria-label="Password" aria-describedby="password-addon"
-                      [ngClass]="{ 'is-invalid': (submitted && form.password.errors) || (form.password.touched && form.password.errors) }">
+                  <div class="form-group mb-3">
+                    <label class="form-label">Password</label>
+                    <div class="input-group auth-pass-inputgroup">
+                      <input type="password" class="form-control" formControlName="password"
+                        placeholder="Enter password" aria-label="Password" aria-describedby="password-addon"
+                        [ngClass]="{ 'is-invalid': (submitted && form.password.errors) || (form.password.touched && form.password.errors) }">
 
+                    </div>
+                    <div *ngIf="submitted||(form.password.touched && form.password.invalid)">
+                      <small class="form-text error-message" *ngIf="form.password.errors"> Password is required</small>
+                    </div>
                   </div>
-                  <div *ngIf="submitted||(form.password.touched && form.password.invalid)">
-                    <small class="form-text error-message" *ngIf="form.password.errors"> Password is required</small>
-                  </div>
-                </div>
 
-                <!-- <div class="form-check">
+                  <!-- <div class="form-check">
                   <input class="form-check-input" type="checkbox" id="remember-check">
                   <label class="form-check-label" for="remember-check">
                     Remember me
                   </label>
                 </div> -->
 
-                <div class="mt-3 d-grid">
-                  <button class="btn btn-primary waves-effect waves-light btn-sm" (click)="onSubmit()">Log In <i
-                      class="mdi mdi-arrow-right ms-1"></i></button>
-                </div>
-              </form>
-</div>
+                  <div class="mt-3 d-grid">
+                    <button class="btn btn-primary waves-effect waves-light btn-sm" (click)="onSubmit()">Log In <i
+                        class="mdi mdi-arrow-right ms-1"></i></button>
+                  </div>
+                </form>
+              </div>
 
-<!-- Phone Login -->
-<div class="col-sm-6">
-  <form [formGroup]="phoneLoginForm" class="formPhoneLogin">
-    <div class="form-group required mb-3">
-      <label for="formrow-firstname-input" class="form-label">Phone</label>
-      <div class="input-group auth-pass-inputgroup">
-        <input type="text" class="form-control" formControlName="phone" placeholder="Enter Mobile Number"
-          [ngClass]="{ 'is-invalid': (phSubmitted && formph.phone.errors) || (formph.phone.touched && formph.phone.errors) }">
-       
-          <button class="btn btn-primary waves-effect waves-light btn-sm" type="button"
-         (click)="phoneNumberVerify()">Verify</button>
-         <!-- <button class="btn btn-success waves-effect waves-light" type="button" *ngIf="isMobileVerify"><i
+              <!-- Phone Login -->
+              <div class="col-sm-6">
+                <form [formGroup]="phoneLoginForm" class="formPhoneLogin">
+                  <div class="form-group required mb-3">
+                    <label for="formrow-firstname-input" class="form-label">Phone</label>
+                    <div class="input-group auth-pass-inputgroup">
+                      <input type="text" class="form-control" formControlName="phone" placeholder="Enter Mobile Number"
+                        [ngClass]="{ 'is-invalid': (phSubmitted && formph.phone.errors) || (formph.phone.touched && formph.phone.errors) }">
+
+                      <button class="btn btn-primary waves-effect waves-light btn-sm" type="button"
+                        (click)="phoneNumberVerify()">Send</button>
+                      <!-- <button class="btn btn-success waves-effect waves-light" type="button" *ngIf="isMobileVerify"><i
           class="far fa-check-circle"></i></button> -->
-      </div>
+                    </div>
 
-      <div *ngIf="phSubmitted||(formph.phone.touched && formph.phone.invalid)">
-        <small class="form-text error-message" *ngIf="formph.phone.errors?.required"> Mobile Number is
-          required</small>
-        <small class="form-text error-message" *ngIf="formph.phone.errors?.pattern"> Please,
-          Enter 10 digit Mobile Number.</small>
-      </div>
-    </div>
+                    <div *ngIf="phSubmitted||(formph.phone.touched && formph.phone.invalid)">
+                      <small class="form-text error-message" *ngIf="formph.phone.errors?.required"> Mobile Number is
+                        required</small>
+                      <small class="form-text error-message" *ngIf="formph.phone.errors?.pattern"> Please,
+                        Enter 10 digit Mobile Number.</small>
+                    </div>
+                  </div>
 
-    <div class="form-group mb-3" *ngIf="isOtpFormGroup">
-      <label class="form-label">OTP</label>
-    <div class="input-group auth-pass-inputgroup">
-      <input type="text" class="form-control" formControlName="phoneOtp" placeholder="Enter OTP"
-      [ngClass]="{ 'is-invalid': (phSubmitted && formph.phoneOtp.errors) || (formph.phoneOtp.touched && formph.phoneOtp.errors) }">
-      <!-- <button class="btn btn-primary waves-effect waves-light btn-sm" type="button"
+                  <div class="form-group mb-3" *ngIf="isOtpFormGroup">
+                    <label class="form-label">OTP</label>
+                    <div class="input-group auth-pass-inputgroup">
+                      <input type="text" class="form-control" formControlName="phoneOtp" placeholder="Enter OTP"
+                        [ngClass]="{ 'is-invalid': (phSubmitted && formph.phoneOtp.errors) || (formph.phoneOtp.touched && formph.phoneOtp.errors) }">
+                      <!-- <button class="btn btn-primary waves-effect waves-light btn-sm" type="button"
         (click)="phoneOtpVerify()">Verify</button> -->
-    </div>
+                    </div>
 
-     <div *ngIf="phSubmitted||(formph.phoneOtp.touched && formph.phoneOtp.invalid)">
-        <small class="form-text error-message" *ngIf="formph.phoneOtp.errors">  OTP is required</small>
-      </div> 
-    </div>
+                    <div *ngIf="phSubmitted||(formph.phoneOtp.touched && formph.phoneOtp.invalid)">
+                      <small class="form-text error-message" *ngIf="formph.phoneOtp.errors"> OTP is required</small>
+                    </div>
+                  </div>
 
 
-    <div class="mt-3 d-grid" *ngIf="isOtpFormGroup">
-      <button class="btn btn-primary waves-effect waves-light btn-sm" (click)="onPhoneFormSubmit()">Log In <i
-          class="mdi mdi-arrow-right ms-1"></i></button>
-    </div>
-  </form>
-</div>
+                  <div class="mt-3 d-grid" *ngIf="isOtpFormGroup">
+                    <button class="btn btn-primary waves-effect waves-light btn-sm" (click)="onPhoneFormSubmit()">Log In
+                      <i class="mdi mdi-arrow-right ms-1"></i></button>
+                  </div>
+                </form>
+              </div>
 
 
             </div>

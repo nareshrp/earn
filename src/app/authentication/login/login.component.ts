@@ -63,6 +63,8 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('userId', userInfo.userId);
         localStorage.setItem('role', userInfo.role);
         localStorage.setItem('hashToken', userInfo.accessToken);
+        localStorage.setItem('userInfo', JSON.stringify(userInfo));
+
         this.toastr.showSuccess("Login Successfully", "Success")
         this.routerServices.navigate(['/']);
       }

@@ -17,7 +17,7 @@ export class UserSignupComponent implements OnInit {
   errorMsg = '';
   isOtp: boolean = false;
   isMobileVerify: boolean = false;
-  rolesList: any = [{ id: 1, role: "admin" }, { id: 2, role: "user" }, { id: 3, role: "vendor" }]
+  rolesList: any = [{ id: 1, role: "admin" }, { id: 2, role: "user" }]
   constructor(
     private fb: FormBuilder,
     private _loginServices: LoginService,
