@@ -13,6 +13,10 @@ export class AdminService {
     return this.http.get(environment.apiUrl + "/api/earnin/users/" + role + "/approve?status=pending");
   }
 
+  getActiveVendorList(role: any) {
+    return this.http.get(environment.apiUrl + "/api/earnin/users/" + role + "/approve?status=active");
+  }
+
   pendingApproval(userId: any, body: any) {
     return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/approve", body);
   }

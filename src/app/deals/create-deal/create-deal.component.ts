@@ -31,7 +31,6 @@ export class CreateDealComponent implements OnInit {
   // locationChosen = false;
   @ViewChild('search')
   public searchElementRef!: ElementRef;
-
   map: any;
   mapClickListener: any;
   files: any = [];
@@ -39,8 +38,11 @@ export class CreateDealComponent implements OnInit {
   shareImgfiles: any = [];
   dealImgObj:any;
   videoAssetsObj:any;
-  sharedTypeList:any=[];
+  // sharedTypeList:any=[];
+  sharedTypeList:any;
   acceptTerms:boolean=false;
+  vendorList:any;
+  selectedVendorID:any;
   constructor(
     private activatedRouterServices: ActivatedRoute,
     private spinner: NgxSpinnerService,
@@ -74,10 +76,15 @@ export class CreateDealComponent implements OnInit {
     this.role = localStorage.getItem("role");
     this.userId = localStorage.getItem("userId");
     this.getPageTitle();
+    this.getActiveVendorList();
     this.mapsAPILoader.load().then(() => {
       this.setCurrentLocation();
       this.geoCoder = new google.maps.Geocoder;
     });
+    if(this.role!=='admin'){
+      this.selectedVendorID=this.userId;
+    }
+    
   }
 
   onChangeDealContent({ editor }: ChangeEvent) {
@@ -138,12 +145,24 @@ export class CreateDealComponent implements OnInit {
       } else {
         window.alert('Geocoder failed due to: ' + status);
       }
-
     });
   }
   backNavigation() {
     this.routerServices.navigate(['/deals'])
   }
+
+
+getActiveVendorList(){
+  this.vendorService.getActiveVendorList(this.userId).subscribe((res:any)=>{
+    console.log("getActiveVendorList", res);
+    this.vendorList=res.result;
+  })
+}
+
+getVendorId(event:any){
+     console.log("vendorIdevent", event.target.value);
+     this.selectedVendorID=event.target.value;
+}
 
   /* File Upload Logic */
   // We will create multiple form controls inside defined form controls photos.
@@ -164,8 +183,7 @@ export class CreateDealComponent implements OnInit {
           }else{
             this.shareImgfiles.push(file);
           }
-
-        
+       
           //console.log(e.target.result)
         }
         reader.readAsDataURL(file);
@@ -176,10 +194,8 @@ export class CreateDealComponent implements OnInit {
   uploadDealImg(){
     this.spinner.show();
     var fd: any = new FormData();
-    console.log(this.files[0])
     fd.append('files', this.files[0]);
-    console.log("uploadDealImg fd",fd);
-    this.vendorService.fileUpload(this.userId, fd).pipe(finalize(() => {
+     this.vendorService.fileUpload(this.userId, fd).pipe(finalize(() => {
      this.spinner.hide();
       // Success Tost Message
       // this.toastr.showSuccess("File Successfully Created !!", "Successfully");
@@ -202,7 +218,7 @@ export class CreateDealComponent implements OnInit {
     var fd: any = new FormData();
     console.log(this.vfiles[0])
     fd.append('files', this.vfiles[0]);
-    console.log("uploadVideoAssets fd",fd);
+    
     this.vendorService.fileUpload(this.userId, fd).pipe(finalize(() => {
       this.spinner.hide();
        // Success Tost Message
@@ -221,19 +237,25 @@ export class CreateDealComponent implements OnInit {
      });
   }
 
-  sharetype(event:any){
-   let val=event.target.value;
-   if(event.target.checked){
-       console.log(event.target.value);
-       this.sharedTypeList.push(val);
-    }else{
-      let el = this.sharedTypeList.find((itm:any) => itm===val);
-      if(el)
-      this.sharedTypeList.splice(this.sharedTypeList.indexOf(el),1);
-    }
+  // sharetype(event:any){
+  //  let val=event.target.value;
+  //  if(event.target.checked){
+  //      console.log(event.target.value);
+  //      this.sharedTypeList.push(val);
+  //   }else{
+  //     let el = this.sharedTypeList.find((itm:any) => itm===val);
+  //     if(el)
+  //     this.sharedTypeList.splice(this.sharedTypeList.indexOf(el),1);
+  //   }
   
-    console.log("sharedTypeList", this.sharedTypeList);
+  //   console.log("sharedTypeList", this.sharedTypeList);
+  // }
+  sharetype(event:any){
+    let val=event.target.value;
+    this.sharedTypeList=val;
+    console.log("sharetype", this.sharedTypeList);
   }
+
   termsCheck(event:any){
     if(event.target.checked){
       this.createDealForm.value['consentPolicy']=true;
@@ -251,7 +273,7 @@ export class CreateDealComponent implements OnInit {
     this.createDealForm.value['dealmg']=this.dealImgObj;
     this.createDealForm.value['vAssets']=this.videoAssetsObj;
     this.createDealForm.value['sharedType']=this.sharedTypeList;
-    this.createDealForm.value['vendorId']=this.userId;
+    this.createDealForm.value['vendorId']=this.selectedVendorID;
     console.log("Form Value", this.createDealForm.value);
     this.vendorService.createDeal(this.userId, this.createDealForm.value).pipe(finalize(() => {
       this.spinner.hide();

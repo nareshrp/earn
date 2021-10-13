@@ -8,6 +8,9 @@ import { environment } from 'src/environments/environment';
 export class VendorService {
 
   constructor(private http: HttpClient) { }
+  getActiveVendorList(role: any) {
+    return this.http.get(environment.apiUrl + "/api/earnin/users/" + role + "/approve?status=active");
+  }
   fileUpload(userId: any, body: any) {
     return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/file", body);
   }
