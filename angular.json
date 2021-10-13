@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "nrp-app": {
+    "earnin-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/nrp-app",
+            "outputPath": "dist/earnin-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -81,18 +81,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "nrp-app:build"
+            "browserTarget": "earnin-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "nrp-app:build:production"
+              "browserTarget": "earnin-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "nrp-app:build"
+            "browserTarget": "earnin-app:build"
           }
         },
         "test": {
@@ -129,16 +129,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "nrp-app:serve"
+            "devServerTarget": "earnin-app:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "nrp-app:serve:production"
+              "devServerTarget": "earnin-app:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "nrp-app"
+  "defaultProject": "earnin-app"
 }

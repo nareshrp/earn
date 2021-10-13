@@ -16,7 +16,8 @@ import { finalize } from 'rxjs/operators';
 })
 export class CreateDealComponent implements OnInit {
   public Editor = ClassicEditor;
-
+  submitted = false;
+  errorMsg = '';
   pageTitle: any;
   role: any;
   userId: any;
@@ -84,7 +85,7 @@ export class CreateDealComponent implements OnInit {
       this.setCurrentLocation();
       this.geoCoder = new google.maps.Geocoder;
     });
-    if (this.role !== 'admin') {
+    if (this.role != 'admin') {
       this.selectedVendorID = this.userId;
     }
 
@@ -170,10 +171,16 @@ export class CreateDealComponent implements OnInit {
 
 
   getActiveVendorList() {
-    this.vendorService.getActiveVendorList(this.userId).subscribe((res: any) => {
-      console.log("getActiveVendorList", res);
-      this.vendorList = res.result;
-    })
+    if(this.role=='admin'){
+      this.vendorService.getActiveVendorList(this.userId).subscribe((res: any) => {
+        console.log("getActiveVendorList", res);
+        this.vendorList = res.result;
+      });
+    }else{
+      console.log("vendor selectedVendorID", this.selectedVendorID);
+      return;
+    }
+   
   }
 
   getVendorId(event: any) {
@@ -289,7 +296,11 @@ export class CreateDealComponent implements OnInit {
   }
 
   onSaveDeal() {
-    this.spinner.show();
+   this.spinner.show();
+    this.submitted = true;
+    if (this.createDealForm.invalid) {
+      return;
+    }
     console.log("DealObj", this.dealImgObj);
     console.log("videoAssetsObj", this.videoAssetsObj);
     this.createDealForm.value['dealmg'] = this.dealImgObj;
