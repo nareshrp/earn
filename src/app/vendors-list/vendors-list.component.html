@@ -14,18 +14,33 @@
   <div class="col-xl-12">
     <div class="card">
       <div class="card-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group required">
+                <label class="form-label">Status Type</label>
+               <select class="form-control" [(ngModel)]="statusType" (change)="selectStatus(statusType)" >
+                  <option *ngFor="let row of statusMaste" [value]="row.status">{{row.status}}</option>
+                 </select>
+            
+             
+              </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xl-12">
+    <div class="card">
+      <div class="card-body">
 
 
         <div class="table-responsive">
           <table class="table align-middle table-nowrap table-check">
             <thead class="table-light">
               <tr>
-                <th style="width: 20px;" class="align-middle">
-                  <div class="form-check font-size-16">
-                    <input class="form-check-input" type="checkbox" id="checkAll">
-                    <label class="form-check-label" for="checkAll"></label>
-                  </div>
-                </th>
+            
                 <th class="align-middle">Business Name</th>
                 <th class="align-middle">Business Phone</th>
                 <th class="align-middle">Contact Person</th>
@@ -38,12 +53,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let row of vendorsList">
-                <td>
-                  <div class="form-check font-size-16">
-                    <input class="form-check-input" type="checkbox" id="orderidcheck01">
-                    <label class="form-check-label" for="orderidcheck01"></label>
-                  </div>
-                </td>
+               
                 <td><a href="javascript: void(0);" class="text-body fw-bold">{{row.bName}}</a> </td>
                 <td>{{row.bPhone}}</td>
                 <td>{{row.firstName}}</td>

@@ -75,9 +75,9 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let row of countryList">
+              <tr *ngFor="let row of countryList; let i=index">
               
-                <td>{{row.id}} </td>
+                <td>{{i+1}} </td>
                 <td>{{row.code}}</td>
                 <td>{{row.name}}</td>
                 

@@ -29,6 +29,7 @@ export class CreateDealComponent implements OnInit {
   zoom: number = 18;
   address: string = '';
   geoCoder: any;
+  // finalLocation:any={};
   // locationChosen = false;
   @ViewChild('search')
   public searchElementRef!: ElementRef;
@@ -47,6 +48,7 @@ export class CreateDealComponent implements OnInit {
   radius: any = 10;
   vedInstrData: any;
   dealContentData: any;
+  radiusMaster:any=[{id:1, value:5}, {id:2, value:10}, {id:3, value:15}, {id:4, value:20}];
   constructor(
     private activatedRouterServices: ActivatedRoute,
     private spinner: NgxSpinnerService,
@@ -81,14 +83,24 @@ export class CreateDealComponent implements OnInit {
     this.userId = localStorage.getItem("userId");
     this.getPageTitle();
     this.getActiveVendorList();
-    this.mapsAPILoader.load().then(() => {
-      this.setCurrentLocation();
-      this.geoCoder = new google.maps.Geocoder;
-    });
+   this.mapInt();
     if (this.role != 'admin') {
       this.selectedVendorID = this.userId;
     }
 
+  }
+
+  mapInt(){
+    this.mapsAPILoader.load().then(() => {
+      this.setCurrentLocation();
+      this.geoCoder = new google.maps.Geocoder;
+    });
+  }
+
+  changeRadious(event:any){
+      console.log(event.target.value);
+      this.radius=parseInt(event.target.value);
+      this.mapInt();
   }
 
   onChangeDealContent({ editor }: ChangeEvent) {
@@ -156,7 +168,9 @@ export class CreateDealComponent implements OnInit {
       if (status === 'OK') {
         if (results[0]) {
           this.zoom = 20;
+          console.log("results[0]", results[0]);
           this.address = results[0].formatted_address;
+         
         } else {
           window.alert('No results found');
         }
@@ -303,13 +317,21 @@ export class CreateDealComponent implements OnInit {
     }
     console.log("DealObj", this.dealImgObj);
     console.log("videoAssetsObj", this.videoAssetsObj);
+    let locationData={
+      address:this.address,
+      latitude:this.latitude,
+      longitude:this.longitude,
+      radius:this.radius
+    }
     this.createDealForm.value['dealmg'] = this.dealImgObj;
     this.createDealForm.value['vAssets'] = this.videoAssetsObj;
     this.createDealForm.value['sharedType'] = this.sharedTypeList;
     this.createDealForm.value['vendorId'] = this.selectedVendorID;
     this.createDealForm.value['dealContent'] = this.dealContentData;
     this.createDealForm.value['vedInstr'] = this.vedInstrData;
+    this.createDealForm.value['location'] = locationData;
     console.log("Form Value", this.createDealForm.value);
+  
     this.vendorService.createDeal(this.userId, this.createDealForm.value).pipe(finalize(() => {
       this.spinner.hide();
 

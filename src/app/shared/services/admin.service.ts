@@ -9,8 +9,8 @@ export class AdminService {
 
 
   constructor(private http: HttpClient) { }
-  getVendorList(role: any) {
-    return this.http.get(environment.apiUrl + "/api/earnin/users/" + role + "/approve?status=pending");
+  getVendorList(role: any, status:any) {
+    return this.http.get(environment.apiUrl + "/api/earnin/users/" + role + "/approve?status="+status);
   }
 
   getActiveVendorList(role: any) {

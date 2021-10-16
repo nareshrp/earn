@@ -17,6 +17,8 @@ export class VendorsListComponent implements OnInit {
   userId: any;
   vendorsList: any;
   errorMsg: any = '';
+  statusType:any='pending'
+  statusMaste:any=[{id:1, status:'pending'}, {id:1, status:'active'}]
   constructor(
     private activatedRouterServices: ActivatedRoute,
     private spinner: NgxSpinnerService,
@@ -29,7 +31,7 @@ export class VendorsListComponent implements OnInit {
     this.role = localStorage.getItem("role");
     this.userId = localStorage.getItem("userId");
     this.getPageTitle();
-    this.getPendingVendorsList();
+    this.getPendingVendorsList(this.statusType);
   }
 
   getPageTitle() {
@@ -38,9 +40,13 @@ export class VendorsListComponent implements OnInit {
     })
   }
 
-  getPendingVendorsList() {
+  selectStatus(status:any){
+    console.log(status);
+    this.getPendingVendorsList(status);
+  }
+  getPendingVendorsList(status:any) {
     this.spinner.show();
-    this._adminServices.getVendorList(this.userId).pipe(finalize(() => {
+    this._adminServices.getVendorList(this.userId, status).pipe(finalize(() => {
       this.spinner.hide();
     })).subscribe((res: any) => {
       
@@ -67,7 +73,7 @@ export class VendorsListComponent implements OnInit {
         
         console.log("approveVendor", res);
         if(res.statusCode){
-        this.getPendingVendorsList();
+        this.getPendingVendorsList(this.statusType);
         this.toastr.showSuccess("Success", this.errorMsg);
         }
       
