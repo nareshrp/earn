@@ -47,8 +47,8 @@
                 <th class="align-middle">Phone</th>
                 <th class="align-middle">Category</th>
                 <th class="align-middle">Address</th>
-                <!-- <th class="align-middle">Status</th> -->
-                <th class="align-middle" style="width: 150px;">Actions</th>
+               <th class="align-middle" *ngIf="statusType!='pending'">Status</th> 
+                <th class="align-middle" style="width: 150px;" *ngIf="statusType=='pending'">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -60,16 +60,16 @@
                 <td>{{row.phone}}</td>
                 <td>{{row.bCategory}}</td>
                 <td>{{row.bLoc.address}}</td>
-                <!-- <td>{{row.status}}</td> -->
+               <td *ngIf="statusType!='pending'">{{row.status}}</td>
 
-                <td>
+                <td *ngIf="statusType=='pending'">
                   <!-- <div class="d-flex gap-3">
                     <a href="javascript:void(0);" class="text-success" (click)="editRow(row.id)"><i
                         class="mdi mdi-pencil font-size-18"></i></a>
                     <a href="javascript:void(0);" class="text-danger"><i class="mdi mdi-delete font-size-18"></i></a>
                   </div> -->
                   <button class="btn btn-primary waves-effect waves-light btn-sm margin-right3" (click)="approveVendor(row.userId)">Approve </button>
-                  <button class="btn btn-danger waves-effect waves-light btn-sm" (click)="rejectVendor()">Reject  </button>
+                  <button class="btn btn-danger waves-effect waves-light btn-sm" (click)="rejectVendor(row.userId)">Reject  </button>
                 </td>
               </tr>
             </tbody>

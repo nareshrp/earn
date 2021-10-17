@@ -80,8 +80,22 @@ export class VendorsListComponent implements OnInit {
       });
   }
   
-  rejectVendor(){
-
+  rejectVendor(id:any){
+    let data={
+      "userId":id
+    };
+    this.spinner.show();
+    this._adminServices.rejectApproval(this.userId, data).pipe(finalize(() => {
+      this.spinner.hide();
+    })).subscribe((res: any) => {
+      
+      console.log("rejectApproval", res);
+      if(res.statusCode){
+      this.getPendingVendorsList(this.statusType);
+      this.toastr.showSuccess("Success", this.errorMsg);
+      }
+    
+    });
   }
 
 }

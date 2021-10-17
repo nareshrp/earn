@@ -21,6 +21,10 @@ export class AdminService {
     return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/approve", body);
   }
 
+  rejectApproval(userId: any, body: any) {
+    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/reject", body);
+  }
+
   getCountryCode() {
     return this.http.get(environment.apiUrl + "/api/earnin/countrycode/");
   }
