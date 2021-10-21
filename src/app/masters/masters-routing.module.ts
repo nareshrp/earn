@@ -18,6 +18,10 @@ const routes: Routes = [
     path: 'categories',
     loadChildren: () => import('../masters/categories/categories.module').then(m => m.CategoriesModule),
   },
+  {
+    path: 'coins',
+    loadChildren: () => import('../masters/coins/coins.module').then(m => m.CoinsModule),
+  },
 ];
 
 @NgModule({

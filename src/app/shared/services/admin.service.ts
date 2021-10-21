@@ -9,8 +9,8 @@ export class AdminService {
 
 
   constructor(private http: HttpClient) { }
-  getVendorList(role: any, status:any) {
-    return this.http.get(environment.apiUrl + "/api/earnin/users/" + role + "/approve?status="+status);
+  getVendorList(role: any, status: any) {
+    return this.http.get(environment.apiUrl + "/api/earnin/users/" + role + "/approve?status=" + status);
   }
 
   getActiveVendorList(role: any) {
@@ -70,6 +70,10 @@ export class AdminService {
 
   deleteCategory(userId: any, categoryId: any) {
     return this.http.delete(environment.apiUrl + "/api/earnin/users/" + userId + "/category/" + categoryId);
+  }
+
+  upDateCoins(userId: any, countryId: any, body: any) {
+    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/country/" + countryId, body);
   }
 
 }
