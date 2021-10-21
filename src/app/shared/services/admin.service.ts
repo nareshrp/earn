@@ -76,4 +76,8 @@ export class AdminService {
     return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/country/" + countryId, body);
   }
 
+  getCountryWithCoins(userId: any) {
+    return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/country?coin=true");
+  }
+
 }

@@ -22,6 +22,7 @@ export class CoinsComponent implements OnInit {
   upDatedCoinVal: any;
   selectedCountryId: any;
   countryCode: any;
+  countryCoinsData:any;
   constructor(
     private activatedRouterServices: ActivatedRoute,
     private spinner: NgxSpinnerService,
@@ -61,6 +62,18 @@ export class CoinsComponent implements OnInit {
       if (res.statusCode === 200) {
         this.countryList = res.result;
         console.log("country countryList", this.countryList);
+      }
+    })
+  }
+
+  getCountryListWithCoinsData() {
+    this._adminService.getCountryWithCoins(this.userId).pipe(finalize(() => {
+
+    })).subscribe((res: any) => {
+
+      if (res.statusCode === 200) {
+        this.countryCoinsData = res.result;
+        console.log("country countryCoinsData", this.countryCoinsData);
       }
     })
   }
