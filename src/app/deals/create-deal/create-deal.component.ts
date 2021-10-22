@@ -48,7 +48,34 @@ export class CreateDealComponent implements OnInit {
   radius: any = 10;
   vedInstrData: any;
   dealContentData: any;
-  radiusMaster:any=[{id:1, value:5}, {id:2, value:10}, {id:3, value:15}, {id:4, value:20}];
+  radiusMaster: any = [{ id: 1, value: 5 }, { id: 2, value: 10 }, { id: 3, value: 15 }, { id: 4, value: 20 }];
+  config = {
+    uiColor: '#ffffff',
+    toolbarGroups: [{ name: 'clipboard', groups: ['clipboard', 'undo'] },
+    { name: 'editing', groups: ['find', 'selection', 'spellchecker'] },
+    { name: 'links' }, { name: 'insert' },
+    { name: 'document', groups: ['mode', 'document', 'doctools'] },
+    { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
+    { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align'] },
+    { name: 'styles' },
+    { name: 'colors' }],
+    skin: 'kama',
+    resize_enabled: false,
+    removePlugins: 'elementspath,save,magicline',
+    extraPlugins: 'divarea,smiley,justify,indentblock,colordialog',
+    colorButton_foreStyle: {
+      element: 'font',
+      attributes: { 'color': '#(color)' }
+    },
+    height: 188,
+    removeDialogTabs: 'image:advanced;link:advanced',
+    removeButtons: 'Subscript,Superscript,Anchor,Source,Table',
+    format_tags: 'p;h1;h2;h3;pre;div',
+    stylesSet: 'my_styles'
+
+  }
+
+
   constructor(
     private activatedRouterServices: ActivatedRoute,
     private spinner: NgxSpinnerService,
@@ -83,24 +110,24 @@ export class CreateDealComponent implements OnInit {
     this.userId = localStorage.getItem("userId");
     this.getPageTitle();
     this.getActiveVendorList();
-   this.mapInt();
+    this.mapInt();
     if (this.role != 'admin') {
       this.selectedVendorID = this.userId;
     }
 
   }
 
-  mapInt(){
+  mapInt() {
     this.mapsAPILoader.load().then(() => {
       this.setCurrentLocation();
       this.geoCoder = new google.maps.Geocoder;
     });
   }
 
-  changeRadious(event:any){
-      console.log(event.target.value);
-      this.radius=parseInt(event.target.value);
-      this.mapInt();
+  changeRadious(event: any) {
+    console.log(event.target.value);
+    this.radius = parseInt(event.target.value);
+    this.mapInt();
   }
 
   onChangeDealContent({ editor }: ChangeEvent) {
@@ -170,7 +197,7 @@ export class CreateDealComponent implements OnInit {
           this.zoom = 20;
           console.log("results[0]", results[0]);
           this.address = results[0].formatted_address;
-         
+
         } else {
           window.alert('No results found');
         }
@@ -185,16 +212,16 @@ export class CreateDealComponent implements OnInit {
 
 
   getActiveVendorList() {
-    if(this.role=='admin'){
+    if (this.role == 'admin') {
       this.vendorService.getActiveVendorList(this.userId).subscribe((res: any) => {
         console.log("getActiveVendorList", res);
         this.vendorList = res.result;
       });
-    }else{
+    } else {
       console.log("vendor selectedVendorID", this.selectedVendorID);
       return;
     }
-   
+
   }
 
   getVendorId(event: any) {
@@ -310,18 +337,18 @@ export class CreateDealComponent implements OnInit {
   }
 
   onSaveDeal() {
-   this.spinner.show();
+    this.spinner.show();
     this.submitted = true;
     if (this.createDealForm.invalid) {
       return;
     }
     console.log("DealObj", this.dealImgObj);
     console.log("videoAssetsObj", this.videoAssetsObj);
-    let locationData={
-      address:this.address,
-      latitude:this.latitude,
-      longitude:this.longitude,
-      radius:this.radius
+    let locationData = {
+      address: this.address,
+      latitude: this.latitude,
+      longitude: this.longitude,
+      radius: this.radius
     }
     this.createDealForm.value['dealmg'] = this.dealImgObj;
     this.createDealForm.value['vAssets'] = this.videoAssetsObj;
@@ -331,7 +358,7 @@ export class CreateDealComponent implements OnInit {
     this.createDealForm.value['vedInstr'] = this.vedInstrData;
     this.createDealForm.value['location'] = locationData;
     console.log("Form Value", this.createDealForm.value);
-  
+
     this.vendorService.createDeal(this.userId, this.createDealForm.value).pipe(finalize(() => {
       this.spinner.hide();
 

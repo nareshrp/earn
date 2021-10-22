@@ -22,7 +22,10 @@ export class CoinsComponent implements OnInit {
   upDatedCoinVal: any;
   selectedCountryId: any;
   countryCode: any;
-  countryCoinsData:any;
+  countryCoinsData: any;
+  isRowEdit: boolean = false;
+  rowId: any;
+  updatedCode: any;
   constructor(
     private activatedRouterServices: ActivatedRoute,
     private spinner: NgxSpinnerService,
@@ -44,6 +47,7 @@ export class CoinsComponent implements OnInit {
     this.getPageTitle();
     // this.getCountryCodeData();
     this.getCountryList();
+    this.getCountryListWithCoinsData();
 
   }
 
@@ -84,8 +88,55 @@ export class CoinsComponent implements OnInit {
     this.updatedCurrencyVal = data.currency;
     this.selectedCountryId = data.id;
     this.countryCode = data.code;
+    console.log(this.countryCode);
     this.coinsForm.controls['currency'].setValue(this.updatedCurrencyVal);
 
+  }
+  editRow(row: any) {
+    this.isRowEdit = true;
+    console.log("row id", row.id);
+    console.log("row", row);
+    this.rowId = row.id;
+    // this.countryForm.controls['code'].setValue(row.code);
+    // this.updatedCode = this.countryCoinsData.filter((item: any) => {
+    //   return item.name === row.name;
+    // })[0].code;
+
+    this.coinsForm.controls['name'].setValue(row.name);
+    this.coinsForm.controls['currency'].setValue(row.currency);
+    this.coinsForm.controls['coinVal'].setValue(row.coinVal);
+    // this.selectCountry(row.name);
+    console.log("rowupdated form value", this.coinsForm.value);
+
+
+
+  }
+  updateRow() {
+    this.isRowEdit = false;
+    // let data = {
+    //   "name": this.coinsForm.value['name'],
+    //   "code": this.updatedCode,
+    //   "currency": this.coinsForm.value['currency'],
+    // }
+    console.log("set data", this.coinsForm.value);
+    this._adminService.editCountry(this.userId, this.rowId, this.coinsForm.value).subscribe((result: any) => {
+      if (result.statusCode === 200) {
+        this.toastr.showSuccess(result.message, 'Success');
+        this.coinsForm.reset();
+        this.getCountryListWithCoinsData();
+
+      }
+    });
+  }
+  rowDelete(id: any) {
+    console.log("delete", id);
+
+    this._adminService.deleteCountry(this.userId, id).subscribe((result: any) => {
+      if (result.statusCode === 200) {
+        this.toastr.showSuccess(result.message, 'Success');
+        this.getCountryListWithCoinsData();
+      }
+    });
   }
 
   onSubmit() {
@@ -98,19 +149,33 @@ export class CoinsComponent implements OnInit {
       this.spinner.hide();
       return;
     }
-    this.coinsForm.value['code'] = this.countryCode;
 
-    this._adminService.upDateCoins(this.userId, this.selectedCountryId, this.coinsForm.value).pipe(finalize(() => {
+    let uniqueval = this.countryCoinsData.filter((itm: any, i: any, a: any) => {
+      // array of unique elements
+      console.log("itm", itm);
+      return this.coinsForm.value.name == itm.name;
+    });
+
+    if (uniqueval.length) {
+      this.toastr.showError("Dublicate Entry", 'Error');
       this.spinner.hide();
-    })).subscribe((res: any) => {
-      console.log("res", res);
-      if (res.statusCode === 200) {
-        this.toastr.showSuccess(res.message, 'Success');
-        this.coinsForm.reset();
-        // this.getAllMyCities();
+      this.coinsForm.reset();
 
-      }
-    })
+    } else {
+      this.coinsForm.value['code'] = this.countryCode;
+      this._adminService.upDateCoins(this.userId, this.selectedCountryId, this.coinsForm.value).pipe(finalize(() => {
+        this.spinner.hide();
+      })).subscribe((res: any) => {
+        console.log("res", res);
+        if (res.statusCode === 200) {
+          this.toastr.showSuccess(res.message, 'Success');
+          this.getCountryListWithCoinsData();
+          this.coinsForm.reset();
+          // this.getAllMyCities();
+
+        }
+      });
+    }
 
   }
 

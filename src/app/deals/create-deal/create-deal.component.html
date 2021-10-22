@@ -15,7 +15,7 @@
     <div class="card">
       <div class="card-body">
         <form [formGroup]="createDealForm">
-          <div class="row" >
+          <div class="row">
             <div class="col-md-3" *ngIf="role=='admin'">
               <div class="form-group required">
                 <label class="form-label">Select Vendor</label>
@@ -28,7 +28,7 @@
             <div class="col-md-3">
               <div class="form-group required">
                 <label class="form-label">Select Radius</label>
-                <select class="form-control"  (change)="changeRadious($event)">
+                <select class="form-control" (change)="changeRadious($event)">
                   <option [value]="row.value" *ngFor="let row of radiusMaster;">{{row.value}}</option>
                 </select>
 
@@ -65,7 +65,8 @@
             <div class="col-md-4">
               <div class="form-group required">
                 <label class="form-label">From Date & Time</label>
-                <input class="form-control" type="datetime-local" formControlName="fromDate"  [ngClass]="{ 'is-invalid': (submitted && form.fromDate.errors) || (form.fromDate.touched && form.fromDate.errors) }">
+                <input class="form-control" type="datetime-local" formControlName="fromDate"
+                  [ngClass]="{ 'is-invalid': (submitted && form.fromDate.errors) || (form.fromDate.touched && form.fromDate.errors) }">
                 <div *ngIf="submitted||(form.fromDate.touched && form.fromDate.invalid)">
                   <small class="form-text error-message" *ngIf="form.fromDate.errors"> From Date is required</small>
                 </div>
@@ -74,7 +75,8 @@
             <div class="col-md-4">
               <div class="form-group required">
                 <label class="form-label">To Date & Time</label>
-                <input class="form-control" type="datetime-local" formControlName="toDate" [ngClass]="{ 'is-invalid': (submitted && form.toDate.errors) || (form.toDate.touched && form.toDate.errors) }">
+                <input class="form-control" type="datetime-local" formControlName="toDate"
+                  [ngClass]="{ 'is-invalid': (submitted && form.toDate.errors) || (form.toDate.touched && form.toDate.errors) }">
                 <div *ngIf="submitted||(form.toDate.touched && form.toDate.invalid)">
                   <small class="form-text error-message" *ngIf="form.toDate.errors"> To Date is required</small>
                 </div>
@@ -83,7 +85,8 @@
             <div class="col-md-4">
               <div class="form-group required">
                 <label class="form-label">Offer Title</label>
-                <input class="form-control" type="text" formControlName="offerTitle" [ngClass]="{ 'is-invalid': (submitted && form.offerTitle.errors) || (form.offerTitle.touched && form.offerTitle.errors) }">
+                <input class="form-control" type="text" formControlName="offerTitle"
+                  [ngClass]="{ 'is-invalid': (submitted && form.offerTitle.errors) || (form.offerTitle.touched && form.offerTitle.errors) }">
                 <div *ngIf="submitted||(form.offerTitle.touched && form.offerTitle.invalid)">
                   <small class="form-text error-message" *ngIf="form.offerTitle.errors"> Offer Title is required</small>
                 </div>
@@ -122,7 +125,8 @@
               <div class="form-group required">
                 <label class="form-label">Page Content</label>
                 <!-- <textarea class="form-control" formControlName="dealContent" ></textarea> -->
-                <ckeditor [editor]="Editor" formControlName="dealContent" (change)="onChangeDealContent($event)">
+                <ckeditor [editor]="Editor" formControlName="dealContent" debounce="500"
+                  (change)="onChangeDealContent($event)">
                 </ckeditor>
               </div>
             </div>

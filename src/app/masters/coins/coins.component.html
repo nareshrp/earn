@@ -47,11 +47,15 @@
             <div class="col-md-3">
               <div class="form-group">
                 <div class="mb-3 mt-4">
-                  <button type="button" class="btn btn-primary w-md" (click)="onSubmit()">Save</button>
+                  <button type="submit" *ngIf="!isRowEdit" class="btn btn-primary w-md"
+                    (click)="onSubmit()">Submit</button>
+                  <button type="submit" *ngIf="isRowEdit" class="btn btn-primary w-md"
+                    (click)="updateRow()">Update</button>
                 </div>
 
               </div>
             </div>
+
           </div>
         </form>
       </div>
@@ -67,7 +71,6 @@
           <table class="table align-middle table-nowrap table-check">
             <thead class="table-light">
               <tr>
-
                 <th class="align-middle">#</th>
                 <th class="align-middle">Country Name</th>
                 <th class="align-middle">Currency</th>
@@ -76,22 +79,22 @@
               </tr>
             </thead>
             <tbody>
-              <!-- <tr *ngFor="let row of countryList; let i=index">
+              <tr *ngFor="let row of countryCoinsData; let i=index">
 
                 <td>{{i+1}} </td>
-                <td>{{row.code}}</td>
                 <td>{{row.name}}</td>
                 <td>{{row.currency}}</td>
+                <td>{{row.coinVal}}</td>
                 <td>
                   <div class="d-flex gap-3">
                     <a href="javascript:void(0);" class="text-success" (click)="editRow(row)"><i
                         class="mdi mdi-pencil font-size-18"></i></a>
-                    <a href="javascript:void(0);" class="text-danger" (click)="rowDelete(row.id)"><i
-                        class="mdi mdi-delete font-size-18"></i></a>
+                    <!-- <a href="javascript:void(0);" class="text-danger" (click)="rowDelete(row.id)"><i
+                        class="mdi mdi-delete font-size-18"></i></a> -->
                   </div>
 
                 </td>
-              </tr> -->
+              </tr>
             </tbody>
           </table>
         </div>

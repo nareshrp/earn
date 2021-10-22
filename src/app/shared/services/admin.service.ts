@@ -80,4 +80,8 @@ export class AdminService {
     return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/country?coin=true");
   }
 
+  addCountryCoins(userId: any, body: any) {
+    return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/country", body);
+  }
+
 }
