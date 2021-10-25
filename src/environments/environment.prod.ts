@@ -1,4 +1,4 @@
 export const environment = {
-  apiUrl: 'http://13.58.233.207',
+  apiUrl: 'https://earnin.me',
   production: true
 };
