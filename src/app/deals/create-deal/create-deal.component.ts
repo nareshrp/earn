@@ -41,7 +41,7 @@ export class CreateDealComponent implements OnInit {
   dealImgObj: any;
   videoAssetsObj: any;
   // sharedTypeList:any=[];
-  sharedTypeList: any;
+  sharedTypeList: any = [];
   acceptTerms: boolean = false;
   vendorList: any;
   selectedVendorID: any;
@@ -49,31 +49,7 @@ export class CreateDealComponent implements OnInit {
   vedInstrData: any;
   dealContentData: any;
   radiusMaster: any = [{ id: 1, value: 5 }, { id: 2, value: 10 }, { id: 3, value: 15 }, { id: 4, value: 20 }];
-  config = {
-    uiColor: '#ffffff',
-    toolbarGroups: [{ name: 'clipboard', groups: ['clipboard', 'undo'] },
-    { name: 'editing', groups: ['find', 'selection', 'spellchecker'] },
-    { name: 'links' }, { name: 'insert' },
-    { name: 'document', groups: ['mode', 'document', 'doctools'] },
-    { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
-    { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align'] },
-    { name: 'styles' },
-    { name: 'colors' }],
-    skin: 'kama',
-    resize_enabled: false,
-    removePlugins: 'elementspath,save,magicline',
-    extraPlugins: 'divarea,smiley,justify,indentblock,colordialog',
-    colorButton_foreStyle: {
-      element: 'font',
-      attributes: { 'color': '#(color)' }
-    },
-    height: 188,
-    removeDialogTabs: 'image:advanced;link:advanced',
-    removeButtons: 'Subscript,Superscript,Anchor,Source,Table',
-    format_tags: 'p;h1;h2;h3;pre;div',
-    stylesSet: 'my_styles'
-
-  }
+  bindingRadious: any;
 
 
   constructor(
@@ -93,15 +69,15 @@ export class CreateDealComponent implements OnInit {
       fromDate: [null, [Validators.required]],
       toDate: [null, [Validators.required]],
       offerTitle: [null, [Validators.required]],
-      dealmg: [null],
+      dealmg: [null, [Validators.required]],
       dealContent: [null],
       sharedType: [null],
       vedInstr: [null],
-      vAssets: [null],
+      vAssets: [null, [Validators.required]],
       sharedImgInstr: [null],
-      campBudget: [null],
-      bidPerCoin: [null],
-      consentPolicy: [null],
+      campBudget: [null, [Validators.required]],
+      bidPerCoin: [null, [Validators.required]],
+      consentPolicy: [null, [Validators.required]],
     })
   }
 
@@ -124,9 +100,9 @@ export class CreateDealComponent implements OnInit {
     });
   }
 
-  changeRadious(event: any) {
-    console.log(event.target.value);
-    this.radius = parseInt(event.target.value);
+  changeRadious(val: any) {
+    console.log("change", val);
+    this.radius = parseInt(val);
     this.mapInt();
   }
 
@@ -320,28 +296,41 @@ export class CreateDealComponent implements OnInit {
 
   //   console.log("sharedTypeList", this.sharedTypeList);
   // }
-  sharetype(event: any) {
+  sharetype(event: any, id: any) {
     let val = event.target.value;
-    this.sharedTypeList = val;
+    if (event.target.checked === true) {
+      this.sharedTypeList.push(val);
+    }
+    else {
+      // this.moduleData.slice(0, index);
+      this.sharedTypeList.splice(this.sharedTypeList.indexOf(id));
+
+    }
+
     console.log("sharetype", this.sharedTypeList);
   }
 
   termsCheck(event: any) {
-    if (event.target.checked) {
+    if (event.target.checked === true) {
+      console.log("IF Condition", event.target.checked);
       this.createDealForm.value['consentPolicy'] = true;
+      this.createDealForm.controls['consentPolicy'].setValidators([])
     }
     else {
+      console.log("else Condition", event.target.checked);
       this.createDealForm.value['consentPolicy'] = false;
+      this.createDealForm.controls['consentPolicy'].setValidators([Validators.required])
     }
 
   }
 
   onSaveDeal() {
-    this.spinner.show();
+
     this.submitted = true;
     if (this.createDealForm.invalid) {
       return;
     }
+    this.spinner.show();
     console.log("DealObj", this.dealImgObj);
     console.log("videoAssetsObj", this.videoAssetsObj);
     let locationData = {

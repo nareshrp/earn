@@ -22,4 +22,9 @@ export const CommonLayout_ROUTES: Routes = [
     loadChildren: () => import('../../deals/deals.module').then(m => m.DealsModule),
     canActivate: [AuthenticationGuard],
   },
+  {
+    path: 'coupon-validation',
+    loadChildren: () => import('../../coupon-validation/coupon-validation.module').then(m => m.CouponValidationModule),
+    canActivate: [AuthenticationGuard],
+  },
 ];

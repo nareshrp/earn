@@ -1,60 +1,69 @@
 <div class="row">
-    <div class="col-12">
-      <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-        <h4 class="mb-sm-0 font-size-18">{{pageTitle}}</h4>
-        <div class="page-title-right">
-          <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
-            (click)="createDeal()"><i class="mdi mdi-plus me-1"></i> Create Deal</button>
-        </div>
+  <div class="col-12">
+    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+      <h4 class="mb-sm-0 font-size-18">{{pageTitle}}</h4>
+      <div class="page-title-right">
+        <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
+          (click)="createDeal()"><i class="mdi mdi-plus me-1"></i> Create Deal</button>
       </div>
     </div>
   </div>
-  <!-- Page Title End -->
-  <div class="row">
-    <div class="col-xl-12">
-        <div class="card">
-          <div class="card-body">
-            <!-- <h4 class="card-title">City List</h4> -->
-            <div class="table-responsive">
-              <table class="table align-middle table-nowrap table-check">
-                <thead class="table-light">
-                  <tr>
-    
-                    <th class="align-middle">Created Date</th>
-                    <th class="align-middle">Deal ID</th>
-                    <th class="align-middle">Deal Name</th>
-                    <th class="align-middle">End Date</th>
-                    <th class="align-middle">Location</th>
-                    <th class="align-middle">No.Of Users Shared</th>
-                   
-                    <th class="align-middle" style="width: 150px;">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <!-- <tr *ngFor="let row of cityList; let i=index">
-    
-                    <td>{{i+1}} </td>
-                    <td>{{row.name}}</td>
-    
-    
-                    <td>
-                      <div class="d-flex gap-3">
-                        <a href="javascript:void(0);" class="text-success" (click)="editRow(row)"><i
-                            class="mdi mdi-pencil font-size-18"></i></a>
-    
-                        <a href="javascript:void(0);" class="text-danger" (click)="rowDelete(row.id)"><i
-                            class="mdi mdi-delete font-size-18"></i></a>
-    
-                      </div>
-    
-                    </td>
-                  </tr> -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <!-- end card body -->
+</div>
+<!-- Page Title End -->
+<div class="row">
+  <div class="col-xl-12">
+    <div class="card">
+      <div class="card-body">
+        <!-- <h4 class="card-title">City List</h4> -->
+        <div class="table-responsive">
+          <table class="table align-middle table-nowrap table-check">
+            <thead class="table-light">
+              <tr>
+
+                <th class="align-middle">Created Date</th>
+                <th class="align-middle">Deal ID</th>
+                <th class="align-middle">Deal Name</th>
+                <th class="align-middle">End Date</th>
+                <th class="align-middle">Location</th>
+                <th class="align-middle">No.Of Users Shared</th>
+
+                <th class="align-middle" style="width: 150px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of dealsList; let i=index">
+
+
+                <td>{{row.cOn | date:'medium' }}</td>
+                <td>{{row.id}}</td>
+                <td>{{row.offerTitle}}</td>
+                <td>{{row.toDate | date:'medium'}}</td>
+                <td>{{row.location.address}}</td>
+                <td>0</td>
+
+
+                <td>
+                  <div class="d-flex gap-3">
+                    <button class="btn btn-primary waves-effect waves-light btn-sm margin-right3">Pause </button>
+                    <button class="btn btn-danger waves-effect waves-light btn-sm">Stop</button>
+
+
+
+                  </div>
+
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <!-- end card -->
       </div>
+      <!-- end card body -->
+    </div>
+    <!-- end card -->
   </div>
+</div>
+
+<ngx-spinner bdColor="rgba(253,254,255,0.8)" size="medium" color="#0c62db" type="ball-clip-rotate-pulse"
+  [fullScreen]="true">
+  <p style="color: #007bff"> Loading... </p>
+</ngx-spinner>

@@ -17,4 +17,12 @@ export class VendorService {
   createDeal(userId: any, body: any) {
     return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/deal", body);
   }
+  getDeals() {
+    return this.http.get(environment.apiUrl + "/api/earnin/deals");
+  }
+
+  verifyCoupon(userId: any, body: any) {
+    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/coupon/verify", body);
+  }
+
 }

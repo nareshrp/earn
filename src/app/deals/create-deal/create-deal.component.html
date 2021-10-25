@@ -28,9 +28,10 @@
             <div class="col-md-3">
               <div class="form-group required">
                 <label class="form-label">Select Radius</label>
-                <select class="form-control" (change)="changeRadious($event)">
+                <input type="text" #bindingRadious class="form-control" (keyup)="changeRadious(bindingRadious.value)">
+                <!-- <select class="form-control" (change)="changeRadious($event)">
                   <option [value]="row.value" *ngFor="let row of radiusMaster;">{{row.value}}</option>
-                </select>
+                </select> -->
 
               </div>
             </div>
@@ -106,7 +107,11 @@
               <div class="form-group required">
                 <label class="form-label">Deal Image</label>
                 <input class="form-control" type="file" formControlName="dealmg"
-                  (change)="detectFiles($event, 'dealmg')" accept=".png, .jpg, .jpeg">
+                  (change)="detectFiles($event, 'dealmg')" accept=".png, .jpg, .jpeg"
+                  [ngClass]="{ 'is-invalid': (submitted && form.dealmg.errors) || (form.dealmg.touched && form.dealmg.errors) }">
+                <div *ngIf="submitted||(form.dealmg.touched && form.dealmg.invalid)">
+                  <small class="form-text error-message" *ngIf="form.dealmg.errors"> Deal Image is required</small>
+                </div>
                 <!-- <img *ngFor="let item of files" src={{item.imgUrl}} alt="" style="width: 60px;" id="img"> -->
               </div>
             </div>
@@ -136,11 +141,13 @@
               <div class="form-group">
                 <strong>Choose share type</strong>
                 <div class="form-check form-check-inline" style="margin-left:5px ;">
-                  <input class="form-check-input" type="radio" name="sahre" value="video" (change)="sharetype($event)">
+                  <input class="form-check-input" type="checkbox" name="sahre" value="video"
+                    (change)="sharetype($event,1)">
                   <label class="form-check-label">Dedicated Video</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="sahre" value="image" (change)="sharetype($event)">
+                  <input class="form-check-input" type="checkbox" name="sahre" value="image"
+                    (change)="sharetype($event,2)">
                   <label class="form-check-label">Deal Image to share</label>
                 </div>
               </div>
@@ -168,7 +175,11 @@
               <div class="form-group required">
                 <label class="form-label">Upload Video Assets for influencers</label>
                 <input class="form-control" type="file" formControlName="vAssets"
-                  (change)="detectFiles($event, 'vAssets')">
+                  (change)="detectFiles($event, 'vAssets')"
+                  [ngClass]="{ 'is-invalid': (submitted && form.vAssets.errors) || (form.vAssets.touched && form.vAssets.errors) }">
+                <div *ngIf="submitted||(form.vAssets.touched && form.vAssets.invalid)">
+                  <small class="form-text error-message" *ngIf="form.vAssets.errors"> Video Assets is required</small>
+                </div>
               </div>
             </div>
             <div class="col-md-4">
@@ -213,15 +224,24 @@
             <div class="col-md-4">
               <div class="form-group required">
                 <label class="form-label">Campaign Budget</label>
-                <input class="form-control" type="text" formControlName="campBudget" placeholder="Budget">
+                <input class="form-control" type="text" formControlName="campBudget" placeholder="Budget"
+                  [ngClass]="{ 'is-invalid': (submitted && form.campBudget.errors) || (form.campBudget.touched && form.campBudget.errors) }">
+                <div *ngIf="submitted||(form.campBudget.touched && form.campBudget.invalid)">
+                  <small class="form-text error-message" *ngIf="form.campBudget.errors">Campaign Budget is
+                    required</small>
+                </div>
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group required">
                 <label class="form-label">Bid for each coin</label>
-                <input class="form-control" type="text" formControlName="bidPerCoin"
-                  placeholder="Devide coins (in INR)">
+                <input class="form-control" type="text" formControlName="bidPerCoin" placeholder="Devide coins (in INR)"
+                  [ngClass]="{ 'is-invalid': (submitted && form.bidPerCoin.errors) || (form.bidPerCoin.touched && form.bidPerCoin.errors) }">
                 <small>500 coins as per your budget</small>
+                <div *ngIf="submitted||(form.bidPerCoin.touched && form.bidPerCoin.invalid)">
+                  <small class="form-text error-message" *ngIf="form.bidPerCoin.errors">Bid for each coin is
+                    required</small>
+                </div>
               </div>
             </div>
 
@@ -230,8 +250,16 @@
             <div class="col-md-12">
               <h4 class="card-title">I Agree Temers & Conditions, Refund policy</h4>
               <div class="form-check" style="margin-left:5px ;">
-                <input class="form-check-input" type="checkbox" (change)="termsCheck($event)">
+                <input class="form-check-input" type="checkbox" formControlName="consentPolicy"
+                  (change)="termsCheck($event)"
+                  [ngClass]="{ 'is-invalid': (submitted && form.consentPolicy.errors) || (form.consentPolicy.touched && form.consentPolicy.errors) }">
                 <label class="form-check-label">I Agree Temers & Conditions, Refund policy</label>
+
+                <div *ngIf="submitted||(form.consentPolicy.touched && form.consentPolicy.invalid)">
+                  <small class="form-text error-message" *ngIf="form.consentPolicy.errors">Temers & Conditions is
+                    required</small>
+                </div>
+
               </div>
             </div>
           </div>
