@@ -323,3 +323,5 @@ body[data-sidebar-size=small] .footer {
 .vertical-collpsed .vertical-menu #sidebar-menu>ul>li:hover>a i {
   color: #fff;
 }
+
+.navbar-header.public-header .navbar-brand-box { background:none}

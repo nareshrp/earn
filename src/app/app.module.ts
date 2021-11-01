@@ -13,13 +13,17 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { DEFAULT_TIMEOUT, HttpInterceptorService } from './shared/services/http-interceptor.service';
+import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
+import { HeaderComponent } from './layouts/public-layout/header/header.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     CommonLayoutComponent,
-    FullLayoutComponent
+    FullLayoutComponent,
+    PublicLayoutComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
