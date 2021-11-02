@@ -34,7 +34,7 @@ const routes: Routes = [
     children: FullLayout_ROUTES
   },
   {
-    path: 'coupon/:id',
+    path: 'ddp/:id',
     component: PublicLayoutComponent,
     children: PublicLayout_ROUTES
   },

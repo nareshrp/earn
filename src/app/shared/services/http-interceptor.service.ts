@@ -140,7 +140,7 @@ export class HttpInterceptorService implements HttpInterceptor {
   handle403Error(error: HttpErrorResponse): Observable<HttpEvent<any>> {
     if (error && error.status === 403) {
       this.toastService.showError(error.error.message, error.statusText);
-      this.auth.logout();
+      // this.auth.logout();
       return throwError(error);
     }
 
