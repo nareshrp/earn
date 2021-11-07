@@ -84,4 +84,20 @@ export class AdminService {
     return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/country", body);
   }
 
+  //Question API Start Here
+
+  addQuestions(userId: any, body: any) {
+    return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/question", body);
+  }
+
+  getQuestions(userId: any) {
+    return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/questions");
+  }
+
+ 
+  deleteQuestions(userId: any, questionId: any) {
+    
+    return this.http.delete(environment.apiUrl + "/api/earnin/users/" + userId + "/question/" + questionId);
+  }
+
 }

@@ -12,6 +12,7 @@ export const CommonLayout_ROUTES: Routes = [
     loadChildren: () => import('../../masters/masters.module').then(m => m.MastersModule),
     canActivate: [AuthenticationGuard],
   },
+ 
   {
     path: 'vendors',
     loadChildren: () => import('../../vendors-list/vendors-list.module').then(m => m.VendorsListModule),
@@ -25,6 +26,16 @@ export const CommonLayout_ROUTES: Routes = [
   {
     path: 'coupon-validation',
     loadChildren: () => import('../../coupon-validation/coupon-validation.module').then(m => m.CouponValidationModule),
+    canActivate: [AuthenticationGuard],
+  },
+  {
+    path: 'questions',
+    loadChildren: () => import('../../questions/questions.module').then(m => m.QuestionsModule),
+    canActivate: [AuthenticationGuard],
+  },
+  {
+    path: 'notification',
+    loadChildren: () => import('../../appnotifications/appnotifications.module').then(m => m.AppnotificationsModule),
     canActivate: [AuthenticationGuard],
   },
 ];
