@@ -8,6 +8,7 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular';
 import { VendorService } from 'src/app/shared/services/vendor.service';
 import { finalize } from 'rxjs/operators';
+import { AdminService } from 'src/app/shared/services/admin.service';
 
 @Component({
   selector: 'app-create-deal',
@@ -50,6 +51,7 @@ export class CreateDealComponent implements OnInit {
   dealContentData: any;
   radiusMaster: any = [{ id: 1, value: 5 }, { id: 2, value: 10 }, { id: 3, value: 15 }, { id: 4, value: 20 }];
   bindingRadious: any;
+  categoryList:any;
 
 
   constructor(
@@ -61,6 +63,7 @@ export class CreateDealComponent implements OnInit {
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
     private vendorService: VendorService,
+    public adminService: AdminService,
   ) {
     this.latitude = 17.4264979;
     this.longitude = 78.45113220000007;
@@ -69,7 +72,7 @@ export class CreateDealComponent implements OnInit {
       fromDate: [null, [Validators.required]],
       toDate: [null, [Validators.required]],
       offerTitle: [null, [Validators.required]],
-      dealmg: [null, [Validators.required]],
+      dealImg: [null, [Validators.required]],
       dealContent: [null],
       sharedType: [null],
       vedInstr: [null],
@@ -78,6 +81,8 @@ export class CreateDealComponent implements OnInit {
       campBudget: [null, [Validators.required]],
       bidPerCoin: [null, [Validators.required]],
       consentPolicy: [null, [Validators.required]],
+      category: [null, [Validators.required]],
+      isCoupon: [null],
     })
   }
 
@@ -90,6 +95,8 @@ export class CreateDealComponent implements OnInit {
     if (this.role != 'admin') {
       this.selectedVendorID = this.userId;
     }
+
+    this.getCategoryList();
 
   }
 
@@ -217,7 +224,7 @@ export class CreateDealComponent implements OnInit {
         let reader = new FileReader();
         reader.onload = (e: any) => {
           //file.imgUrl = e.target.result;
-          if (imgType == 'dealmg') {
+          if (imgType == 'dealImg') {
             this.files.push(file);
           } else if (imgType == 'vAssets') {
             this.vfiles.push(file);
@@ -324,13 +331,35 @@ export class CreateDealComponent implements OnInit {
 
   }
 
+  isCouponCheck(event: any) {
+    if (event.target.checked === true) {
+      this.createDealForm.value['isCoupon'] = true;
+    }
+    else {
+      this.createDealForm.value['isCoupon'] = false;
+    }
+  }
+
+  getCategoryList(){
+    this.adminService.getCategory(this.userId).pipe(finalize(() => {
+  
+ })).subscribe((res:any)=>{
+
+   if(res.statusCode===200){
+    this.categoryList=res.result;  
+    console.log("categoryList", this.categoryList);
+   }
+ })
+}
+
+
   onSaveDeal() {
 
     this.submitted = true;
     if (this.createDealForm.invalid) {
       return;
     }
-    this.spinner.show();
+   
     console.log("DealObj", this.dealImgObj);
     console.log("videoAssetsObj", this.videoAssetsObj);
     let locationData = {
@@ -339,7 +368,7 @@ export class CreateDealComponent implements OnInit {
       longitude: this.longitude,
       radius: this.radius
     }
-    this.createDealForm.value['dealmg'] = this.dealImgObj;
+    this.createDealForm.value['dealImg'] = this.dealImgObj;
     this.createDealForm.value['vAssets'] = this.videoAssetsObj;
     this.createDealForm.value['sharedType'] = this.sharedTypeList;
     this.createDealForm.value['vendorId'] = this.selectedVendorID;
@@ -347,7 +376,7 @@ export class CreateDealComponent implements OnInit {
     this.createDealForm.value['vedInstr'] = this.vedInstrData;
     this.createDealForm.value['location'] = locationData;
     console.log("Form Value", this.createDealForm.value);
-
+    this.spinner.show();
     this.vendorService.createDeal(this.userId, this.createDealForm.value).pipe(finalize(() => {
       this.spinner.hide();
 

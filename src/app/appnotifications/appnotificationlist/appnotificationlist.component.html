@@ -14,39 +14,55 @@
   <div class="col-xl-12">
     <div class="card">
       <div class="card-body">
-        <form>
+        <form [formGroup]="notificationForm">
           <div class="row">
             <div class="col-md-3">
               <div class="form-group required">
                 <label class="form-label">Notification Title</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control"  formControlName="title"  [ngClass]="{ 'is-invalid': (submitted && form.title.errors) || (form.title.touched && form.title.errors) }">
+                <div *ngIf="submitted||(form.title.touched && form.title.invalid)">
+                  <small class="form-text error-message" *ngIf="form.title.errors"> Title is required</small>
+                </div>
               </div>
             </div>
            
             <div class="col-md-3">
               <div class="form-group required">
                 <label for="formrow-email-input" class="form-label">Start Date & Time</label>
-                <input class="form-control" type="datetime-local" >
+                <input class="form-control" type="datetime-local" formControlName="fromDate"  [ngClass]="{ 'is-invalid': (submitted && form.fromDate.errors) || (form.fromDate.touched && form.fromDate.errors) }">
+                <div *ngIf="submitted||(form.fromDate.touched && form.fromDate.invalid)">
+                  <small class="form-text error-message" *ngIf="form.fromDate.errors"> Start Date & Time is required</small>
+                </div>
               </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group required">
                   <label class="form-label">End Date & Time</label>
-                  <input class="form-control" type="datetime-local" >
+                  <input class="form-control" type="datetime-local" formControlName="toDate" [ngClass]="{ 'is-invalid': (submitted && form.toDate.errors) || (form.toDate.touched && form.toDate.errors) }">
+                  <div *ngIf="submitted||(form.toDate.touched && form.toDate.invalid)">
+                    <small class="form-text error-message" *ngIf="form.toDate.errors"> End Date & Time is required</small>
+                  </div>
                 </div>
               </div>
               <div class="col-md-12">
                 <div class="form-group required">
                   <label for="formrow-email-input" class="form-label">Message</label>
-                  <textarea type="text" class="form-control"> </textarea>
+                  <textarea type="text" class="form-control" formControlName="message" [ngClass]="{ 'is-invalid': (submitted && form.message.errors) || (form.message.touched && form.message.errors) }"> </textarea>
+                  <div *ngIf="submitted||(form.message.touched && form.message.invalid)">
+                    <small class="form-text error-message" *ngIf="form.message.errors">Message is required</small>
+                  </div>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="mb-3 mt-4">
-                  <button type="submit" class="btn btn-primary w-md"
-                    >Submit</button>
+                  <!-- <button type="button" (click)="onSubmit()" class="btn btn-primary w-md"
+                    >Submit</button> -->
                   <!-- <button type="submit" class="btn btn-primary w-md"
                   >Update</button> -->
+
+                  <button type="button" *ngIf="isSaveBt"  class="btn btn-primary w-md" (click)="onSubmit()">Save</button>
+                  <button type="submit" *ngIf="isUpdateBt" class="btn btn-primary w-md" (click)="updateRow()">Update</button>
+               
                 </div>
               </div>
              
@@ -63,7 +79,7 @@
   <div class="col-xl-12">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Country List</h4>
+        <h4 class="card-title">Message List</h4>
         <div class="table-responsive">
           <table class="table align-middle table-nowrap table-check">
             <thead class="table-light">
@@ -72,18 +88,25 @@
                 <th class="align-middle">#</th>
                 <th class="align-middle">Notification Title</th>
                 <th class="align-middle">Message</th>
-                <th class="align-middle">Start Date & Time</th>
-                <th class="align-middle">End Date & Time</th>
+                <th class="align-middle">Status</th>
+                <th class="align-middle">Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr *ngFor="let row of messageLiest; let i=index;">
 
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{i+1}}</td>
+                <td>{{row.title}}</td>
+                <td>{{row.message}}</td>
+                <td>{{row.status}}</td>
+                <td>
+                  <div class="d-flex gap-3">
+                    <a href="javascript:void(0);" class="text-success" (click)="editRow(row)"><i
+                        class="mdi mdi-pencil font-size-18"></i></a>
+                    <a href="javascript:void(0);" class="text-danger" (click)="rowDelete(row.id)"><i
+                        class="mdi mdi-delete font-size-18"></i></a>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>

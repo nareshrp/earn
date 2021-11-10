@@ -100,4 +100,20 @@ export class AdminService {
     return this.http.delete(environment.apiUrl + "/api/earnin/users/" + userId + "/question/" + questionId);
   }
 
+  addNotification(userId: any, body: any) {
+    return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/notification/message", body);
+  }
+  getNotification(userId: any) {
+    return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/notification/messages");
+  }
+  deleteNotification(userId: any, msgId:any) {
+    return this.http.delete(environment.apiUrl + "/api/earnin/users/" + userId + "/notification/message/"+msgId);
+  }
+
+ 
+
+  updateNotification(userId: any, rowId: any, body: any) {
+    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/notification/message/" + rowId, body);
+  }
+
 }

@@ -92,6 +92,13 @@
                     <li><a [routerLink]="['/questions']" routerLinkActive="router-link-active">Questions List </a></li>
                   </ul>
                 </li>
+                <li>
+                  <a [routerLink]="['/notification']" routerLinkActive="router-link-active"  class="waves-effect">
+                    <i class="bx bx-store"></i>
+                    <span>Notification Message</span>
+                  </a>
+               
+                </li>
 
               </ng-container>
               <ng-container *ngIf="role=='vendor'">

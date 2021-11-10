@@ -25,6 +25,20 @@
 
               </div>
             </div>
+
+            <div class="col-md-3">
+              <div class="form-group required">
+                <label class="form-label">Select category</label>
+                <select class="form-control" formControlName="category" [ngClass]="{ 'is-invalid': (submitted && form.category.errors) || (form.category.touched && form.category.errors) }">
+                  <option [value]="row.name" *ngFor="let row of categoryList;">{{row.name}}</option>
+                </select>
+
+                <div *ngIf="submitted||(form.category.touched && form.category.invalid)">
+                  <small class="form-text error-message" *ngIf="form.category.errors"> Category is required</small>
+                </div>
+
+              </div>
+            </div>
             <div class="col-md-3">
               <div class="form-group required">
                 <label class="form-label">Select Radius</label>
@@ -106,11 +120,11 @@
             <div class="col-md-4">
               <div class="form-group required">
                 <label class="form-label">Deal Image</label>
-                <input class="form-control" type="file" formControlName="dealmg"
-                  (change)="detectFiles($event, 'dealmg')" accept=".png, .jpg, .jpeg"
-                  [ngClass]="{ 'is-invalid': (submitted && form.dealmg.errors) || (form.dealmg.touched && form.dealmg.errors) }">
-                <div *ngIf="submitted||(form.dealmg.touched && form.dealmg.invalid)">
-                  <small class="form-text error-message" *ngIf="form.dealmg.errors"> Deal Image is required</small>
+                <input class="form-control" type="file" formControlName="dealImg"
+                  (change)="detectFiles($event, 'dealImg')" accept=".png, .jpg, .jpeg"
+                  [ngClass]="{ 'is-invalid': (submitted && form.dealImg.errors) || (form.dealImg.touched && form.dealImg.errors) }">
+                <div *ngIf="submitted||(form.dealImg.touched && form.dealImg.invalid)">
+                  <small class="form-text error-message" *ngIf="form.dealImg.errors"> Deal Image is required</small>
                 </div>
                 <!-- <img *ngFor="let item of files" src={{item.imgUrl}} alt="" style="width: 60px;" id="img"> -->
               </div>
@@ -119,7 +133,7 @@
               <div class="form-group mt-4">
                 <button class="btn btn-primary waves-effect waves-light  margin-right3 btn-sm ms-1"
                   (click)="uploadDealImg()">Upload <i class="mdi mdi-cloud-upload-outline"></i></button>
-                <button class="btn btn-secondary waves-effect waves-light btn-sm" (click)="resetBtn('dealmg')">Cancel <i
+                <button class="btn btn-secondary waves-effect waves-light btn-sm" (click)="resetBtn('dealImg')">Cancel <i
                     class="mdi mdi-close-circle-outline
                                         ms-1"></i></button>
               </div>
@@ -207,7 +221,7 @@
             <div class="col-md-4">
               <div class="form-group required">
                 <label class="form-label">Upload image to share</label>
-                <input class="form-control" type="file" formControlName="dealmg">
+                <input class="form-control" type="file" formControlName="dealImg">
               </div>
             </div>
             <div class="col-md-4">
@@ -241,6 +255,20 @@
                 <div *ngIf="submitted||(form.bidPerCoin.touched && form.bidPerCoin.invalid)">
                   <small class="form-text error-message" *ngIf="form.bidPerCoin.errors">Bid for each coin is
                     required</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="form-check" style="margin-left:5px ;">
+                  <input class="form-check-input" type="checkbox" formControlName="isCoupon"
+                    (change)="isCouponCheck($event)"
+                    >
+                  <label class="form-check-label">Need Coupon Code</label>
+  
+                 
+  
                 </div>
               </div>
             </div>
