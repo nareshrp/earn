@@ -22,6 +22,10 @@ const routes: Routes = [
     path: 'coins',
     loadChildren: () => import('../masters/coins/coins.module').then(m => m.CoinsModule),
   },
+  {
+    path: 'coin-settings',
+    loadChildren: () => import('../masters/coin-settings/coin-settings.module').then(m => m.CoinSettingsModule),
+  },
 ];
 
 @NgModule({

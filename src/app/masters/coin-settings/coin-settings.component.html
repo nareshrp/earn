@@ -1,0 +1,168 @@
+<div class="row">
+    <div class="col-12">
+      <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+        <h4 class="mb-sm-0 font-size-18">{{pageTitle}}</h4>
+        <div class="page-title-right">
+          <!-- <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
+            (click)="addOrganization()"><i class="mdi mdi-plus me-1"></i> Add New Order</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+ 
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]="coinsSettingForm">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group required">
+                  <label class="form-label">Select Country</label>
+                  <select class="form-control" formControlName="country" (change)="countryChange($event)"                 
+                   [ngClass]="{ 'is-invalid': (submitted && form.country.errors) || (form.country.touched && form.country.errors) }">
+                  
+                    <option [value]="row.code" *ngFor="let row of countryCoinsData">{{row.name}}</option>
+                  </select>
+                  <div *ngIf="submitted||(form.country.touched && form.country.invalid)">
+                    <small class="form-text error-message" *ngIf="form.country.errors"> Country is required</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group required">
+                  <label class="form-label">Currency</label>
+                  <input type="text" class="form-control" formControlName="currency" readonly>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group required">
+                  <label class="form-label">Coin Val</label>
+                  <input type="text" class="form-control" formControlName="coinVAl" readonly>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group required">
+                  <label class="form-label">Threshold</label>
+                  <input type="number" class="form-control" formControlName="threshold" [ngClass]="{ 'is-invalid': (submitted && form.threshold.errors) || (form.threshold.touched && form.threshold.errors) }">
+                  <div *ngIf="submitted||(form.threshold.touched && form.threshold.invalid)">
+                    <small class="form-text error-message" *ngIf="form.threshold.errors"> Threshold is required</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group required">
+                  <label class="form-label">Image View Val</label>
+                  <input type="number" class="form-control" formControlName="imgViewVal" [ngClass]="{ 'is-invalid': (submitted && form.imgViewVal.errors) || (form.imgViewVal.touched && form.imgViewVal.errors) }">
+                  <div *ngIf="submitted||(form.imgViewVal.touched && form.imgViewVal.invalid)">
+                    <small class="form-text error-message" *ngIf="form.imgViewVal.errors"> Image View Val is required</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group required">
+                  <label class="form-label">Video View Val</label>
+                  <input type="number" class="form-control" formControlName="videoViewVal"  [ngClass]="{ 'is-invalid': (submitted && form.videoViewVal.errors) || (form.videoViewVal.touched && form.videoViewVal.errors) }">
+                  <div *ngIf="submitted||(form.videoViewVal.touched && form.videoViewVal.invalid)">
+                    <small class="form-text error-message" *ngIf="form.videoViewVal.errors"> Video View Val is required</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group required">
+                  <label class="form-label">Default Coins</label>
+                  <input type="number" class="form-control" formControlName="defaultCoin" [ngClass]="{ 'is-invalid': (submitted && form.defaultCoin.errors) || (form.defaultCoin.touched && form.defaultCoin.errors) }">
+                  <div *ngIf="submitted||(form.defaultCoin.touched && form.defaultCoin.invalid)">
+                    <small class="form-text error-message" *ngIf="form.defaultCoin.errors"> Default Coins is required</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group required">
+                  <label class="form-label">Withdraw Threshold</label>
+                  <input type="number" class="form-control" formControlName="withdrawThreshold" [ngClass]="{ 'is-invalid': (submitted && form.withdrawThreshold.errors) || (form.withdrawThreshold.touched && form.withdrawThreshold.errors) }">
+                  <div *ngIf="submitted||(form.withdrawThreshold.touched && form.withdrawThreshold.invalid)">
+                    <small class="form-text error-message" *ngIf="form.withdrawThreshold.errors"> Withdraw Threshold is required</small>
+                  </div>
+                </div>
+              </div>
+           
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="mb-3 mt-4">
+                    <button type="submit" *ngIf="!isRowEdit" class="btn btn-primary w-md"
+                      (click)="onSubmit()">Submit</button>
+                    <button type="submit" *ngIf="isRowEdit" class="btn btn-primary w-md"
+                      (click)="updateRow()">Update</button>
+                  </div>
+  
+                </div>
+              </div>
+  
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Setting Coins List</h4>
+          <div class="table-responsive">
+            <table class="table align-middle table-nowrap table-check">
+              <thead class="table-light">
+                <tr>
+                  <th class="align-middle">#</th>
+                  <th class="align-middle">Country Name</th>
+                  <th class="align-middle">Currency</th>
+                  <th class="align-middle">Set Coins</th>
+                  <th class="align-middle">Img View</th>
+                  <th class="align-middle">Video View</th>
+                  <th class="align-middle">Threshold</th>
+                  <th class="align-middle">Default Coins</th>
+                  <th class="align-middle">Withdraw Threshold</th>
+                  <th class="align-middle" style="width: 150px;">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of settingCoinsList; let i=index">
+  
+                  <td>{{i+1}} </td>
+                  <td>{{row.country}}</td>
+                  <td>{{row.currency}}</td>
+                  <td>{{row.coinVAl}}</td>
+                  <td>{{row.imgViewVal}}</td>
+                  <td>{{row.videoViewVal}}</td>
+                  <td>{{row.threshold}}</td>
+                  <td>{{row.defaultCoin}}</td>
+                  <td>{{row.withdrawThreshold}}</td>
+                  <td>
+                    <div class="d-flex gap-3">
+                      <a href="javascript:void(0);" class="text-success" (click)="editRow(row)"><i
+                          class="mdi mdi-pencil font-size-18"></i></a>
+                      <a href="javascript:void(0);" class="text-danger" (click)="rowDelete(row.id)"><i
+                          class="mdi mdi-delete font-size-18"></i></a>
+                    </div>
+  
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- end card body -->
+      </div>
+      <!-- end card -->
+    </div>
+  </div>
+
+
+  <ngx-spinner bdColor="rgba(253,254,255,0.8)" size="medium" color="#0c62db" type="ball-clip-rotate-pulse"
+  [fullScreen]="true">
+  <p style="color: #007bff"> Loading... </p>
+</ngx-spinner>

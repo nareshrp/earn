@@ -116,4 +116,20 @@ export class AdminService {
     return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/notification/message/" + rowId, body);
   }
 
+  addCoinSettings(userId: any, body: any){
+    return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/coinsetting", body);
+  }
+
+  getCoinData(userId: any){
+    return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/coinsetting");
+  }
+
+  editCoinSetting(userId: any, cId: any, body: any) {
+    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/coinsetting/" + cId, body);
+  }
+
+  deleteCoinSetting(userId: any, cId:any) {
+    return this.http.delete(environment.apiUrl + "/api/earnin/users/" + userId + "/coinsetting/"+cId);
+  }
+
 }
