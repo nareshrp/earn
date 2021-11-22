@@ -38,4 +38,9 @@ export const CommonLayout_ROUTES: Routes = [
     loadChildren: () => import('../../appnotifications/appnotifications.module').then(m => m.AppnotificationsModule),
     canActivate: [AuthenticationGuard],
   },
+  {
+    path: 'users',
+    loadChildren: () => import('../../users/users.module').then(m => m.UsersModule),
+    canActivate: [AuthenticationGuard],
+  },
 ];

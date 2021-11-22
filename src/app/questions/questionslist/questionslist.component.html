@@ -54,8 +54,12 @@
                   <button class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2" (click)="addPhone()" >Add</button>
                 </div>
                 <div class="col-md-4">
-                  <ul class="list-group">
-                    <li class="list-group-item" *ngFor="let row of radioQuestion">{{row}} <a href=""><i class="fa fa-trash" style="color:red;position: relative;left: 88%;" ></i> </a></li>
+                  <ul class="list-group queListOptions">
+                    <li class="list-group-item" *ngFor="let row of radioQuestion; let i=index;">
+                      {{row}} 
+                      <a href="javascript:void(0)" (click)="optionRow(row)">
+                        <i class="fa fa-trash" style="color:red;" ></i> </a>
+                      </li>
                    
                   </ul>
                 </div>
@@ -70,7 +74,7 @@
             <div class="mb-3 mt-4">
               <button type="submit"class="btn btn-primary w-md" *ngIf="!isRowEdit" (click)="onSubmit()" 
                 >Submit</button>
-              <button type="submit"  class="btn btn-primary w-md" *ngIf="isRowEdit"
+              <button type="submit"  class="btn btn-primary w-md" *ngIf="isRowEdit" (click)="onUpdated()"
                 >Update</button>
                 
             </div>

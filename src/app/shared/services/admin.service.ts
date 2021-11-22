@@ -90,6 +90,10 @@ export class AdminService {
     return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/question", body);
   }
 
+  editQuestion(userId: any, qtyId:any, body: any){
+    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/question/"+ qtyId, body);
+  }
+
   getQuestions(userId: any) {
     return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/questions");
   }

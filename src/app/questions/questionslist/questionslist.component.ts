@@ -80,9 +80,10 @@ export class QuestionslistComponent implements OnInit {
     this._adminService.getQuestions(this.userId).pipe(finalize(() => {
       this.spinner.hide();
     })).subscribe((res: any) => {
+      console.log("res", res);
       if (res.statusCode === 200) {
-        this.questionsList = res.result;
-        console.log("country countryList", this.questionsList);
+        this.questionsList = res.questions;
+        console.log("questionsList", this.questionsList);
       }
     })
   }
@@ -118,6 +119,30 @@ export class QuestionslistComponent implements OnInit {
 
   }
 
+  onUpdated(){
+    this.isRowEdit = false;
+    const obj = 
+    {
+      qtnType: this.questionInfo.value.qtnType,
+      question: this.questionInfo.value.question,
+      radios: this.radioQuestion
+    }
+
+    this._adminService.editQuestion(this.userId, this.rowId, obj).pipe(finalize(() => {
+      this.spinner.hide();
+    })).subscribe((res: any) => {
+      if (res.statusCode === 200) {
+        this.radioQuestion = [];
+        this.radioType = false;
+        this.toastr.showSuccess(res.message, 'Success');
+        this.questionInfo.reset();
+        this.getQuestionsList();
+      }
+    });
+
+
+  }
+
   rowDelete(id: any) {
     console.log("delete", id);
 
@@ -128,7 +153,10 @@ export class QuestionslistComponent implements OnInit {
       }
     });
   }
-
+  optionRow(index:any){
+    console.log("index", index);
+    this.radioQuestion=  this.radioQuestion.filter((item:any) => item !== index);
+  }
   editRow(row:any) {
     this.isRowEdit = true;
     console.log("row id", row.id);
@@ -138,6 +166,14 @@ export class QuestionslistComponent implements OnInit {
     this.questionInfo.controls['question'].setValue(row.question);
     // this.selectCountry(row.name);
     console.log("rowupdated form value", this.questionInfo.value);
+    if(row.options.length>0){
+      this.radioType = true;
+    this.radioQuestion=row.options;
+    }
+    
+
+    console.log("radioQuestion",this.radioQuestion);
+
   }
 
 }

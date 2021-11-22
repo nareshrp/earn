@@ -325,3 +325,12 @@ body[data-sidebar-size=small] .footer {
 }
 
 .navbar-header.public-header .navbar-brand-box { background:none}
+
+.queListOptions li {
+  position: relative;
+}
+.queListOptions li a {
+  position: absolute;
+  right: 12px;
+}
+
