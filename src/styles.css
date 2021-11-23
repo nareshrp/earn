@@ -333,4 +333,53 @@ body[data-sidebar-size=small] .footer {
   position: absolute;
   right: 12px;
 }
+.userTemplate .left-panel{ border-right: solid 1px #e0e1e7; padding: 15px;}
+.userTemplate .right-panel{ padding: 15px;}
+.no-padding-left{ padding-left: 0px;}
+.userTemplate .left-panel .list{ margin: 0px; padding: 0px; list-style: none;}
+.userTemplate .left-panel .list li{ display: inline-block; width: 100%; position: relative;  padding-left: 40px;  border-bottom: solid 1px #e0e1e7; margin-bottom: 10px; padding-bottom: 10px;}
+.userTemplate .left-panel .list li::before { content: '\f10c';  font-family: "FontAwesome";  font-size: 18px;  position: absolute;  left: 5px;  color: #ebebf1;}
+.userTemplate .left-panel .list li h3{ font-size: 14px; font-weight: 600;}
+.userTemplate .left-panel .list li .mobile{ font-size: 13px; font-weight: 500; margin:0px}
+.userTemplate .left-panel .list li .email{ font-size: 13px; font-weight: normal; display: block;}
+.userTemplate .left-panel .list li.active::before { content: "\f192"; color: #fe841a;}
+.btn-positionAbs{ position: absolute; top: 0;  right: 0;  display: none}
+.userblockAction{ border-radius: 20px; border: solid 2px #ebebf1;  ;}
+.primaryAction{ border-radius: 20px; border: solid 2px #bbebce; background:#ecfff4; color: #19743d; margin-top: 8px; }
+.userblockAction:hover{ background:#fe841a; color: #FFF; border-color:#fe841a;}
+.userTemplate .left-panel .list li:hover .btn-positionAbs{ display: block;}
+.userTemplate .right-panel .user-block{ position: relative; border-bottom: solid 1px #e0e1e7; padding-bottom: 10px; padding-top: 10px; margin-bottom: 20px;  }
+.userTemplate .right-panel .user-block h2{ font-size: 18px; font-weight: 600; }
+.userTemplate .right-panel .user-block .position-list{position: absolute; margin: 0px;  list-style: none; right: 0;  top: 0;}
+.userTemplate .right-panel .user-block .position-list li{ display: inline-block; padding: 6px 20px; border: solid 1px #ebebf1; margin-left:10px; border-radius: 30px; font-size: 13px; font-weight: 500px;}
+.userTemplate .right-panel .user-block .position-list li.email{ border-color:#bbebce; background:#ecfff4; color: #19743d}
+.userTemplate .right-panel .user-block .position-list li.mobile{ border-color: #ffe1c7;
+  background: #fff2e7;
+  color: #fe841a;}
+  .pills-block{ position: relative; }
+  .pills-block h5{ font-size: 16px; font-weight: 600;     color: #293042;}
+  .pills-block::after{ content: ''; position: absolute; width: 2px; height: 100%;     top: 0;
+    right: 0;
+    background: #d5d5d5;}
+    .pills-block.no-border::after{ display: none;}
+    .inner-card{ border-radius: 6px; margin-bottom:0px; margin-top:20px; background: #eaeaf4; padding: 20px;}
+    .inner-card h3{    font-size: 16px;  color: #4343b3;}
+    .inner-card .card-list{ margin:0px; padding: 0px; list-style: none;}
+    .inner-card .card-list li{ margin-bottom: 5px;   position: relative; padding-left: 30px; padding-top: 3px;}
+    .inner-card .card-list li .count{ position: absolute; left: 0; top: 0; width: 22px; height: 22px; border: solid 1px #e0e1e7; background: #FFF; border-radius: 100%; text-align: center;}
+    .vertical-line {      border-right: solid 1px #c8c8db; }
+
+.opt-color{ background: #f1e3e8;}
+.mr-left{ margin-left: 10px;}
+.border-radious30px{ border-radius: 30px;}
+.no-margin{ margin:0px;}
+.deals-block h3{ font-size: 18px; font-weight: 600;}
+.deal { border-bottom:solid 1px #e0e1e7;     margin-top: 15px;}
+.deal h5{ font-size: 14px; font-weight: 600; margin-bottom: 0px; }
+.deal h5 span{ color: #fe841a;}
+.deal ul{ margin: 0px; padding: 0px; list-style: none;}
+.deal ul li{ margin-bottom: 10px; padding: 10px;  display: inline-block;  width: 16%;  text-align: center;  position: relative;}
+.deal ul li:after {  content: " ";  width: 1px;  height: 80%;  position: absolute;  top: 0;  background: #e7eafb;  right: 0;}
+.deal ul li:last-child:after{ display: none;}
+.deal ul li a{ font-size: 14px;}
 
