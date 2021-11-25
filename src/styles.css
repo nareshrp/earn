@@ -383,4 +383,7 @@ body[data-sidebar-size=small] .footer {
 .deal ul li:after {  content: " ";  width: 1px;  height: 80%;  position: absolute;  top: 0;  background: #e7eafb;  right: 0;}
 .deal ul li:last-child:after{ display: none;}
 .deal ul li a{ font-size: 14px;}
-
+.input-group-text{
+  height: 33px;
+  font-size: 13px;
+}
