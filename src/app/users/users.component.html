@@ -16,14 +16,26 @@
         <div class="col-xl-4 no-padding-right">
           <div class="left-panel">
             <ul class="list">
-              <li class="active">
+              <!-- <li class="active">
                 <h3>Naresh Bolakonda </h3>
                 <h4 class="mobile">9701630343</h4>
                 <span class="email">naresh@rpwebapps.com</span>
                 <button class="btn btn-sm btn-default userblockAction btn-positionAbs">Block</button>
                 <button class="btn btn-sm btn-default userblockAction primaryAction">Withdrawal</button>
-              </li>
-              <li>
+              </li> -->
+<ng-container *ngFor="let row of usersList; let i=index">
+  <li  [ngClass]="(i==updatedIndex)?'active':''" (click)="slectedUser(row, i)" >
+    <h3>{{row.firstName}}{{row.lastName}} </h3>
+    <h4 class="mobile">9701630343</h4>
+    <span class="email">{{row.emailId}}</span>
+    <button class="btn btn-sm btn-default userblockAction btn-positionAbs">Block</button>
+    <button class="btn btn-sm btn-default userblockAction primaryAction" *ngIf="isWithdrawal">Withdrawal</button>
+  </li>
+</ng-container>
+            
+
+              
+              <!-- <li>
                 <h3>Rajesh</h3>
                 <h4 class="mobile">9701630343</h4>
                 <span class="email">rajesh@rpwebapps.com</span>
@@ -52,18 +64,18 @@
                 <h4 class="mobile">9701630343</h4>
                 <span class="email">mahi@rpwebapps.com</span>
                 <button class="btn btn-sm btn-default userblockAction btn-positionAbs">Block</button>
-              </li>
+              </li> -->
             </ul>
           </div>
         </div>
         <div class="col-xl-8">
-          <div class="right-panel">
+          <div class="right-panel" *ngIf="filterDataList">
             <div class="row">
               <div class="col-12">
                 <div class="user-block">
-                  <h2>Naresh Bolakonda</h2>
+                  <h2>{{filterDataList.firstName}} {{filterDataList.lastName}}</h2>
                   <ul class="position-list">
-                    <li class="email">naresh@rpwebapps.com</li>
+                    <li class="email">{{filterDataList.emailId}}</li>
                     <li class="mobile">9701630343</li>
                   </ul>
                 </div>
@@ -73,19 +85,19 @@
               <div class="col-4">
                 <div class="pills-block">
                   <label>Last coins withdrawal  </label>
-                  <h5>11/23/2021</h5>
+                  <h5>{{filterDataList.lastWithdrawTime | date :'dd-MMM-yy h:mm:ss a '}}</h5>
                 </div>
               </div>
               <div class="col-4">
                 <div class="pills-block">
                   <label>Coupons Used</label>
-                  <h5>40</h5>
+                  <h5>{{filterDataList.couponUsed}}</h5>
                 </div>
               </div>
               <div class="col-4">
                 <div class="pills-block no-border">
                   <label>Coins Earned</label>
-                  <h5>200</h5>
+                  <h5>{{filterDataList.earnCoin}}</h5>
                 </div>
               </div>
             </div>
@@ -140,34 +152,39 @@
               <div class="col-12">
                 <div class="deals-block">
                   <h3>Deals</h3>
-                  <div class="deal">
-                    <h5>Diwali Offer - <span class="pill">Comedy</span></h5>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+                  <div class="deal" *ngFor="let deal of filterDataList.deals">
+                    <h5>{{deal.offerTitle}} - <span class="pill">{{deal.category}}</span></h5>
+                    <span>From Date: {{deal.fromDate | date :'dd-MMM-yy h:mm:ss'}}</span> -  <span>End Date: {{deal.eOn | date :'dd-MMM-yy h:mm:ss'}}</span>
+                     <div  innerHtml="{{deal.dealContent}}"></div>
                     <ul>
                       <li>
-                        <label>Image</label>
-                        <h6>20</h6>
+                        <label>Shared Count</label>
+                        <h6>{{deal.sharedCnt}}</h6>
                       </li>
                       
                       <li>
-                        <label>Traffic</label>
-                        <h6>40</h6>
+                        <label>View Count</label>
+                        <h6>{{deal.viewCnt}}</h6>
                       </li>
                       <li>
-                        <label>Coupons</label>
-                        <h6>40</h6>
+                        <label>Total Coins</label>
+                        <h6>{{deal.totCoin}}</h6>
                       </li>
                       <li>
+                        <label>Used Coins</label>
+                        <h6>{{deal.usedCoin}}</h6>
+                      </li>
+                      <!-- <li>
                         <label>Coins</label>
                         <h6>40</h6>
-                      </li>
+                      </li> -->
                       <li>
                         <label>Deal Link</label>
-                        <h6><a href="#">Click here</a></h6>
+                        <h6><a href="{{deal.linkUrl}}">Click here</a></h6>
                       </li>
                     </ul>
                   </div>
-                  <div class="deal">
+                  <!-- <div class="deal">
                     <h5>Diwali Offer - <span class="pill">Comedy</span></h5>
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
                     <ul>
@@ -193,7 +210,7 @@
                         <h6><a href="#">Click here</a></h6>
                       </li>
                     </ul>
-                  </div>
+                  </div> -->
 
 
                 </div>

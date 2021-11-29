@@ -338,7 +338,7 @@ body[data-sidebar-size=small] .footer {
 .no-padding-left{ padding-left: 0px;}
 .no-padding-right{ padding-right: 0px;}
 .userTemplate .left-panel .list{ margin: 0px; padding: 0px; list-style: none;}
-.userTemplate .left-panel .list li{ display: inline-block; width: 100%; position: relative;  padding-left: 40px;  border-bottom: solid 1px #e0e1e7; margin-bottom: 10px; padding-bottom: 10px;}
+.userTemplate .left-panel .list li{ display: inline-block; width: 100%; cursor: pointer; position: relative;  padding-left: 40px;  border-bottom: solid 1px #e0e1e7; margin-bottom: 10px; padding-bottom: 10px;}
 .userTemplate .left-panel .list li::before { content: '\f10c';  font-family: "FontAwesome";  font-size: 18px;  position: absolute;  left: 5px;  color: #ebebf1;}
 .userTemplate .left-panel .list li h3{ font-size: 14px; font-weight: 600;}
 .userTemplate .left-panel .list li .mobile{ font-size: 13px; font-weight: 500; margin:0px}

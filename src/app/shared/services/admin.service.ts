@@ -136,4 +136,8 @@ export class AdminService {
     return this.http.delete(environment.apiUrl + "/api/earnin/users/" + userId + "/coinsetting/"+cId);
   }
 
+  getAllUsers(userId: any){
+    return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/search?name=earn");
+  }
+
 }
