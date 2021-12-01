@@ -14,6 +14,7 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 export class CoinSettingsComponent implements OnInit {
   pageTitle: any;
   coinsSettingForm: FormGroup;
+  conditionForm: FormGroup;
   role: any;
   userId: any;
   submitted = false;
@@ -21,10 +22,11 @@ export class CoinSettingsComponent implements OnInit {
   rowId: any;
   countryCoinsData: any;
   settingCoinsList: any;
-  shareType: any = [{ val: "image", type: 'Image Share' }, { val: "video", type: 'Video Share' }, { val: "link", type: 'Link View' }, { val: "coupon", type: 'Coupon Share' }];
+  shareType: any = [{ val: "imgViewSettings", type: 'Image Share' }, { val: "videoViewSettings", type: 'Video Share' }, { val: "linkViewSettings", type: 'Link View' }, { val: "couponViewSettings", type: 'Coupon Share' }];
   conditionalType: any = [{ val: "lt", type: '<' }, { val: "gt", type: '>' }, { val: "eq", type: '=' }, { val: "lte", type: '<=' }, { val: "gte", type: '>=' }];
-  actionType: any = [{ id: 1, type: 'Release hold funds' }, { id: 2, type: 'Hold funds' }];
+  actionType: any = [{ id: 1, type: 'Release Holded funds' }, { id: 2, type: 'Holded funds' },  { id: 3, type: 'Not applicable' }];
   conditionsList: any = [];
+  dynamicKey:any;
   constructor(
     private activatedRouterServices: ActivatedRoute,
     private spinner: NgxSpinnerService,
@@ -45,15 +47,21 @@ export class CoinSettingsComponent implements OnInit {
     // });
 
     this.coinsSettingForm = this.fb.group({
-      defaultImageShare: [null],
-      defaultVideoShare: [null],
-      shareType: [null],
-      conditionType: [null],
+      imgDefaultCoin: [null],
+      videoDefaultCoin: [null],
+     
+    });
+
+    this.conditionForm = this.fb.group({
+      operator: [null],
       threshold: [null],
-      rewardAmount: [null],
+      coin: [null],
       currency: [null],
       action: [null],
+     
     });
+
+
 
   }
 
@@ -94,20 +102,26 @@ export class CoinSettingsComponent implements OnInit {
     this.coinsSettingForm.controls['coinVAl'].setValue(filterVal.coinVal);
   }
 
-  editRow(row: any) {
+  editRow(row: any, view:any) {
     this.isRowEdit = true;
-    console.log("row id", row.id);
+    console.log("row id", row._id);
+    console.log("row view",view);
     console.log("row", row);
-    this.rowId = row.id;
+    this.rowId = row._id;
+    let data = this.settingCoinsList.filter((item:any)=>{
+      return item._id==row._id;
+    });
+    console.log("data", data);
+    // this.coinsSettingForm.controls['country'].setValue(row.country);
+    // this.coinsSettingForm.controls['currency'].setValue(row.currency);
+    // this.coinsSettingForm.controls['coinVAl'].setValue(row.coinVAl);
+    // this.coinsSettingForm.controls['threshold'].setValue(row.threshold);
+    // this.coinsSettingForm.controls['imgViewVal'].setValue(row.imgViewVal);
+    // this.coinsSettingForm.controls['videoViewVal'].setValue(row.videoViewVal);
+    // this.coinsSettingForm.controls['defaultCoin'].setValue(row.defaultCoin);
+    // this.coinsSettingForm.controls['withdrawThreshold'].setValue(row.withdrawThreshold);
 
-    this.coinsSettingForm.controls['country'].setValue(row.country);
-    this.coinsSettingForm.controls['currency'].setValue(row.currency);
-    this.coinsSettingForm.controls['coinVAl'].setValue(row.coinVAl);
-    this.coinsSettingForm.controls['threshold'].setValue(row.threshold);
-    this.coinsSettingForm.controls['imgViewVal'].setValue(row.imgViewVal);
-    this.coinsSettingForm.controls['videoViewVal'].setValue(row.videoViewVal);
-    this.coinsSettingForm.controls['defaultCoin'].setValue(row.defaultCoin);
-    this.coinsSettingForm.controls['withdrawThreshold'].setValue(row.withdrawThreshold);
+    
 
   }
 
@@ -139,10 +153,10 @@ export class CoinSettingsComponent implements OnInit {
     this._adminService.getCoinData(this.userId).pipe(finalize(() => {
 
     })).subscribe((res: any) => {
-
+      console.log("res",res);
       if (res.statusCode === 200) {
-        this.settingCoinsList = res.result;
-        console.log("country settingCoinsList", this.settingCoinsList);
+        this.settingCoinsList = res.coinsSetting;
+        console.log("settingCoinsList", this.settingCoinsList);
       }
     })
   }
@@ -188,10 +202,33 @@ export class CoinSettingsComponent implements OnInit {
 
   }
 
+  onChangeSharetype(event:any){
+      console.log("event type", event.target.value);
+      this.dynamicKey=event.target.value;
+  }
+
   addCondition() {
-    console.log("this.form", this.coinsSettingForm.value);
-    this.conditionsList.push(this.coinsSettingForm.value);
-    console.log("conditionsList", this.conditionsList);
+    this.spinner.show();
+    let newObject ={
+      defaultImageShare:this.coinsSettingForm.value['imgDefaultCoin'],
+      videoDefaultCoin:this.coinsSettingForm.value['videoDefaultCoin'],
+     [this.dynamicKey]:this.conditionForm.value
+    }
+
+
+    this._adminService.addCoinSettings(this.userId, newObject).pipe(finalize(() => {
+      this.spinner.hide();
+    })).subscribe((res: any) => {
+      console.log("res", res);
+      if (res.statusCode === 200) {
+        this.toastr.showSuccess(res.message, 'Success');
+        this.getSettingCoinsDataList();
+        this.conditionForm.reset();
+        // this.getAllMyCities();
+
+      }
+    });
+
 
   }
 
