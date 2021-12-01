@@ -20,7 +20,11 @@ export class CoinSettingsComponent implements OnInit {
   isRowEdit: boolean = false;
   rowId: any;
   countryCoinsData: any;
-  settingCoinsList:any;
+  settingCoinsList: any;
+  shareType: any = [{ val: "image", type: 'Image Share' }, { val: "video", type: 'Video Share' }, { val: "link", type: 'Link View' }, { val: "coupon", type: 'Coupon Share' }];
+  conditionalType: any = [{ val: "lt", type: '<' }, { val: "gt", type: '>' }, { val: "eq", type: '=' }, { val: "lte", type: '<=' }, { val: "gte", type: '>=' }];
+  actionType: any = [{ id: 1, type: 'Release hold funds' }, { id: 2, type: 'Hold funds' }];
+  conditionsList: any = [];
   constructor(
     private activatedRouterServices: ActivatedRoute,
     private spinner: NgxSpinnerService,
@@ -28,16 +32,27 @@ export class CoinSettingsComponent implements OnInit {
     private fb: FormBuilder,
     public routerServices: Router,
     private _adminService: AdminService,
-  ) { 
+  ) {
+    // this.coinsSettingForm = this.fb.group({
+    //   country: [null, [Validators.required]],
+    //   currency: [null],
+    //   coinVAl: [null],
+    //   threshold: [null, [Validators.required]],
+    //   imgViewVal: [null, [Validators.required]],
+    //   videoViewVal: [null, [Validators.required]],
+    //   defaultCoin: [null, [Validators.required]],
+    //   withdrawThreshold: [null, [Validators.required]],
+    // });
+
     this.coinsSettingForm = this.fb.group({
-      country: [null, [Validators.required]],
+      defaultImageShare: [null],
+      defaultVideoShare: [null],
+      shareType: [null],
+      conditionType: [null],
+      threshold: [null],
+      rewardAmount: [null],
       currency: [null],
-      coinVAl: [null],
-      threshold: [null, [Validators.required]],
-      imgViewVal: [null, [Validators.required]],
-      videoViewVal: [null, [Validators.required]],
-      defaultCoin: [null, [Validators.required]],
-      withdrawThreshold: [null, [Validators.required]],
+      action: [null],
     });
 
   }
@@ -68,11 +83,11 @@ export class CoinSettingsComponent implements OnInit {
     })
   }
 
-  countryChange(event:any){
-   
-    let eventVal=event.target.value;
-    let filterVal= this.countryCoinsData.filter((item:any)=>{
-      return item.code===eventVal;
+  countryChange(event: any) {
+
+    let eventVal = event.target.value;
+    let filterVal = this.countryCoinsData.filter((item: any) => {
+      return item.code === eventVal;
     })[0];
     console.log(filterVal);
     this.coinsSettingForm.controls['currency'].setValue(filterVal.currency);
@@ -147,14 +162,14 @@ export class CoinSettingsComponent implements OnInit {
       console.log("item", item);
       return this.coinsSettingForm.value.currency == item.currency;
     });
-    
+
     if (uniqueval.length) {
       this.toastr.showError("Dublicate Entry", 'Error');
       this.spinner.hide();
       this.coinsSettingForm.reset();
 
-    }else{
-      this._adminService.addCoinSettings(this.userId,this.coinsSettingForm.value).pipe(finalize(() => {
+    } else {
+      this._adminService.addCoinSettings(this.userId, this.coinsSettingForm.value).pipe(finalize(() => {
         this.spinner.hide();
       })).subscribe((res: any) => {
         console.log("res", res);
@@ -163,13 +178,20 @@ export class CoinSettingsComponent implements OnInit {
           this.getSettingCoinsDataList();
           this.coinsSettingForm.reset();
           // this.getAllMyCities();
-  
+
         }
       });
     }
 
-   
 
+
+
+  }
+
+  addCondition() {
+    console.log("this.form", this.coinsSettingForm.value);
+    this.conditionsList.push(this.coinsSettingForm.value);
+    console.log("conditionsList", this.conditionsList);
 
   }
 

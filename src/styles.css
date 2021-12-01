@@ -387,3 +387,8 @@ body[data-sidebar-size=small] .footer {
   height: 33px;
   font-size: 13px;
 }
+.common-btn {
+  height: 32px;
+  font-size: 14px;
+  line-height: 10px;
+}
