@@ -24,9 +24,11 @@ export class CoinSettingsComponent implements OnInit {
   settingCoinsList: any;
   shareType: any = [{ val: "imgViewSettings", type: 'Image Share' }, { val: "videoViewSettings", type: 'Video Share' }, { val: "linkViewSettings", type: 'Link View' }, { val: "couponViewSettings", type: 'Coupon Share' }];
   conditionalType: any = [{ val: "lt", type: '<' }, { val: "gt", type: '>' }, { val: "eq", type: '=' }, { val: "lte", type: '<=' }, { val: "gte", type: '>=' }];
-  actionType: any = [{ id: 1, type: 'Release Holded funds' }, { id: 2, type: 'Holded funds' },  { id: 3, type: 'Not applicable' }];
+  actionType: any = [{ id: 1, type: 'Release Holded funds' }, { id: 2, type: 'Holded funds' }, { id: 3, type: 'Not applicable' }];
   conditionsList: any = [];
-  dynamicKey:any;
+  dynamicKey: any;
+  updatedRowId: any;
+
   constructor(
     private activatedRouterServices: ActivatedRoute,
     private spinner: NgxSpinnerService,
@@ -49,7 +51,7 @@ export class CoinSettingsComponent implements OnInit {
     this.coinsSettingForm = this.fb.group({
       imgDefaultCoin: [null],
       videoDefaultCoin: [null],
-     
+
     });
 
     this.conditionForm = this.fb.group({
@@ -58,7 +60,7 @@ export class CoinSettingsComponent implements OnInit {
       coin: [null],
       currency: [null],
       action: [null],
-     
+
     });
 
 
@@ -86,7 +88,7 @@ export class CoinSettingsComponent implements OnInit {
 
       if (res.statusCode === 200) {
         this.countryCoinsData = res.result;
-        console.log("country countryCoinsData", this.countryCoinsData);
+        // console.log("country countryCoinsData", this.countryCoinsData);
       }
     })
   }
@@ -102,26 +104,22 @@ export class CoinSettingsComponent implements OnInit {
     this.coinsSettingForm.controls['coinVAl'].setValue(filterVal.coinVal);
   }
 
-  editRow(row: any, view:any) {
+  editRow(condition: any, type: any, row: any) {
     this.isRowEdit = true;
-    console.log("row id", row._id);
-    console.log("row view",view);
-    console.log("row", row);
-    this.rowId = row._id;
-    let data = this.settingCoinsList.filter((item:any)=>{
-      return item._id==row._id;
-    });
-    console.log("data", data);
-    // this.coinsSettingForm.controls['country'].setValue(row.country);
-    // this.coinsSettingForm.controls['currency'].setValue(row.currency);
-    // this.coinsSettingForm.controls['coinVAl'].setValue(row.coinVAl);
-    // this.coinsSettingForm.controls['threshold'].setValue(row.threshold);
-    // this.coinsSettingForm.controls['imgViewVal'].setValue(row.imgViewVal);
-    // this.coinsSettingForm.controls['videoViewVal'].setValue(row.videoViewVal);
-    // this.coinsSettingForm.controls['defaultCoin'].setValue(row.defaultCoin);
-    // this.coinsSettingForm.controls['withdrawThreshold'].setValue(row.withdrawThreshold);
 
-    
+    console.log("condition", condition);
+    console.log("type", type);
+    console.log("row", row);
+    if (type == 'linkView') {
+      this.updatedRowId = row._id;
+      this.coinsSettingForm.controls['imgDefaultCoin'].setValue(condition.imgDefaultCoin);
+      this.coinsSettingForm.controls['videoDefaultCoin'].setValue(condition.videoDefaultCoin);
+      this.onChangeSharetype("imgViewSettings");
+      this.dynamicKey = "imgViewSettings";
+      this.conditionForm.controls['coin'].setValue(row.coin);
+      this.conditionForm.controls['operator'].setValue(row.operator);
+      this.conditionForm.controls['threshold'].setValue(row.threshold);
+    }
 
   }
 
@@ -137,23 +135,12 @@ export class CoinSettingsComponent implements OnInit {
     });
   }
 
-  updateRow() {
-    this.isRowEdit = false;
-    this._adminService.editCountry(this.userId, this.rowId, this.coinsSettingForm.value).subscribe((result: any) => {
-      if (result.statusCode === 200) {
-        this.toastr.showSuccess(result.message, 'Success');
-        this.coinsSettingForm.reset();
-        this.getSettingCoinsDataList();
-
-      }
-    });
-  }
 
   getSettingCoinsDataList() {
     this._adminService.getCoinData(this.userId).pipe(finalize(() => {
 
     })).subscribe((res: any) => {
-      console.log("res",res);
+      console.log("res", res);
       if (res.statusCode === 200) {
         this.settingCoinsList = res.coinsSetting;
         console.log("settingCoinsList", this.settingCoinsList);
@@ -202,20 +189,34 @@ export class CoinSettingsComponent implements OnInit {
 
   }
 
-  onChangeSharetype(event:any){
-      console.log("event type", event.target.value);
-      this.dynamicKey=event.target.value;
+  onChangeSharetype(event: any) {
+    // console.log("event type", event.target.value);
+    if (event != '' && event.target != undefined) {
+      if (event.target.value != "") {
+        this.dynamicKey = event.target.value;
+        console.log("if", event.target.value);
+      }
+      else {
+
+        this.dynamicKey = event;
+        console.log("else", event);
+      }
+
+    }
+    else {
+      console.log("else else", event);
+      this.dynamicKey = event;
+    }
+
   }
 
   addCondition() {
     this.spinner.show();
-    let newObject ={
-      defaultImageShare:this.coinsSettingForm.value['imgDefaultCoin'],
-      videoDefaultCoin:this.coinsSettingForm.value['videoDefaultCoin'],
-     [this.dynamicKey]:this.conditionForm.value
+    let newObject = {
+      defaultImageShare: this.coinsSettingForm.value['imgDefaultCoin'],
+      videoDefaultCoin: this.coinsSettingForm.value['videoDefaultCoin'],
+      [this.dynamicKey]: this.conditionForm.value
     }
-
-
     this._adminService.addCoinSettings(this.userId, newObject).pipe(finalize(() => {
       this.spinner.hide();
     })).subscribe((res: any) => {
@@ -228,8 +229,30 @@ export class CoinSettingsComponent implements OnInit {
 
       }
     });
-
-
   }
+
+  updateRow() {
+    this.isRowEdit = false;
+
+    let newObject = {
+      defaultImageShare: this.coinsSettingForm.value['imgDefaultCoin'],
+      videoDefaultCoin: this.coinsSettingForm.value['videoDefaultCoin'],
+      [this.dynamicKey]: this.conditionForm.value
+    }
+
+    console.log("updateRow", newObject);
+    this._adminService.editCoinSetting(this.userId, this.updatedRowId, newObject).subscribe((result: any) => {
+      if (result.statusCode === 200) {
+        this.toastr.showSuccess(result.message, 'Success');
+        // this.coinsSettingForm.reset();
+        this.conditionForm.reset();
+        this.getSettingCoinsDataList();
+
+      }
+    });
+  }
+
+
+
 
 }

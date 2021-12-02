@@ -142,19 +142,20 @@
             </div>
           </div>
         </form>
-          <div class="row">
-            <div class="col-12">
-              <hr>
-            </div>
+        <div class="row">
+          <div class="col-12">
+            <hr>
           </div>
-          <form [formGroup]="conditionForm">
+        </div>
+        <form [formGroup]="conditionForm">
           <div class="row">
             <div class="col-md-2">
               <div class="form-group required">
                 <label class="form-label">Share Type</label>
                 <select class="form-control" (change)="onChangeSharetype($event)">
                   <option></option>
-                  <option *ngFor="let row of shareType" [value]="row.val">{{row.type}}</option>
+                  <option *ngFor="let row of shareType" [value]="row.val" [selected]="row.val===dynamicKey">{{row.type}}
+                  </option>
                 </select>
               </div>
             </div>
@@ -200,7 +201,13 @@
 
             <div class="col-md-2">
               <div class="form-group required" style="margin-top: 28px;">
-                <button class="btn btn-primary btn-block common-btn" (click)="addCondition()">Add Condition</button>
+                <button class="btn btn-primary btn-block common-btn" *ngIf="!isRowEdit" (click)="addCondition()">Add
+                  Condition</button>
+                <button class="btn btn-primary btn-block common-btn" *ngIf="isRowEdit"
+                  (click)="updateRow()">Update</button>
+
+
+
               </div>
             </div>
 
@@ -222,36 +229,36 @@
           <div *ngFor="let condition of settingCoinsList; let i=index">
 
             <ng-container *ngIf="condition.imgView && condition.imgView.length>0">
-                <ul>
-                  <ng-container *ngFor="let row of condition.imgView">
-                    <li >
-                      Image Share
-                    </li>
-                    <li>
-                      {{row.operator ==='lt'? '<': row.operator ==='gt'?'>': row.operator ==='eq' ? '=' : row.operator ==='lte' ? '<=' : row.operator ==='gte'?'>=':''}}
-                    </li>
+              <ul>
+                <ng-container *ngFor="let row of condition.imgView">
+                  <li>
+                    Image Share
+                  </li>
+                  <li>
+                    {{row.operator ==='lt'? '<': row.operator ==='gt'?'>': row.operator ==='eq' ? '=' : row.operator ==='lte' ? '<=' : row.operator ==='gte'?'>=':''}}
+                  </li>
 
-                    <li>
-                      {{row.threshold}}
-                    </li>
-                    <li>
-                      {{row.coin}}
-                    </li>
-                    <li>
-                      <a href="javascript:void(0);" class="text-success" (click)="editRow(row, condition.imgView)"><i
+                  <li>
+                    {{row.threshold}}
+                  </li>
+                  <li>
+                    {{row.coin}}
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);" class="text-success" (click)="editRow(condition, 'imgView', row)"><i
                         class="mdi mdi-pencil font-size-18"></i></a>
                     <a href="javascript:void(0);" class="text-danger" (click)="rowDelete(row.id)"><i
                         class="mdi mdi-delete font-size-18"></i></a>
-                    </li>
-                  </ng-container>
-                 
-                </ul>
+                  </li>
+                </ng-container>
+
+              </ul>
             </ng-container>
 
             <ng-container *ngIf="condition.videoView && condition.videoView.length>0">
               <ul>
                 <ng-container *ngFor="let row of condition.videoView">
-                  <li >
+                  <li>
                     Video Share
                   </li>
                   <li>
@@ -265,50 +272,50 @@
                     {{row.coin}}
                   </li>
                   <li>
-                    <a href="javascript:void(0);" class="text-success" (click)="editRow(row, condition.videoView)"><i
-                      class="mdi mdi-pencil font-size-18"></i></a>
-                  <a href="javascript:void(0);" class="text-danger" (click)="rowDelete(row.id)"><i
-                      class="mdi mdi-delete font-size-18"></i></a>
+                    <a href="javascript:void(0);" class="text-success" (click)="editRow(condition, 'videoView', row)"><i
+                        class="mdi mdi-pencil font-size-18"></i></a>
+                    <a href="javascript:void(0);" class="text-danger" (click)="rowDelete(row.id)"><i
+                        class="mdi mdi-delete font-size-18"></i></a>
                   </li>
                 </ng-container>
-               
+
               </ul>
-          </ng-container>
+            </ng-container>
 
-          <ng-container *ngIf="condition.linkView && condition.linkView.length>0">
-            <ul>
-              <ng-container *ngFor="let row of condition.linkView">
-                <li>
-                  Link View
-                </li>
-                <li>
-                  {{row.operator ==='lt'? '<': row.operator ==='gt'?'>': row.operator ==='eq' ? '=' : row.operator ==='lte' ? '<=' : row.operator ==='gte'?'>=':''}}
-                </li>
+            <ng-container *ngIf="condition.linkView && condition.linkView.length>0">
+              <ul>
+                <ng-container *ngFor="let row of condition.linkView">
+                  <li>
+                    Link View
+                  </li>
+                  <li>
+                    {{row.operator ==='lt'? '<': row.operator ==='gt'?'>': row.operator ==='eq' ? '=' : row.operator ==='lte' ? '<=' : row.operator ==='gte'?'>=':''}}
+                  </li>
 
-                <li>
-                  {{row.threshold}}
-                </li>
-                <li>
-                  {{row.coin}}
-                </li>
-                <li>
-                  <a href="javascript:void(0);" class="text-success" (click)="editRow(row, condition.linkView)"><i
-                    class="mdi mdi-pencil font-size-18"></i></a>
-                <a href="javascript:void(0);" class="text-danger" (click)="rowDelete(row.id)"><i
-                    class="mdi mdi-delete font-size-18"></i></a>
-                </li>
-              </ng-container>
-             
-            </ul>
-        </ng-container>
+                  <li>
+                    {{row.threshold}}
+                  </li>
+                  <li>
+                    {{row.coin}}
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);" class="text-success" (click)="editRow(condition, 'linkView', row)"><i
+                        class="mdi mdi-pencil font-size-18"></i></a>
+                    <a href="javascript:void(0);" class="text-danger" (click)="rowDelete(row.id)"><i
+                        class="mdi mdi-delete font-size-18"></i></a>
+                  </li>
+                </ng-container>
+
+              </ul>
+            </ng-container>
 
           </div>
           <!-- <table class="table align-middle table-nowrap table-check">
-       
+
             <tbody>
               <tr *ngFor="let row of settingCoinsList; let i=index">
 
-             
+
                 <td>{{i+1}} </td>
                 <td>{{row.country}}</td>
                 <td>{{row.currency}}</td>

@@ -90,17 +90,17 @@ export class AdminService {
     return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/question", body);
   }
 
-  editQuestion(userId: any, qtyId:any, body: any){
-    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/question/"+ qtyId, body);
+  editQuestion(userId: any, qtyId: any, body: any) {
+    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/question/" + qtyId, body);
   }
 
   getQuestions(userId: any) {
     return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/questions");
   }
 
- 
+
   deleteQuestions(userId: any, questionId: any) {
-    
+
     return this.http.delete(environment.apiUrl + "/api/earnin/users/" + userId + "/question/" + questionId);
   }
 
@@ -110,21 +110,21 @@ export class AdminService {
   getNotification(userId: any) {
     return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/notification/messages");
   }
-  deleteNotification(userId: any, msgId:any) {
-    return this.http.delete(environment.apiUrl + "/api/earnin/users/" + userId + "/notification/message/"+msgId);
+  deleteNotification(userId: any, msgId: any) {
+    return this.http.delete(environment.apiUrl + "/api/earnin/users/" + userId + "/notification/message/" + msgId);
   }
 
- 
+
 
   updateNotification(userId: any, rowId: any, body: any) {
     return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/notification/message/" + rowId, body);
   }
 
-  addCoinSettings(userId: any, body: any){
+  addCoinSettings(userId: any, body: any) {
     return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/coinsetting", body);
   }
 
-  getCoinData(userId: any){
+  getCoinData(userId: any) {
     return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/coinsetting");
   }
 
@@ -132,11 +132,11 @@ export class AdminService {
     return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/coinsetting/" + cId, body);
   }
 
-  deleteCoinSetting(userId: any, cId:any) {
-    return this.http.delete(environment.apiUrl + "/api/earnin/users/" + userId + "/coinsetting/"+cId);
+  deleteCoinSetting(userId: any, cId: any) {
+    return this.http.delete(environment.apiUrl + "/api/earnin/users/" + userId + "/coinsetting/" + cId);
   }
 
-  getAllUsers(userId: any){
+  getAllUsers(userId: any) {
     return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/search?name=earn");
   }
 
