@@ -22,7 +22,12 @@ export class CoinSettingsComponent implements OnInit {
   rowId: any;
   countryCoinsData: any;
   settingCoinsList: any;
-  shareType: any = [{ val: "imgViewSettings", type: 'Image Share' }, { val: "videoViewSettings", type: 'Video Share' }, { val: "linkViewSettings", type: 'Link View' }, { val: "couponViewSettings", type: 'Coupon Share' }];
+  shareType: any = [
+    { val: "imgViewSettings", type: 'Image Share' }, 
+    { val: "videoViewSettings", type: 'Video Share' }, 
+    { val: "linkViewSettings", type: 'Link View' }, 
+    { val: "couponViewSettings", type: 'Coupon Share' }
+  ];
   conditionalType: any = [{ val: "lt", type: '<' }, { val: "gt", type: '>' }, { val: "eq", type: '=' }, { val: "lte", type: '<=' }, { val: "gte", type: '>=' }];
   actionType: any = [{ id: 1, type: 'Release Holded funds' }, { id: 2, type: 'Holded funds' }, { id: 3, type: 'Not applicable' }];
   conditionsList: any = [];
@@ -112,10 +117,32 @@ export class CoinSettingsComponent implements OnInit {
     console.log("row", row);
     if (type == 'linkView') {
       this.updatedRowId = row._id;
+      console.log("linkView row", this.updatedRowId);
       this.coinsSettingForm.controls['imgDefaultCoin'].setValue(condition.imgDefaultCoin);
       this.coinsSettingForm.controls['videoDefaultCoin'].setValue(condition.videoDefaultCoin);
       this.onChangeSharetype("imgViewSettings");
       this.dynamicKey = "imgViewSettings";
+      this.conditionForm.controls['coin'].setValue(row.coin);
+      this.conditionForm.controls['operator'].setValue(row.operator);
+      this.conditionForm.controls['threshold'].setValue(row.threshold);
+    }else if (type == 'videoView') {
+      this.updatedRowId = row._id;
+      console.log("videoView row", this.updatedRowId);
+      this.coinsSettingForm.controls['imgDefaultCoin'].setValue(condition.imgDefaultCoin);
+      this.coinsSettingForm.controls['videoDefaultCoin'].setValue(condition.videoDefaultCoin);
+      this.onChangeSharetype("videoViewSettings");
+      this.dynamicKey = "videoViewSettings";
+      this.conditionForm.controls['coin'].setValue(row.coin);
+      this.conditionForm.controls['operator'].setValue(row.operator);
+      this.conditionForm.controls['threshold'].setValue(row.threshold);
+    }
+    else{
+      this.updatedRowId = row._id;
+      console.log("linkViewSettings row", this.updatedRowId);
+      this.coinsSettingForm.controls['imgDefaultCoin'].setValue(condition.imgDefaultCoin);
+      this.coinsSettingForm.controls['videoDefaultCoin'].setValue(condition.videoDefaultCoin);
+      this.onChangeSharetype("linkViewSettings");
+      this.dynamicKey = "linkViewSettings";
       this.conditionForm.controls['coin'].setValue(row.coin);
       this.conditionForm.controls['operator'].setValue(row.operator);
       this.conditionForm.controls['threshold'].setValue(row.threshold);
@@ -124,16 +151,6 @@ export class CoinSettingsComponent implements OnInit {
   }
 
 
-  rowDelete(id: any) {
-    console.log("delete", id);
-
-    this._adminService.deleteCoinSetting(this.userId, id).subscribe((result: any) => {
-      if (result.statusCode === 200) {
-        this.toastr.showSuccess(result.message, 'Success');
-        this.getSettingCoinsDataList();
-      }
-    });
-  }
 
 
   getSettingCoinsDataList() {
@@ -251,6 +268,18 @@ export class CoinSettingsComponent implements OnInit {
       }
     });
   }
+
+  rowDelete(id: any) {
+    console.log("delete", id);
+    
+    this._adminService.deleteCoinSetting(this.userId, id).subscribe((result: any) => {
+      if (result.statusCode === 200) {
+        this.toastr.showSuccess(result.message, 'Success');
+        this.getSettingCoinsDataList();
+      }
+    });
+  }
+
 
 
 
