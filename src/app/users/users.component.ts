@@ -67,5 +67,9 @@ export class UsersComponent implements OnInit {
 
   }
 
+  showQuestions(){
+    console.log("que", this.userId);
+  }
+
 
 }

@@ -29,7 +29,7 @@ export class CoinSettingsComponent implements OnInit {
     { val: "couponViewSettings", type: 'Coupon Share' }
   ];
   conditionalType: any = [{ val: "lt", type: '<' }, { val: "gt", type: '>' }, { val: "eq", type: '=' }, { val: "lte", type: '<=' }, { val: "gte", type: '>=' }];
-  actionType: any = [{ id: 1, type: 'Release Holded funds' }, { id: 2, type: 'Holded funds' }, { id: 3, type: 'Not applicable' }];
+  actionType: any = [{ action:"RHF", desc : 'Release Holded funds' },{ action:"HF", desc : 'Holded funds' }, { action:"NA", desc : 'Not applicable' }];
   conditionsList: any = [];
   dynamicKey: any;
   updatedRowId: any;
@@ -60,11 +60,11 @@ export class CoinSettingsComponent implements OnInit {
     });
 
     this.conditionForm = this.fb.group({
-      operator: [null],
-      threshold: [null],
-      coin: [null],
-      currency: [null],
-      action: [null],
+      operator: [null,[Validators.required]],
+      threshold: [null, [Validators.required]],
+      coin: [null, [Validators.required]],
+      currency: [null, [Validators.required]],
+      action: [null, [Validators.required]],
 
     });
 
@@ -80,6 +80,7 @@ export class CoinSettingsComponent implements OnInit {
     this.getSettingCoinsDataList();
   }
   get form() { return this.coinsSettingForm.controls; }
+  get cform() { return this.conditionForm.controls; }
   getPageTitle() {
     this.activatedRouterServices.data.subscribe((result: any) => {
       this.pageTitle = result.title;
@@ -115,7 +116,7 @@ export class CoinSettingsComponent implements OnInit {
     console.log("condition", condition);
     console.log("type", type);
     console.log("row", row);
-    if (type == 'linkView') {
+    if (type == 'imgView') {
       this.updatedRowId = row._id;
       console.log("linkView row", this.updatedRowId);
       this.coinsSettingForm.controls['imgDefaultCoin'].setValue(condition.imgDefaultCoin);
@@ -125,6 +126,8 @@ export class CoinSettingsComponent implements OnInit {
       this.conditionForm.controls['coin'].setValue(row.coin);
       this.conditionForm.controls['operator'].setValue(row.operator);
       this.conditionForm.controls['threshold'].setValue(row.threshold);
+      this.conditionForm.controls['currency'].setValue(row.currency);
+      this.conditionForm.controls['action'].setValue(row.action);
     }else if (type == 'videoView') {
       this.updatedRowId = row._id;
       console.log("videoView row", this.updatedRowId);
@@ -135,6 +138,8 @@ export class CoinSettingsComponent implements OnInit {
       this.conditionForm.controls['coin'].setValue(row.coin);
       this.conditionForm.controls['operator'].setValue(row.operator);
       this.conditionForm.controls['threshold'].setValue(row.threshold);
+      this.conditionForm.controls['currency'].setValue(row.currency);
+      this.conditionForm.controls['action'].setValue(row.action);
     }
     else{
       this.updatedRowId = row._id;
@@ -146,6 +151,8 @@ export class CoinSettingsComponent implements OnInit {
       this.conditionForm.controls['coin'].setValue(row.coin);
       this.conditionForm.controls['operator'].setValue(row.operator);
       this.conditionForm.controls['threshold'].setValue(row.threshold);
+      this.conditionForm.controls['currency'].setValue(row.currency);
+      this.conditionForm.controls['action'].setValue(row.action);
     }
 
   }
@@ -228,7 +235,14 @@ export class CoinSettingsComponent implements OnInit {
   }
 
   addCondition() {
+    this.submitted = true;
     this.spinner.show();
+    if (this.conditionForm.invalid) {
+      this.spinner.hide();
+      return;
+    }
+    
+
     let newObject = {
       defaultImageShare: this.coinsSettingForm.value['imgDefaultCoin'],
       videoDefaultCoin: this.coinsSettingForm.value['videoDefaultCoin'],

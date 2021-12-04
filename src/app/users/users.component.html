@@ -26,7 +26,7 @@
 <ng-container *ngFor="let row of usersList; let i=index">
   <li  [ngClass]="(i==updatedIndex)?'active':''" (click)="slectedUser(row, i)" >
     <h3>{{row.firstName}}{{row.lastName}} </h3>
-    <h4 class="mobile">9701630343</h4>
+    <h4 class="mobile">{{row.phone}}</h4>
     <span class="email">{{row.emailId}}</span>
     <button class="btn btn-sm btn-default userblockAction btn-positionAbs">Block</button>
     <button class="btn btn-sm btn-default userblockAction primaryAction" *ngIf="isWithdrawal">Withdrawal</button>
@@ -76,7 +76,7 @@
                   <h2>{{filterDataList.firstName}} {{filterDataList.lastName}}</h2>
                   <ul class="position-list">
                     <li class="email">{{filterDataList.emailId}}</li>
-                    <li class="mobile">9701630343</li>
+                    <li class="mobile">{{filterDataList.phone}}</li>
                   </ul>
                 </div>
               </div>
@@ -137,7 +137,7 @@
               <div class="col-12">
                 <div class="pills-block no-border">
                   <p class="no-margin"> <strong>Questions</strong> <button
-                      class="btn btn-primary btn-sm border-radious30px mr-left">
+                      class="btn btn-primary btn-sm border-radious30px mr-left" (click)="showQuestions()">
                       Click here to view the
                       questions</button></p>
                 </div>

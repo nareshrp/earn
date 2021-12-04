@@ -403,3 +403,4 @@ body[data-sidebar-size=small] .footer {
   font-weight: 500; position: relative;}
  .conditionsBlock ul li:nth-child(3):after {content: "->";position: absolute;top: 0;right: 30px;}
 
+ .conditionsBlock ul li:nth-child(4){ width: 30%;}
