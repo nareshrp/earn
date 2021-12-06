@@ -33,7 +33,7 @@ import { HeaderComponent } from './layouts/public-layout/header/header.component
     MetismenuAngularModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(), // ToastrModule added
-    SidebarModule.forRoot(),
+    SidebarModule.forRoot(), NgbModule,
     // AgmCoreModule.forRoot({
     //   apiKey: 'AIzaSyAhDYjKC1B1VjPSEgfCtsAjJRDZHbOrlCg',
     //   libraries: ['places']

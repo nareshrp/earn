@@ -112,7 +112,7 @@
                 <div class="col-6 vertical-line">
                   <h3>Bank Accounts</h3>
                   <ul class="card-list">
-                    <li *ngFor="let acc of filterDataList.banks.accounts; let i=index"><span class="count">{{i+1}}</span>{{acc.accNo}} <span class="badge badge-primary " *ngIf="acc.isPrimary">Primary </span></li>
+                    <li *ngFor="let acc of filterDataList.banks.accounts; let i=index" (click)="openLg(content, acc)"><span class="count">{{i+1}}</span>{{acc.accNo}} <span class="badge badge-primary " *ngIf="acc.isPrimary">Primary </span></li>
                     <!-- <li><span class="count">2</span>16270020211114</li>
                     <li><span class="count">3</span>16270020211114</li> -->
                   </ul>
@@ -233,3 +233,19 @@
     </div>
   </div>
 </div>
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Modal title</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>One fine body&hellip;</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>

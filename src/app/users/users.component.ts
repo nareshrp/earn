@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs/operators';
 import { AdminService } from '../shared/services/admin.service';
 import { NotificationService } from '../shared/services/notification.service';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-users',
@@ -24,6 +25,7 @@ export class UsersComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private toastr: NotificationService,
     private _adminServices: AdminService,
+    private modalService: NgbModal
   ) { 
     this.slectedUser(this.usersList[0],0);
   }
@@ -35,6 +37,11 @@ export class UsersComponent implements OnInit {
     this.getUsersData();
     // this.slectedUser(this.usersList[0],0);
   
+  }
+
+  openLg(content:any, data:any) {
+    this.modalService.open(content, { size: 'lg' });
+    console.log("data", data);
   }
 
   getPageTitle() {
