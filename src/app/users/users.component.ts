@@ -68,7 +68,14 @@ export class UsersComponent implements OnInit {
   }
 
   showQuestions(){
-    console.log("que", this.userId);
+   
+   this._adminServices.getUserQstnAnswer(this.userId).pipe(finalize(() => {
+      this.spinner.hide();
+    })).subscribe((res: any) => {
+      console.log("res", res);
+    });
+
+    
   }
 
 

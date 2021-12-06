@@ -112,17 +112,15 @@
                 <div class="col-6 vertical-line">
                   <h3>Bank Accounts</h3>
                   <ul class="card-list">
-                    <li><span class="count">1</span>16270020XXXX14</li>
-                    <li><span class="count">2</span>16270020211114</li>
-                    <li><span class="count">3</span>16270020211114</li>
+                    <li *ngFor="let acc of filterDataList.banks.accounts; let i=index"><span class="count">{{i+1}}</span>{{acc.accNo}} <span class="badge badge-primary " *ngIf="acc.isPrimary">Primary </span></li>
+                    <!-- <li><span class="count">2</span>16270020211114</li>
+                    <li><span class="count">3</span>16270020211114</li> -->
                   </ul>
                 </div>
                 <div class="col-6">
                   <h3>UPI</h3>
                   <ul class="card-list">
-                    <li><span class="count">1</span>9701630343@ybl</li>
-                    <li><span class="count">2</span>Sample Task List 1</li>
-                    <li><span class="count">3</span>Sample Task List 1</li>
+                    <li *ngFor="let acc of filterDataList.banks.UPI; let i=index"><span class="count">{{i+1}}</span>{{acc.id}} <span class="badge badge-primary " *ngIf="acc.isPrimary">Primary </span></li>
                   </ul>
                 </div>
               </div>

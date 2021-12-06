@@ -79,7 +79,7 @@ export class CreateDealComponent implements OnInit {
       vAssets: [null, [Validators.required]],
       sharedImgInstr: [null],
       campBudget: [null, [Validators.required]],
-      bidPerCoin: [null, [Validators.required]],
+      // bidPerCoin: [null, [Validators.required]],
       consentPolicy: [null, [Validators.required]],
       category: [null, [Validators.required]],
       isCoupon: [null],
