@@ -135,7 +135,7 @@
               <div class="col-12">
                 <div class="pills-block no-border">
                   <p class="no-margin"> <strong>Questions</strong> <button
-                      class="btn btn-primary btn-sm border-radious30px mr-left" (click)="showQuestions()">
+                      class="btn btn-primary btn-sm border-radious30px mr-left" (click)="showQuestions(questions)">
                       Click here to view the
                       questions</button></p>
                 </div>
@@ -220,9 +220,14 @@
               <div class="col-12">
                 <div class="deals-block">
                   <h3>Coins renewed</h3>
-                  <p>Withdrawals requested on 23 Nov 2021 <button
-                    class="btn btn-primary btn-sm border-radious30px mr-left">
-                    Payment Done</button></p>
+                  <p>Withdrawals requested {{filterDataList.pendingTransaction[0].status}} 
+                    <button
+                    class="btn btn-primary btn-sm border-radious30px mr-left" (click)="approve(filterDataList.pendingTransaction[0].id)">
+                    Approve </button>
+                    <button
+                    class="btn btn-danger btn-sm border-radious30px mr-left" (click)="reject(filterDataList.pendingTransaction[0].id)">
+                    Rejected </button>
+                  </p>
                 </div>
               </div>
             </div>
@@ -237,13 +242,63 @@
 
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title">Modal title</h4>
+    <h4 class="modal-title">Bank Accounts</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    <p>One fine body&hellip;</p>
+   <div class="row">
+     <div class="col-md-3">
+       <div class="form-group">
+         <label>Account Number</label>
+         <p><strong>{{bankAccount.accNo}}</strong></p>
+       </div>
+     </div>
+     <div class="col-md-3">
+      <div class="form-group">
+        <label>Account HolderName</label>
+        <p><strong>{{bankAccount.accountHolderName}}</strong></p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <label>Primary Account</label>
+        <p><strong *ngIf="!bankAccount.isPrimary">No</strong> <strong *ngIf="bankAccount.isPrimary">Yes</strong></p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <label>Status</label>
+        <p><strong>{{bankAccount.status}}</strong></p>
+      </div>
+    </div>
+   </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #questions let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Questions & Answers</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-12 qa-list">
+        <ul>
+          <li *ngFor="let row of userQAList">
+            <h3>{{row.question}}</h3>
+            <span class="an">{{row.answer}}</span>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>

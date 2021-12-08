@@ -20,6 +20,8 @@ export class UsersComponent implements OnInit {
   updatedRowId:any;
   filterDataList:any;
   updatedIndex:any;
+  userQAList:any=[];
+  bankAccount:any;
   constructor(
     private activatedRouterServices: ActivatedRoute,
     private spinner: NgxSpinnerService,
@@ -42,7 +44,10 @@ export class UsersComponent implements OnInit {
   openLg(content:any, data:any) {
     this.modalService.open(content, { size: 'lg' });
     console.log("data", data);
+    this.bankAccount=data;
   }
+
+
 
   getPageTitle() {
     this.activatedRouterServices.data.subscribe((result: any) => {
@@ -66,24 +71,51 @@ export class UsersComponent implements OnInit {
   }
 
   slectedUser(row:any, index:any){
-    // console.log("row", row);
-    // this.updatedRowId=row.userId;
+    console.log("row", row);
+  //  this.updatedRowId=row.userId;
     this.updatedIndex=index;
     this.filterDataList= this.usersList.filter((item:any)=>{ return item.userId==row.userId})[0];
     console.log("filter Data", this.filterDataList);
+    // this.getWithdrawScreenMsg();
 
   }
 
-  showQuestions(){
+
+  // getWithdrawScreenMsg(){
+  //   let id="619656823d4bd2ce01ea2ee6"
+  //   this._adminServices.getWithdrawScreenMsg(id).pipe(finalize(() => {
+     
+  //   })).subscribe((res: any) => {
+  //     console.log(res);
+  //   });
+  // }
+
+  showQuestions(content:any){
    
    this._adminServices.getUserQstnAnswer(this.userId).pipe(finalize(() => {
       this.spinner.hide();
     })).subscribe((res: any) => {
       console.log("res", res);
+      this.modalService.open(content, { size: 'lg' });
+      if(res.statusCode===200){
+        this.userQAList=res.qstnAnswere;
+        console.log("userQAList", this.userQAList)
+      }
+     
     });
 
     
   }
+
+  approve(id:any){
+    console.log(id)
+  }
+
+  reject(id:any){
+    console.log(id)
+  }
+
+
 
 
 }

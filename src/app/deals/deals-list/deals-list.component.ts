@@ -32,7 +32,7 @@ export class DealsListComponent implements OnInit {
     this.role = localStorage.getItem("role");
     this.userId = localStorage.getItem("userId");
     this.getPageTitle();
-    this.getDealsData();
+    this.getDealsData(this.userId);
   }
   getPageTitle() {
     this.activatedRouterServices.data.subscribe((result: any) => {
@@ -44,9 +44,9 @@ export class DealsListComponent implements OnInit {
   }
 
 
-  getDealsData() {
+  getDealsData(userId:any) {
     this.spinner.show();
-    this.vendorService.getDeals().pipe(finalize(() => {
+    this.vendorService.getDeals(userId).pipe(finalize(() => {
       this.spinner.hide();
     })).subscribe((res: any) => {
 

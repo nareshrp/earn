@@ -141,12 +141,16 @@ export class AdminService {
     // return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/search?name=earn");
   }
 
-  requestForWithdraw(userId: any){
-    return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/withdraw");
-  }
+  // getWithdrawScreenMsg(userId: any){
+  //   return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/info");
+  // }
 
   getUserQstnAnswer(userId: any){
     return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/qstnanswer");
+  }
+
+  getApprove(userId: any, withdId:any){
+    return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/withdraw/"+withdId+"/approve");
   }
 
 }
