@@ -15,7 +15,7 @@
       <div class="card-body">
         <form [formGroup]="coinsForm">
           <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-2">
               <div class="form-group required">
                 <label class="form-label">Select Country</label>
                 <select class="form-control" formControlName="name" (change)="countryChange($event)"
@@ -27,13 +27,13 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
               <div class="form-group required">
                 <label class="form-label">Currency</label>
                 <input type="text" class="form-control" formControlName="currency" readonly>
               </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
               <div class="form-group required">
                 <label class="form-label">Set <strong>1 Coin = {{upDatedCoinVal}} </strong>
                   <span>{{updatedCurrencyVal}}</span> </label>
@@ -44,7 +44,27 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
+              <div class="form-group required">
+                <label class="form-label">Tax</label>
+                <input type="text" class="form-control"  formControlName="tax"
+                  [ngClass]="{ 'is-invalid': (submitted && form.tax.errors) || (form.tax.touched && form.tax.errors) }">
+                <div *ngIf="submitted||(form.tax.touched && form.tax.invalid)">
+                  <small class="form-text error-message" *ngIf="form.coinVal.errors"> Tax is required</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group required">
+                <label class="form-label">Vat</label>
+                <input type="text" class="form-control"  formControlName="vat"
+                  [ngClass]="{ 'is-invalid': (submitted && form.vat.errors) || (form.vat.touched && form.vat.errors) }">
+                <div *ngIf="submitted||(form.vat.touched && form.vat.invalid)">
+                  <small class="form-text error-message" *ngIf="form.coinVal.errors"> Vat is required</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
               <div class="form-group">
                 <div class="mb-3 mt-4">
                   <button type="submit" *ngIf="!isRowEdit" class="btn btn-primary w-md"
@@ -75,6 +95,8 @@
                 <th class="align-middle">Country Name</th>
                 <th class="align-middle">Currency</th>
                 <th class="align-middle">Set Coins</th>
+                <th class="align-middle">Tax</th>
+                <th class="align-middle">Vat</th>
                 <th class="align-middle" style="width: 150px;">Actions</th>
               </tr>
             </thead>
@@ -85,6 +107,8 @@
                 <td>{{row.name}}</td>
                 <td>{{row.currency}}</td>
                 <td>{{row.coinVal}}</td>
+                <td>{{row.tax}}</td>
+                <td>{{row.vat}}</td>
                 <td>
                   <div class="d-flex gap-3">
                     <a href="javascript:void(0);" class="text-success" (click)="editRow(row)"><i

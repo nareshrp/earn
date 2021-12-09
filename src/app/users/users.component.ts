@@ -109,10 +109,21 @@ export class UsersComponent implements OnInit {
 
   approve(id:any){
     console.log(id)
+    this._adminServices.getApprove(this.userId, id).pipe(finalize(() => {
+      this.spinner.hide();
+    })).subscribe((res: any) => {
+      this.toastr.showSuccess(res.message, "Successfully");
+    })
+
   }
 
   reject(id:any){
     console.log(id)
+    this._adminServices.getRejectedCol(this.userId, id).pipe(finalize(() => {
+      this.spinner.hide();
+    })).subscribe((res: any) => {
+      this.toastr.showSuccess(res.message, "Successfully");
+    })
   }
 
 

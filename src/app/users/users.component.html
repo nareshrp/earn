@@ -216,15 +216,15 @@
               </div>
             </div>
 
-            <div class="row my-3">
+            <div class="row my-3" *ngIf="filterDataList.pendingTransaction && filterDataList.pendingTransaction.length>0">
               <div class="col-12">
                 <div class="deals-block">
                   <h3>Coins renewed</h3>
                   <p>Withdrawals requested {{filterDataList.pendingTransaction[0].status}} 
-                    <button
+                    <button *ngIf="filterDataList.pendingTransaction[0].status"
                     class="btn btn-primary btn-sm border-radious30px mr-left" (click)="approve(filterDataList.pendingTransaction[0].id)">
                     Approve </button>
-                    <button
+                    <button *ngIf="filterDataList.pendingTransaction[0].status"
                     class="btn btn-danger btn-sm border-radious30px mr-left" (click)="reject(filterDataList.pendingTransaction[0].id)">
                     Rejected </button>
                   </p>

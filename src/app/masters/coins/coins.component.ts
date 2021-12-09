@@ -38,6 +38,8 @@ export class CoinsComponent implements OnInit {
       name: [null, [Validators.required]],
       currency: [null],
       coinVal: [null, [Validators.required]],
+      tax: [null, [Validators.required]],
+      vat: [null, [Validators.required]],
     });
   }
 
@@ -105,6 +107,8 @@ export class CoinsComponent implements OnInit {
     this.coinsForm.controls['name'].setValue(row.name);
     this.coinsForm.controls['currency'].setValue(row.currency);
     this.coinsForm.controls['coinVal'].setValue(row.coinVal);
+    this.coinsForm.controls['tax'].setValue(row.tax);
+    this.coinsForm.controls['vat'].setValue(row.vat);
     // this.selectCountry(row.name);
     console.log("rowupdated form value", this.coinsForm.value);
 

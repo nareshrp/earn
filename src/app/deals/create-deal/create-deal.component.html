@@ -238,7 +238,7 @@
             <div class="col-md-4">
               <div class="form-group required">
                 <label class="form-label">Campaign Budget</label>
-                <input class="form-control" type="text" formControlName="campBudget" placeholder="Budget"
+                <input class="form-control" type="text" formControlName="campBudget" placeholder="Budget" (blur)="onBudgetBlur()"
                   [ngClass]="{ 'is-invalid': (submitted && form.campBudget.errors) || (form.campBudget.touched && form.campBudget.errors) }">
                 <div *ngIf="submitted||(form.campBudget.touched && form.campBudget.invalid)">
                   <small class="form-text error-message" *ngIf="form.campBudget.errors">Campaign Budget is
@@ -246,18 +246,18 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="col-md-4">
+            <div class="col-md-4">
               <div class="form-group required">
                 <label class="form-label">Bid for each coin</label>
                 <input class="form-control" type="text" formControlName="bidPerCoin" placeholder="Devide coins (in INR)"
-                  [ngClass]="{ 'is-invalid': (submitted && form.bidPerCoin.errors) || (form.bidPerCoin.touched && form.bidPerCoin.errors) }">
-                <small>500 coins as per your budget</small>
+                 readonly>
+                <!-- <small>500 coins as per your budget</small>
                 <div *ngIf="submitted||(form.bidPerCoin.touched && form.bidPerCoin.invalid)">
                   <small class="form-text error-message" *ngIf="form.bidPerCoin.errors">Bid for each coin is
                     required</small>
-                </div>
+                </div> -->
               </div>
-            </div> -->
+            </div>
 
             <div class="col-md-4">
               <div class="form-group">

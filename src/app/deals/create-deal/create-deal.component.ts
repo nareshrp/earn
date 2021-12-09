@@ -52,7 +52,7 @@ export class CreateDealComponent implements OnInit {
   radiusMaster: any = [{ id: 1, value: 5 }, { id: 2, value: 10 }, { id: 3, value: 15 }, { id: 4, value: 20 }];
   bindingRadious: any;
   categoryList:any;
-
+countryName:any;
 
   constructor(
     private activatedRouterServices: ActivatedRoute,
@@ -79,7 +79,7 @@ export class CreateDealComponent implements OnInit {
       vAssets: [null, [Validators.required]],
       sharedImgInstr: [null],
       campBudget: [null, [Validators.required]],
-      // bidPerCoin: [null, [Validators.required]],
+      bidPerCoin: [null],
       consentPolicy: [null, [Validators.required]],
       category: [null, [Validators.required]],
       isCoupon: [null],
@@ -178,9 +178,12 @@ export class CreateDealComponent implements OnInit {
       if (status === 'OK') {
         if (results[0]) {
           this.zoom = 20;
-          console.log("results[0]", results[0]);
+          // console.log("results -----", results);
+           this.countryName= results[results.length - 1].formatted_address;
+            console.log("this.countryName",  this.countryName);
+          // console.log("results[0]", results[0]);
           this.address = results[0].formatted_address;
-
+          // console.log("this.address", this.address);
         } else {
           window.alert('No results found');
         }
@@ -352,6 +355,23 @@ export class CreateDealComponent implements OnInit {
  })
 }
 
+onBudgetBlur(){
+  console.log(this.createDealForm.value['campBudget']);
+  let data={
+    "country" : this.countryName,
+    "campBudget" : this.createDealForm.value['campBudget']
+  }
+  this.adminService.getCoinPerBudget(this.userId, data).pipe(finalize(() => {
+  
+  })).subscribe((res:any)=>{
+    console.log(res);
+    if(res.statusCode===200){
+      this.createDealForm.controls['bidPerCoin'].setValue(res.coin.coins);
+      
+    }
+    
+  })
+}
 
   onSaveDeal() {
 

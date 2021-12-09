@@ -150,7 +150,14 @@ export class AdminService {
   }
 
   getApprove(userId: any, withdId:any){
-    return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/withdraw/"+withdId+"/approve");
+    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/withdraw/"+withdId+"/approve", {});
+  }
+  getRejectedCol(userId: any, withdId:any){
+    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/withdraw/"+withdId+"/reject", {});
+  }
+
+  getCoinPerBudget(userId: any, body:any ){
+    return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/budgetcoins", body);
   }
 
 }
