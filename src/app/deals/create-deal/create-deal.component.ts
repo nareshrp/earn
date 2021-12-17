@@ -38,6 +38,8 @@ export class CreateDealComponent implements OnInit {
   mapClickListener: any;
   files: any = [];
   vfiles: any = [];
+  imageAssetsFiles: any = [];
+
   shareImgfiles: any = [];
   dealImgObj: any;
   videoAssetsObj: any;
@@ -55,10 +57,11 @@ export class CreateDealComponent implements OnInit {
 countryName:any;
 videoAssetsObjFileName:any=[];
 videoAssetsObjFilePath:any=[];
-editorConfig = {
-  removePlugins: ['Image'],
-  placeholder: 'Type the content here!'
-    };
+isVideoAssets:boolean=false;
+isImageAssets:boolean=false;
+
+imageAssetsFilesObjFileName:any=[];
+imageAssetsFilesObjFilePath:any=[];
 
   constructor(
     private activatedRouterServices: ActivatedRoute,
@@ -82,8 +85,10 @@ editorConfig = {
       dealContent: [null],
       sharedType: [null],
       vedInstr: [null],
-      vAssets: [null, [Validators.required]],
+      vAssets: [null],
       sharedImgInstr: [null],
+      imageAssets: [null],
+      
       campBudget: [null, [Validators.required]],
       bidPerCoin: [null],
       consentPolicy: [null, [Validators.required]],
@@ -237,7 +242,10 @@ editorConfig = {
             this.files.push(file);
           } else if (imgType == 'vAssets') {
             this.vfiles.push(file);
-          } else {
+          }else if(imgType =='imageAssets'){
+            this.imageAssetsFiles.push(file);
+          }
+          else {
             this.shareImgfiles.push(file);
           }
 
@@ -252,6 +260,7 @@ editorConfig = {
     this.spinner.show();
     var fd: any = new FormData();
     fd.append('files', this.files[0]);
+    console.log("vendorService upload file ",);
     this.vendorService.fileUpload(this.userId, fd).pipe(finalize(() => {
       this.spinner.hide();
       // Success Tost Message
@@ -273,36 +282,53 @@ editorConfig = {
  async uploadVideoAssets() {
     this.spinner.show();
 
-    var fd: any = new FormData();
     for (let i = 0; i < this.vfiles.length; i++) {
+      let fd: any = new FormData();
       fd.append('files', this.vfiles[i]);
       console.log("files"+i,this.vfiles[i]);
-    await  this.vendorService.fileUpload(this.userId, fd).pipe(finalize(() => {
+    await this.vendorService.fileUpload(this.userId, fd).pipe(finalize(() => {
         this.spinner.hide();
         // Success Tost Message
         // this.toastr.showSuccess("File Successfully Created !!", "Successfully");
       })).subscribe((res: any) => {
-        console.log("result -------------------", res);
+       
        if (res.result.statusCode === 200) {
-          // this.videoAssetsObj = {
-          //   fileName: res.result.fileName,
-          //   filePath: res.result.filePath
-          // };
          this.videoAssetsObjFileName.push(res.result.fileName);
          this.videoAssetsObjFilePath.push(res.result.filePath);
-
           this.toastr.showSuccess(res.message, "Successfully");
   
        }
       });
     };
-
-
-  
-  
+ 
     console.log("videoAssetsObjFileName -------------------",  this.videoAssetsObjFileName);
     console.log("videoAssetsObjFilePath---------------------",  this.videoAssetsObjFilePath);
 
+  }
+
+  async uploadImageAssets(){
+    this.spinner.show();
+    for (let i = 0; i < this.imageAssetsFiles.length; i++) {
+      let fd: any = new FormData();
+      fd.append('files', this.imageAssetsFiles[i]);
+      console.log("files"+i,this.imageAssetsFiles[i]);
+    await this.vendorService.fileUpload(this.userId, fd).pipe(finalize(() => {
+        this.spinner.hide();
+        // Success Tost Message
+        // this.toastr.showSuccess("File Successfully Created !!", "Successfully");
+      })).subscribe((res: any) => {
+       
+       if (res.result.statusCode === 200) {
+         this.imageAssetsFilesObjFileName.push(res.result.fileName);
+         this.imageAssetsFilesObjFilePath.push(res.result.filePath);
+          this.toastr.showSuccess(res.message, "Successfully");
+  
+       }
+      });
+    };
+ 
+    console.log("imageAssetsFilesObjFileName -------------------",  this.imageAssetsFilesObjFileName);
+    console.log("imageAssetsFilesObjFilePath---------------------",  this.imageAssetsFilesObjFilePath);
   }
 
   resetBtn(btnName: any) {
@@ -325,12 +351,31 @@ editorConfig = {
   // }
   sharetype(event: any, id: any) {
     let val = event.target.value;
+    console.log("sharetype val", val);
     if (event.target.checked === true) {
       this.sharedTypeList.push(val);
+      if(val=='video'){
+        this.isVideoAssets=true;
+        this.createDealForm.controls['vAssets'].setValidators([Validators.required]);
+      }
+     
+      if(val=='image'){
+        this.isImageAssets=true;
+        this.createDealForm.controls['imageAssets'].setValidators([Validators.required]);
+      }
+     
+
     }
     else {
       // this.moduleData.slice(0, index);
       this.sharedTypeList.splice(this.sharedTypeList.indexOf(id));
+      if(val=='video'){
+        this.isVideoAssets=false;
+      }
+      if(val=='image'){
+        this.isImageAssets=false;
+      }
+      
 
     }
 
