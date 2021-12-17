@@ -53,6 +53,12 @@ export class CreateDealComponent implements OnInit {
   bindingRadious: any;
   categoryList:any;
 countryName:any;
+videoAssetsObjFileName:any=[];
+videoAssetsObjFilePath:any=[];
+editorConfig = {
+  removePlugins: ['Image'],
+  placeholder: 'Type the content here!'
+    };
 
   constructor(
     private activatedRouterServices: ActivatedRoute,
@@ -264,28 +270,39 @@ countryName:any;
     });
   }
 
-  uploadVideoAssets() {
+ async uploadVideoAssets() {
     this.spinner.show();
+
     var fd: any = new FormData();
-    console.log(this.vfiles[0])
-    fd.append('files', this.vfiles[0]);
+    for (let i = 0; i < this.vfiles.length; i++) {
+      fd.append('files', this.vfiles[i]);
+      console.log("files"+i,this.vfiles[i]);
+    await  this.vendorService.fileUpload(this.userId, fd).pipe(finalize(() => {
+        this.spinner.hide();
+        // Success Tost Message
+        // this.toastr.showSuccess("File Successfully Created !!", "Successfully");
+      })).subscribe((res: any) => {
+        console.log("result -------------------", res);
+       if (res.result.statusCode === 200) {
+          // this.videoAssetsObj = {
+          //   fileName: res.result.fileName,
+          //   filePath: res.result.filePath
+          // };
+         this.videoAssetsObjFileName.push(res.result.fileName);
+         this.videoAssetsObjFilePath.push(res.result.filePath);
 
-    this.vendorService.fileUpload(this.userId, fd).pipe(finalize(() => {
-      this.spinner.hide();
-      // Success Tost Message
-      // this.toastr.showSuccess("File Successfully Created !!", "Successfully");
-    })).subscribe((result: any) => {
+          this.toastr.showSuccess(res.message, "Successfully");
+  
+       }
+      });
+    };
 
-      if (result.result.statusCode === 200) {
-        this.videoAssetsObj = {
-          fileName: result.result.fileName,
-          filePath: result.result.filePath
-        };
 
-        this.toastr.showSuccess(result.message, "Successfully");
+  
+  
+    console.log("videoAssetsObjFileName -------------------",  this.videoAssetsObjFileName);
+    console.log("videoAssetsObjFilePath---------------------",  this.videoAssetsObjFilePath);
 
-      }
-    });
   }
 
   resetBtn(btnName: any) {
@@ -388,6 +405,11 @@ onBudgetBlur(){
       longitude: this.longitude,
       radius: this.radius
     }
+    this.videoAssetsObj = {
+      fileName:this.videoAssetsObjFileName,
+      filePath:this.videoAssetsObjFilePath
+    };
+
     this.createDealForm.value['dealImg'] = this.dealImgObj;
     this.createDealForm.value['vAssets'] = this.videoAssetsObj;
     this.createDealForm.value['sharedType'] = this.sharedTypeList;

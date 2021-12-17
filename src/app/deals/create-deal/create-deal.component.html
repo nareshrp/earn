@@ -175,7 +175,7 @@
               <div class="form-group required">
                 <label class="form-label">Dedicated Video Instructions and video Content </label>
                 <!-- <textarea class="form-control" formControlName="dealContent"></textarea> -->
-                <ckeditor [editor]="Editor" formControlName="vedInstr" (change)="onChangeVideoInstContent($event)">
+                <ckeditor  [config]="{ removePlugins: ['MediaEmbed'], mediaEmbed: {} }"  [editor]="Editor" formControlName="vedInstr" (change)="onChangeVideoInstContent($event)">
                 </ckeditor>
               </div>
             </div>
@@ -188,7 +188,7 @@
             <div class="col-md-4">
               <div class="form-group required">
                 <label class="form-label">Upload Video Assets for influencers</label>
-                <input class="form-control" type="file" formControlName="vAssets"
+                <input class="form-control" type="file" multiple formControlName="vAssets"
                   (change)="detectFiles($event, 'vAssets')"
                   [ngClass]="{ 'is-invalid': (submitted && form.vAssets.errors) || (form.vAssets.touched && form.vAssets.errors) }">
                 <div *ngIf="submitted||(form.vAssets.touched && form.vAssets.invalid)">
