@@ -162,7 +162,8 @@
             <div class="col-md-2">
               <div class="form-group required">
                 <label class="form-label">Condition</label>
-                <select class="form-control" formControlName="operator"  [ngClass]="{ 'is-invalid': (submitted && cform.operator.errors) || (cform.operator.touched && cform.operator.errors) }">
+                <select class="form-control" formControlName="operator"
+                  [ngClass]="{ 'is-invalid': (submitted && cform.operator.errors) || (cform.operator.touched && cform.operator.errors) }">
                   <option *ngFor="let row of conditionalType" [value]="row.val">{{row.type}}</option>
                 </select>
                 <div *ngIf="submitted||(cform.operator.touched && cform.operator.invalid)">
@@ -174,7 +175,8 @@
             <div class="col-md-2">
               <div class="form-group required">
                 <label class="form-label">Views</label>
-                <input type="text" class="form-control" formControlName="threshold" [ngClass]="{ 'is-invalid': (submitted && cform.threshold.errors) || (cform.threshold.touched && cform.threshold.errors) }">
+                <input type="text" class="form-control" formControlName="threshold"
+                  [ngClass]="{ 'is-invalid': (submitted && cform.threshold.errors) || (cform.threshold.touched && cform.threshold.errors) }">
                 <div *ngIf="submitted||(cform.threshold.touched && cform.threshold.invalid)">
                   <small class="form-text error-message" *ngIf="cform.threshold.errors">Views is
                     required</small>
@@ -188,10 +190,12 @@
 
                 <div class="input-group">
 
-                  <input type="text" class="form-control" formControlName="coin" [ngClass]="{ 'is-invalid': (submitted && cform.coin.errors) || (cform.coin.touched && cform.coin.errors) }">
-                  <select class="form-control" formControlName="currency" [ngClass]="{ 'is-invalid': (submitted && cform.currency.errors) || (cform.currency.touched && cform.currency.errors) }">
-                    <option>INR</option>
-                    <option>USD</option>
+                  <input type="text" class="form-control" formControlName="coin"
+                    [ngClass]="{ 'is-invalid': (submitted && cform.coin.errors) || (cform.coin.touched && cform.coin.errors) }">
+                  <select class="form-control" formControlName="currency"
+                    [ngClass]="{ 'is-invalid': (submitted && cform.currency.errors) || (cform.currency.touched && cform.currency.errors) }">
+                    <option *ngFor="let row of countryCoinsData" [value]="row.currency">{{row.currency}}</option>
+
                   </select>
                   <div *ngIf="submitted||(cform.coin.touched && cform.coin.invalid)">
                     <small class="form-text error-message" *ngIf="cform.coin.errors">Reward Amount is
@@ -210,7 +214,8 @@
             <div class="col-md-2">
               <div class="form-group required">
                 <label class="form-label">Action </label>
-                <select class="form-control" formControlName="action" [ngClass]="{ 'is-invalid': (submitted && cform.action.errors) || (cform.action.touched && cform.action.errors) }">
+                <select class="form-control" formControlName="action"
+                  [ngClass]="{ 'is-invalid': (submitted && cform.action.errors) || (cform.action.touched && cform.action.errors) }">
                   <option *ngFor="let row of actionType" [value]="row.action">{{row.desc}}</option>
                 </select>
                 <div *ngIf="submitted||(cform.action.touched && cform.action.invalid)">
@@ -263,7 +268,8 @@
                     {{row.threshold}}
                   </li>
                   <li>
-                    {{row.coin}} {{row.currency}} - {{row.action=='RHF'?'Release Holded funds' : row.action=='HF'?'Holded funds':'Not applicable'}} 
+                    {{row.coin}} {{row.currency}} -
+                    {{row.action=='RHF'?'Release Holded funds' : row.action=='HF'?'Holded funds':'Not applicable'}}
                   </li>
                   <li>
                     <a href="javascript:void(0);" class="text-success" (click)="editRow(condition, 'imgView', row)"><i
@@ -290,7 +296,8 @@
                     {{row.threshold}}
                   </li>
                   <li>
-                    {{row.coin}} {{row.currency}} - {{row.action=='RHF'?'Release Holded funds' : row.action=='HF'?'Holded funds':'Not applicable'}} 
+                    {{row.coin}} {{row.currency}} -
+                    {{row.action=='RHF'?'Release Holded funds' : row.action=='HF'?'Holded funds':'Not applicable'}}
                   </li>
                   <li>
                     <a href="javascript:void(0);" class="text-success" (click)="editRow(condition, 'videoView', row)"><i
@@ -317,7 +324,8 @@
                     {{row.threshold}}
                   </li>
                   <li>
-                    {{row.coin}} {{row.currency}} - {{row.action=='RHF'?'Release Holded funds' : row.action=='HF'?'Holded funds':'Not applicable'}} 
+                    {{row.coin}} {{row.currency}} -
+                    {{row.action=='RHF'?'Release Holded funds' : row.action=='HF'?'Holded funds':'Not applicable'}}
                   </li>
                   <li>
                     <a href="javascript:void(0);" class="text-success" (click)="editRow(condition, 'linkView', row)"><i

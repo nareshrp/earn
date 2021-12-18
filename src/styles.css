@@ -387,11 +387,11 @@ body[data-sidebar-size=small] .footer {
 .deal h2{ font-size: 16px; margin-top: 10px; margin-bottom: 0px;}
 .deal p{ margin-top: 10px;}
 .input-group-text{
-  height: 33px;
+  /* height: 33px; */
   font-size: 13px;
 }
 .common-btn {
-  height: 32px;
+  height: 40px;
   font-size: 14px;
   line-height: 10px;
 }

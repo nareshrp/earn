@@ -23,13 +23,13 @@ export class CoinSettingsComponent implements OnInit {
   countryCoinsData: any;
   settingCoinsList: any;
   shareType: any = [
-    { val: "imgViewSettings", type: 'Image Share' }, 
-    { val: "videoViewSettings", type: 'Video Share' }, 
-    { val: "linkViewSettings", type: 'Link View' }, 
+    { val: "imgViewSettings", type: 'Image Share' },
+    { val: "videoViewSettings", type: 'Video Share' },
+    { val: "linkViewSettings", type: 'Link View' },
     { val: "couponViewSettings", type: 'Coupon Share' }
   ];
   conditionalType: any = [{ val: "lt", type: '<' }, { val: "gt", type: '>' }, { val: "eq", type: '=' }, { val: "lte", type: '<=' }, { val: "gte", type: '>=' }];
-  actionType: any = [{ action:"RHF", desc : 'Release Holded funds' },{ action:"HF", desc : 'Holded funds' }, { action:"NA", desc : 'Not applicable' }];
+  actionType: any = [{ action: "RHF", desc: 'Release Holded funds' }, { action: "HF", desc: 'Holded funds' }, { action: "NA", desc: 'Not applicable' }];
   conditionsList: any = [];
   dynamicKey: any;
   updatedRowId: any;
@@ -60,7 +60,7 @@ export class CoinSettingsComponent implements OnInit {
     });
 
     this.conditionForm = this.fb.group({
-      operator: [null,[Validators.required]],
+      operator: [null, [Validators.required]],
       threshold: [null, [Validators.required]],
       coin: [null, [Validators.required]],
       currency: [null, [Validators.required]],
@@ -87,17 +87,6 @@ export class CoinSettingsComponent implements OnInit {
     })
   }
 
-  getCountryListWithCoinsData() {
-    this._adminService.getCountryWithCoins(this.userId).pipe(finalize(() => {
-
-    })).subscribe((res: any) => {
-
-      if (res.statusCode === 200) {
-        this.countryCoinsData = res.result;
-        // console.log("country countryCoinsData", this.countryCoinsData);
-      }
-    })
-  }
 
   countryChange(event: any) {
 
@@ -128,7 +117,7 @@ export class CoinSettingsComponent implements OnInit {
       this.conditionForm.controls['threshold'].setValue(row.threshold);
       this.conditionForm.controls['currency'].setValue(row.currency);
       this.conditionForm.controls['action'].setValue(row.action);
-    }else if (type == 'videoView') {
+    } else if (type == 'videoView') {
       this.updatedRowId = row._id;
       console.log("videoView row", this.updatedRowId);
       this.coinsSettingForm.controls['imgDefaultCoin'].setValue(condition.imgDefaultCoin);
@@ -141,7 +130,7 @@ export class CoinSettingsComponent implements OnInit {
       this.conditionForm.controls['currency'].setValue(row.currency);
       this.conditionForm.controls['action'].setValue(row.action);
     }
-    else{
+    else {
       this.updatedRowId = row._id;
       console.log("linkViewSettings row", this.updatedRowId);
       this.coinsSettingForm.controls['imgDefaultCoin'].setValue(condition.imgDefaultCoin);
@@ -157,7 +146,17 @@ export class CoinSettingsComponent implements OnInit {
 
   }
 
+  getCountryListWithCoinsData() {
+    this._adminService.getCountryWithCoins(this.userId).pipe(finalize(() => {
 
+    })).subscribe((res: any) => {
+
+      if (res.statusCode === 200) {
+        this.countryCoinsData = res.result;
+        console.log("country countryCoinsData", this.countryCoinsData);
+      }
+    })
+  }
 
 
   getSettingCoinsDataList() {
@@ -241,7 +240,7 @@ export class CoinSettingsComponent implements OnInit {
       this.spinner.hide();
       return;
     }
-    
+
 
     let newObject = {
       defaultImageShare: this.coinsSettingForm.value['imgDefaultCoin'],
@@ -285,7 +284,7 @@ export class CoinSettingsComponent implements OnInit {
 
   rowDelete(id: any) {
     console.log("delete", id);
-    
+
     this._adminService.deleteCoinSetting(this.userId, id).subscribe((result: any) => {
       if (result.statusCode === 200) {
         this.toastr.showSuccess(result.message, 'Success');
