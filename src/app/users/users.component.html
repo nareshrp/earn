@@ -196,7 +196,8 @@
                       </li> -->
                       <li>
                         <label>Deal Link</label>
-                        <h6><a href="{{deal.linkUrl}}">Click here</a></h6>
+                        <h6><a [routerLink]="['/ddp/', deal.couponId]" routerLinkActive="router-link-active">Click
+                            here</a></h6>
                       </li>
                     </ul>
                   </div>

@@ -160,4 +160,8 @@ export class AdminService {
     return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/budgetcoins", body);
   }
 
+  getDealByCouponID(couponId: any) {
+    return this.http.get(environment.apiUrl + "/api/earnin/influencer/" + couponId);
+  }
+
 }

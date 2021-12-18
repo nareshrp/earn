@@ -1,4 +1,31 @@
 <public-header></public-header>
-<div class="login">
+<!-- <div class="login">
   <router-outlet></router-outlet>
+</div> -->
+
+<div class="container dealContainer" *ngIf="dealData">
+  <div class="card">
+    <div class="card-header">
+      {{coupon}}
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12">
+          <figure class="figure">
+            <img [src]="dealData.dealImg.filePath" class="figure-img img-fluid rounded" alt="...">
+            <!-- <figcaption class="figure-caption text-right">A caption for the above image.</figcaption> -->
+          </figure>
+
+
+          <p [innerHTML]="dealData.dealContent"></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>
+<!--
+<ngx-spinner bdColor="rgba(253,254,255,0.8)" size="medium" color="#0c62db" type="ball-clip-rotate-pulse"
+  [fullScreen]="true">
+  <p style="color: #007bff"> Loading... </p>
+</ngx-spinner> -->

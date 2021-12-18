@@ -36,4 +36,5 @@ export class VendorService {
     return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/deals/" + dealId + "/status", body);
   }
 
+
 }
