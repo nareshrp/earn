@@ -44,7 +44,8 @@ export class DealsListComponent implements OnInit {
   }
 
 
-  getDealsData(userId:any) {
+
+  getDealsData(userId: any) {
     this.spinner.show();
     this.vendorService.getDeals(userId).pipe(finalize(() => {
       this.spinner.hide();
@@ -61,5 +62,32 @@ export class DealsListComponent implements OnInit {
       }
     )
   }
+  dealAction(action: any, dealId: any) {
+    console.log(action, dealId);
+    let data = {
+      state: action
+    }
+    this.vendorService.actionDeal(this.userId, dealId, data).pipe(finalize(() => {
+      this.spinner.hide();
+    })).subscribe((res: any) => {
+
+      console.log("deal action", res);
+      if (res.statusCode === 200) {
+
+        this.getDealsData(this.userId);
+        this.toastr.showSuccess(res.message, "Successfully");
+      }
+
+
+    },
+      error => {
+        this.errorMsg = error;
+        this.toastr.showError("Error", this.errorMsg);
+
+      });
+
+  }
+
+
 
 }

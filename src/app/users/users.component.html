@@ -15,6 +15,18 @@
       <div class="row">
         <div class="col-xl-4 no-padding-right">
           <div class="left-panel">
+
+            <div class="position-relative leftblock-search">
+              <ng-select [(ngModel)]="selectedUserId" [ngModelOptions]="{standalone: true}" placeholder="Search..."
+                (change)="userSearch(selectedUserId)">
+                <ng-option *ngFor="let row of usersList" [value]="row.userId">{{row.phone}}</ng-option>
+              </ng-select>
+            </div>
+
+
+
+
+
             <ul class="list">
               <!-- <li class="active">
                 <h3>Naresh Bolakonda </h3>
@@ -23,18 +35,19 @@
                 <button class="btn btn-sm btn-default userblockAction btn-positionAbs">Block</button>
                 <button class="btn btn-sm btn-default userblockAction primaryAction">Withdrawal</button>
               </li> -->
-<ng-container *ngFor="let row of usersList; let i=index">
-  <li  [ngClass]="(i==updatedIndex)?'active':''" (click)="slectedUser(row, i)" >
-    <h3>{{row.firstName}}{{row.lastName}} </h3>
-    <h4 class="mobile">{{row.phone}}</h4>
-    <span class="email">{{row.emailId}}</span>
-    <button class="btn btn-sm btn-default userblockAction btn-positionAbs">Block</button>
-    <button class="btn btn-sm btn-default userblockAction primaryAction" *ngIf="isWithdrawal">Withdrawal</button>
-  </li>
-</ng-container>
-            
+              <ng-container *ngFor="let row of filterUserData; let i=index">
+                <li [ngClass]="(i==updatedIndex)?'active':''" (click)="slectedUser(row, i)">
+                  <h3>{{row.firstName}}{{row.lastName}} </h3>
+                  <h4 class="mobile">{{row.phone}}</h4>
+                  <span class="email">{{row.emailId}}</span>
+                  <button class="btn btn-sm btn-default userblockAction btn-positionAbs">Block</button>
+                  <button class="btn btn-sm btn-default userblockAction primaryAction"
+                    *ngIf="isWithdrawal">Withdrawal</button>
+                </li>
+              </ng-container>
 
-              
+
+
               <!-- <li>
                 <h3>Rajesh</h3>
                 <h4 class="mobile">9701630343</h4>
@@ -84,7 +97,7 @@
             <div class="row">
               <div class="col-4">
                 <div class="pills-block">
-                  <label>Last coins withdrawal  </label>
+                  <label>Last coins withdrawal </label>
                   <h5>{{filterDataList.lastWithdrawTime | date :'dd-MMM-yy h:mm:ss a '}}</h5>
                 </div>
               </div>
@@ -112,7 +125,9 @@
                 <div class="col-6 vertical-line">
                   <h3>Bank Accounts</h3>
                   <ul class="card-list">
-                    <li *ngFor="let acc of filterDataList.banks.accounts; let i=index" (click)="openLg(content, acc)"><span class="count">{{i+1}}</span>{{acc.accNo}} <span class="badge badge-primary " *ngIf="acc.isPrimary">Primary </span></li>
+                    <li *ngFor="let acc of filterDataList.banks.accounts; let i=index" (click)="openLg(content, acc)">
+                      <span class="count">{{i+1}}</span>{{acc.accNo}} <span class="badge badge-primary "
+                        *ngIf="acc.isPrimary">Primary </span></li>
                     <!-- <li><span class="count">2</span>16270020211114</li>
                     <li><span class="count">3</span>16270020211114</li> -->
                   </ul>
@@ -120,7 +135,9 @@
                 <div class="col-6">
                   <h3>UPI</h3>
                   <ul class="card-list">
-                    <li *ngFor="let acc of filterDataList.banks.UPI; let i=index"><span class="count">{{i+1}}</span>{{acc.id}} <span class="badge badge-primary " *ngIf="acc.isPrimary">Primary </span></li>
+                    <li *ngFor="let acc of filterDataList.banks.UPI; let i=index"><span
+                        class="count">{{i+1}}</span>{{acc.id}} <span class="badge badge-primary "
+                        *ngIf="acc.isPrimary">Primary </span></li>
                   </ul>
                 </div>
               </div>
@@ -152,14 +169,15 @@
                   <h3>Deals</h3>
                   <div class="deal" *ngFor="let deal of filterDataList.deals">
                     <h5>{{deal.offerTitle}} - <span class="pill">{{deal.category}}</span></h5>
-                    <span>From Date: {{deal.fromDate | date :'dd-MMM-yy h:mm:ss'}}</span> -  <span>End Date: {{deal.eOn | date :'dd-MMM-yy h:mm:ss'}}</span>
-                     <div  innerHtml="{{deal.dealContent}}"></div>
+                    <span>From Date: {{deal.fromDate | date :'dd-MMM-yy h:mm:ss'}}</span> - <span>End Date:
+                      {{deal.eOn | date :'dd-MMM-yy h:mm:ss'}}</span>
+                    <div innerHtml="{{deal.dealContent}}"></div>
                     <ul>
                       <li>
                         <label>Shared Count</label>
                         <h6>{{deal.sharedCnt}}</h6>
                       </li>
-                      
+
                       <li>
                         <label>View Count</label>
                         <h6>{{deal.viewCnt}}</h6>
@@ -186,7 +204,7 @@
                     <h5>Diwali Offer - <span class="pill">Comedy</span></h5>
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
                     <ul>
-                    
+
                       <li>
                         <label>Video</label>
                         <h6>40</h6>
@@ -216,17 +234,20 @@
               </div>
             </div>
 
-            <div class="row my-3" *ngIf="filterDataList.pendingTransaction && filterDataList.pendingTransaction.length>0">
+            <div class="row my-3"
+              *ngIf="filterDataList.pendingTransaction && filterDataList.pendingTransaction.length>0">
               <div class="col-12">
                 <div class="deals-block">
                   <h3>Coins renewed</h3>
-                  <p>Withdrawals requested {{filterDataList.pendingTransaction[0].status}} 
+                  <p>Withdrawals requested {{filterDataList.pendingTransaction[0].status}}
                     <button *ngIf="filterDataList.pendingTransaction[0].status"
-                    class="btn btn-primary btn-sm border-radious30px mr-left" (click)="approve(filterDataList.pendingTransaction[0].id)">
-                    Approve </button>
+                      class="btn btn-primary btn-sm border-radious30px mr-left"
+                      (click)="approve(filterDataList.pendingTransaction[0].id)">
+                      Approve </button>
                     <button *ngIf="filterDataList.pendingTransaction[0].status"
-                    class="btn btn-danger btn-sm border-radious30px mr-left" (click)="reject(filterDataList.pendingTransaction[0].id)">
-                    Rejected </button>
+                      class="btn btn-danger btn-sm border-radious30px mr-left"
+                      (click)="reject(filterDataList.pendingTransaction[0].id)">
+                      Rejected </button>
                   </p>
                 </div>
               </div>
@@ -248,32 +269,32 @@
     </button>
   </div>
   <div class="modal-body">
-   <div class="row">
-     <div class="col-md-3">
-       <div class="form-group">
-         <label>Account Number</label>
-         <p><strong>{{bankAccount.accNo}}</strong></p>
-       </div>
-     </div>
-     <div class="col-md-3">
-      <div class="form-group">
-        <label>Account HolderName</label>
-        <p><strong>{{bankAccount.accountHolderName}}</strong></p>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+          <label>Account Number</label>
+          <p><strong>{{bankAccount.accNo}}</strong></p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label>Account HolderName</label>
+          <p><strong>{{bankAccount.accountHolderName}}</strong></p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label>Primary Account</label>
+          <p><strong *ngIf="!bankAccount.isPrimary">No</strong> <strong *ngIf="bankAccount.isPrimary">Yes</strong></p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label>Status</label>
+          <p><strong>{{bankAccount.status}}</strong></p>
+        </div>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="form-group">
-        <label>Primary Account</label>
-        <p><strong *ngIf="!bankAccount.isPrimary">No</strong> <strong *ngIf="bankAccount.isPrimary">Yes</strong></p>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="form-group">
-        <label>Status</label>
-        <p><strong>{{bankAccount.status}}</strong></p>
-      </div>
-    </div>
-   </div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
@@ -295,7 +316,7 @@
             <h3>{{row.question}}</h3>
             <span class="an">{{row.answer}}</span>
           </li>
-          
+
         </ul>
       </div>
     </div>

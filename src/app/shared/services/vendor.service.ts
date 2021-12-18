@@ -17,19 +17,23 @@ export class VendorService {
   createDeal(userId: any, body: any) {
     return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/deal", body);
   }
-  getDeals(userId:any) {
-    let role= localStorage.getItem('role');
-    if(role!='admin'){
-      return this.http.get(environment.apiUrl + "/api/earnin/deals?vendorId="+userId);
+  getDeals(userId: any) {
+    let role = localStorage.getItem('role');
+    if (role != 'admin') {
+      return this.http.get(environment.apiUrl + "/api/earnin/deals?vendorId=" + userId);
     }
-    else{
+    else {
       return this.http.get(environment.apiUrl + "/api/earnin/deals");
     }
-    
+
   }
 
   verifyCoupon(userId: any, body: any) {
     return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/coupon/verify", body);
+  }
+
+  actionDeal(userId: any, dealId: any, body: any) {
+    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/deals/" + dealId + "/status", body);
   }
 
 }

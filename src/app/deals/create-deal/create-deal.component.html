@@ -20,7 +20,7 @@
               <div class="form-group required">
                 <label class="form-label">Select Vendor</label>
                 <select class="form-control" formControlName="vendorId" (change)="getVendorId($event)">
-                  <option [value]="row.userId" *ngFor="let row of vendorList;">{{row.firstName}}</option>
+                  <option [value]="row.userId" *ngFor="let row of vendorList;">{{row.bName}}</option>
                 </select>
 
               </div>

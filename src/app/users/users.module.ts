@@ -6,6 +6,7 @@ import { UsersComponent } from './users.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgbPaginationModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { NgbPaginationModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap'
     ReactiveFormsModule,
     NgxSpinnerModule,
     NgbPaginationModule,
-    NgbAlertModule
+    NgbAlertModule,
+    NgSelectModule
   ]
 })
 export class UsersModule { }

@@ -213,8 +213,9 @@ export class CreateDealComponent implements OnInit {
   getActiveVendorList() {
     if (this.role == 'admin') {
       this.vendorService.getActiveVendorList(this.userId).subscribe((res: any) => {
-        console.log("getActiveVendorList", res);
+
         this.vendorList = res.result;
+        console.log("this.vendorList", this.vendorList);
       });
     } else {
       console.log("vendor selectedVendorID", this.selectedVendorID);

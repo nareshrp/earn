@@ -137,7 +137,7 @@ export class AdminService {
   }
 
   getAllUsers(userId: any) {
-    return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/search?name=earn");
+    return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/search");
     // return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/search?name=earn");
   }
 
@@ -145,18 +145,18 @@ export class AdminService {
   //   return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/info");
   // }
 
-  getUserQstnAnswer(userId: any){
+  getUserQstnAnswer(userId: any) {
     return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/qstnanswer");
   }
 
-  getApprove(userId: any, withdId:any){
-    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/withdraw/"+withdId+"/approve", {});
+  getApprove(userId: any, withdId: any) {
+    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/withdraw/" + withdId + "/approve", {});
   }
-  getRejectedCol(userId: any, withdId:any){
-    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/withdraw/"+withdId+"/reject", {});
+  getRejectedCol(userId: any, withdId: any) {
+    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/withdraw/" + withdId + "/reject", {});
   }
 
-  getCoinPerBudget(userId: any, body:any ){
+  getCoinPerBudget(userId: any, body: any) {
     return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/budgetcoins", body);
   }
 
