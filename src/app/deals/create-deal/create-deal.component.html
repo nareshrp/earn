@@ -29,7 +29,8 @@
             <div class="col-md-3">
               <div class="form-group required">
                 <label class="form-label">Select category</label>
-                <select class="form-control" formControlName="category" [ngClass]="{ 'is-invalid': (submitted && form.category.errors) || (form.category.touched && form.category.errors) }">
+                <select class="form-control" formControlName="category"
+                  [ngClass]="{ 'is-invalid': (submitted && form.category.errors) || (form.category.touched && form.category.errors) }">
                   <option [value]="row.name" *ngFor="let row of categoryList;">{{row.name}}</option>
                 </select>
 
@@ -133,8 +134,8 @@
               <div class="form-group mt-4">
                 <button class="btn btn-primary waves-effect waves-light  margin-right3 btn-sm ms-1"
                   (click)="uploadDealImg()">Upload <i class="mdi mdi-cloud-upload-outline"></i></button>
-                <button class="btn btn-secondary waves-effect waves-light btn-sm" (click)="resetBtn('dealImg')">Cancel <i
-                    class="mdi mdi-close-circle-outline
+                <button class="btn btn-secondary waves-effect waves-light btn-sm" (click)="resetBtn('dealImg')">Cancel
+                  <i class="mdi mdi-close-circle-outline
                                         ms-1"></i></button>
               </div>
             </div>
@@ -144,8 +145,8 @@
               <div class="form-group required">
                 <label class="form-label">Page Content</label>
                 <!-- <textarea class="form-control" formControlName="dealContent" ></textarea> -->
-                <ckeditor [editor]="Editor" formControlName="dealContent" debounce="500"
-                  (change)="onChangeDealContent($event)">
+                <ckeditor [config]="{ removePlugins: ['MediaEmbed'], mediaEmbed: {} }" [editor]="Editor"
+                  formControlName="dealContent" debounce="500" (change)="onChangeDealContent($event)">
                 </ckeditor>
               </div>
             </div>
@@ -175,7 +176,8 @@
               <div class="form-group required">
                 <label class="form-label">Dedicated Video Instructions and video Content </label>
                 <!-- <textarea class="form-control" formControlName="dealContent"></textarea> -->
-                <ckeditor  [config]="{ removePlugins: ['MediaEmbed'], mediaEmbed: {} }"  [editor]="Editor" formControlName="vedInstr" (change)="onChangeVideoInstContent($event)">
+                <ckeditor [config]="{ removePlugins: ['MediaEmbed'], mediaEmbed: {} }" [editor]="Editor"
+                  formControlName="vedInstr" (change)="onChangeVideoInstContent($event)">
                 </ckeditor>
               </div>
             </div>
@@ -185,13 +187,13 @@
             <div class="col-md-12">
               <h4 class="card-title">Video assets for influencers </h4>
             </div>
-            <div class="col-md-4" >
+            <div class="col-md-4">
               <div class="form-group required">
                 <label class="form-label">Upload Video Assets for influencers</label>
                 <input class="form-control" type="file" multiple formControlName="vAssets"
                   (change)="detectFiles($event, 'vAssets')"
                   [ngClass]="{ 'is-invalid': (submitted && form.vAssets.errors) || (form.vAssets.touched && form.vAssets.errors) }">
-                <div *ngIf="submitted||(form.vAssets.touched && form.vAssets.invalid)">
+                <div *ngIf="isVideoAssets && submitted||(form.vAssets.touched && form.vAssets.invalid)">
                   <small class="form-text error-message" *ngIf="form.vAssets.errors"> Video Assets is required</small>
                 </div>
               </div>
@@ -219,34 +221,38 @@
               </div>
             </div>
             <ng-container *ngIf="isImageAssets">
-            <div class="col-md-4" >
-              <div class="form-group required">
-                <label class="form-label">Upload image to share</label>
-                <input class="form-control" type="file"  multiple formControlName="imageAssets"  (change)="detectFiles($event, 'imageAssets')"
-                [ngClass]="{ 'is-invalid': (submitted && form.imageAssets.errors) || (form.imageAssets.touched && form.imageAssets.errors) }">
-                <div *ngIf="submitted||(form.imageAssets.touched && form.imageAssets.invalid)">
-                  <small class="form-text error-message" *ngIf="form.imageAssets.errors"> Image Assets is required</small>
+              <div class="col-md-4">
+                <div class="form-group required">
+                  <label class="form-label">Upload image to share</label>
+                  <input class="form-control" type="file" multiple formControlName="imageAssets"
+                    (change)="detectFiles($event, 'imageAssets')"
+                    [ngClass]="{ 'is-invalid': (submitted && form.imageAssets.errors) || (form.imageAssets.touched && form.imageAssets.errors) }">
+                  <div *ngIf="isImageAssets && submitted||(form.imageAssets.touched && form.imageAssets.invalid)">
+                    <small class="form-text error-message" *ngIf="form.imageAssets.errors"> Image Assets is
+                      required</small>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group mt-4">
-                <button class="btn btn-primary waves-effect waves-light  margin-right3 ms-1 btn-sm" (click)="uploadImageAssets()">Upload <i
-                    class="mdi mdi-cloud-upload-outline"></i></button>
-                <button class="btn btn-secondary waves-effect waves-light btn-sm" (click)="resetBtn('imageAssets')">Cancel <i class="mdi mdi-close-circle-outline
+              <div class="col-md-4">
+                <div class="form-group mt-4">
+                  <button class="btn btn-primary waves-effect waves-light  margin-right3 ms-1 btn-sm"
+                    (click)="uploadImageAssets()">Upload <i class="mdi mdi-cloud-upload-outline"></i></button>
+                  <button class="btn btn-secondary waves-effect waves-light btn-sm"
+                    (click)="resetBtn('imageAssets')">Cancel <i class="mdi mdi-close-circle-outline
                                         ms-1"></i></button>
 
-                                        
+
+                </div>
               </div>
-            </div>
-          </ng-container>
+            </ng-container>
 
           </div>
           <div class="row">
             <div class="col-md-4">
               <div class="form-group required">
                 <label class="form-label">Campaign Budget</label>
-                <input class="form-control" type="text" formControlName="campBudget" placeholder="Budget" (blur)="onBudgetBlur()"
+                <input class="form-control" type="text" formControlName="campBudget" placeholder="Budget"
+                  (blur)="onBudgetBlur()"
                   [ngClass]="{ 'is-invalid': (submitted && form.campBudget.errors) || (form.campBudget.touched && form.campBudget.errors) }">
                 <div *ngIf="submitted||(form.campBudget.touched && form.campBudget.invalid)">
                   <small class="form-text error-message" *ngIf="form.campBudget.errors">Campaign Budget is
@@ -258,7 +264,7 @@
               <div class="form-group required">
                 <label class="form-label">Bid for each coin</label>
                 <input class="form-control" type="text" formControlName="bidPerCoin" placeholder="Devide coins (in INR)"
-                 readonly>
+                  readonly>
                 <!-- <small>500 coins as per your budget</small>
                 <div *ngIf="submitted||(form.bidPerCoin.touched && form.bidPerCoin.invalid)">
                   <small class="form-text error-message" *ngIf="form.bidPerCoin.errors">Bid for each coin is
@@ -271,12 +277,11 @@
               <div class="form-group">
                 <div class="form-check" style="margin-left:5px ;">
                   <input class="form-check-input" type="checkbox" formControlName="isCoupon"
-                    (change)="isCouponCheck($event)"
-                    >
+                    (change)="isCouponCheck($event)">
                   <label class="form-check-label">Need Coupon Code</label>
-  
-                 
-  
+
+
+
                 </div>
               </div>
             </div>

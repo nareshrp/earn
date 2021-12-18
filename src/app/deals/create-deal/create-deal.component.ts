@@ -43,6 +43,8 @@ export class CreateDealComponent implements OnInit {
   shareImgfiles: any = [];
   dealImgObj: any;
   videoAssetsObj: any;
+  imageAssetsObj: any;
+
   // sharedTypeList:any=[];
   sharedTypeList: any = [];
   acceptTerms: boolean = false;
@@ -53,15 +55,15 @@ export class CreateDealComponent implements OnInit {
   dealContentData: any;
   radiusMaster: any = [{ id: 1, value: 5 }, { id: 2, value: 10 }, { id: 3, value: 15 }, { id: 4, value: 20 }];
   bindingRadious: any;
-  categoryList:any;
-countryName:any;
-videoAssetsObjFileName:any=[];
-videoAssetsObjFilePath:any=[];
-isVideoAssets:boolean=false;
-isImageAssets:boolean=false;
+  categoryList: any;
+  countryName: any;
+  videoAssetsObjFileName: any = [];
+  videoAssetsObjFilePath: any = [];
+  isVideoAssets: boolean = false;
+  isImageAssets: boolean = false;
 
-imageAssetsFilesObjFileName:any=[];
-imageAssetsFilesObjFilePath:any=[];
+  imageAssetsFilesObjFileName: any = [];
+  imageAssetsFilesObjFilePath: any = [];
 
   constructor(
     private activatedRouterServices: ActivatedRoute,
@@ -88,7 +90,7 @@ imageAssetsFilesObjFilePath:any=[];
       vAssets: [null],
       sharedImgInstr: [null],
       imageAssets: [null],
-      
+
       campBudget: [null, [Validators.required]],
       bidPerCoin: [null],
       consentPolicy: [null, [Validators.required]],
@@ -190,8 +192,8 @@ imageAssetsFilesObjFilePath:any=[];
         if (results[0]) {
           this.zoom = 20;
           // console.log("results -----", results);
-           this.countryName= results[results.length - 1].formatted_address;
-            console.log("this.countryName",  this.countryName);
+          this.countryName = results[results.length - 1].formatted_address;
+          console.log("this.countryName", this.countryName);
           // console.log("results[0]", results[0]);
           this.address = results[0].formatted_address;
           // console.log("this.address", this.address);
@@ -242,7 +244,7 @@ imageAssetsFilesObjFilePath:any=[];
             this.files.push(file);
           } else if (imgType == 'vAssets') {
             this.vfiles.push(file);
-          }else if(imgType =='imageAssets'){
+          } else if (imgType == 'imageAssets') {
             this.imageAssetsFiles.push(file);
           }
           else {
@@ -279,56 +281,56 @@ imageAssetsFilesObjFilePath:any=[];
     });
   }
 
- async uploadVideoAssets() {
+  async uploadVideoAssets() {
     this.spinner.show();
 
     for (let i = 0; i < this.vfiles.length; i++) {
       let fd: any = new FormData();
       fd.append('files', this.vfiles[i]);
-      console.log("files"+i,this.vfiles[i]);
-    await this.vendorService.fileUpload(this.userId, fd).pipe(finalize(() => {
+      console.log("files" + i, this.vfiles[i]);
+      await this.vendorService.fileUpload(this.userId, fd).pipe(finalize(() => {
         this.spinner.hide();
         // Success Tost Message
         // this.toastr.showSuccess("File Successfully Created !!", "Successfully");
       })).subscribe((res: any) => {
-       
-       if (res.result.statusCode === 200) {
-         this.videoAssetsObjFileName.push(res.result.fileName);
-         this.videoAssetsObjFilePath.push(res.result.filePath);
+
+        if (res.result.statusCode === 200) {
+          this.videoAssetsObjFileName.push(res.result.fileName);
+          this.videoAssetsObjFilePath.push(res.result.filePath);
           this.toastr.showSuccess(res.message, "Successfully");
-  
-       }
+
+        }
       });
     };
- 
-    console.log("videoAssetsObjFileName -------------------",  this.videoAssetsObjFileName);
-    console.log("videoAssetsObjFilePath---------------------",  this.videoAssetsObjFilePath);
+
+    console.log("videoAssetsObjFileName -------------------", this.videoAssetsObjFileName);
+    console.log("videoAssetsObjFilePath---------------------", this.videoAssetsObjFilePath);
 
   }
 
-  async uploadImageAssets(){
+  async uploadImageAssets() {
     this.spinner.show();
     for (let i = 0; i < this.imageAssetsFiles.length; i++) {
       let fd: any = new FormData();
       fd.append('files', this.imageAssetsFiles[i]);
-      console.log("files"+i,this.imageAssetsFiles[i]);
-    await this.vendorService.fileUpload(this.userId, fd).pipe(finalize(() => {
+      console.log("files" + i, this.imageAssetsFiles[i]);
+      await this.vendorService.fileUpload(this.userId, fd).pipe(finalize(() => {
         this.spinner.hide();
         // Success Tost Message
         // this.toastr.showSuccess("File Successfully Created !!", "Successfully");
       })).subscribe((res: any) => {
-       
-       if (res.result.statusCode === 200) {
-         this.imageAssetsFilesObjFileName.push(res.result.fileName);
-         this.imageAssetsFilesObjFilePath.push(res.result.filePath);
+
+        if (res.result.statusCode === 200) {
+          this.imageAssetsFilesObjFileName.push(res.result.fileName);
+          this.imageAssetsFilesObjFilePath.push(res.result.filePath);
           this.toastr.showSuccess(res.message, "Successfully");
-  
-       }
+
+        }
       });
     };
- 
-    console.log("imageAssetsFilesObjFileName -------------------",  this.imageAssetsFilesObjFileName);
-    console.log("imageAssetsFilesObjFilePath---------------------",  this.imageAssetsFilesObjFilePath);
+
+    console.log("imageAssetsFilesObjFileName -------------------", this.imageAssetsFilesObjFileName);
+    console.log("imageAssetsFilesObjFilePath---------------------", this.imageAssetsFilesObjFilePath);
   }
 
   resetBtn(btnName: any) {
@@ -336,46 +338,32 @@ imageAssetsFilesObjFilePath:any=[];
     this.createDealForm.controls[btnName].reset();
   }
 
-  // sharetype(event:any){
-  //  let val=event.target.value;
-  //  if(event.target.checked){
-  //      console.log(event.target.value);
-  //      this.sharedTypeList.push(val);
-  //   }else{
-  //     let el = this.sharedTypeList.find((itm:any) => itm===val);
-  //     if(el)
-  //     this.sharedTypeList.splice(this.sharedTypeList.indexOf(el),1);
-  //   }
-
-  //   console.log("sharedTypeList", this.sharedTypeList);
-  // }
   sharetype(event: any, id: any) {
     let val = event.target.value;
     console.log("sharetype val", val);
     if (event.target.checked === true) {
       this.sharedTypeList.push(val);
-      if(val=='video'){
-        this.isVideoAssets=true;
+      if (val == 'video') {
+        this.isVideoAssets = true;
         this.createDealForm.controls['vAssets'].setValidators([Validators.required]);
       }
-     
-      if(val=='image'){
-        this.isImageAssets=true;
+      if (val == 'image') {
+        this.isImageAssets = true;
         this.createDealForm.controls['imageAssets'].setValidators([Validators.required]);
       }
-     
-
     }
     else {
       // this.moduleData.slice(0, index);
       this.sharedTypeList.splice(this.sharedTypeList.indexOf(id));
-      if(val=='video'){
-        this.isVideoAssets=false;
+      if (val == 'video') {
+        this.isVideoAssets = false;
+        this.createDealForm.controls['vAssets'].setValidators(null);
       }
-      if(val=='image'){
-        this.isImageAssets=false;
+      if (val == 'image') {
+        this.isImageAssets = false;
+        this.createDealForm.controls['imageAssets'].setValidators(null);
       }
-      
+
 
     }
 
@@ -405,35 +393,35 @@ imageAssetsFilesObjFilePath:any=[];
     }
   }
 
-  getCategoryList(){
+  getCategoryList() {
     this.adminService.getCategory(this.userId).pipe(finalize(() => {
-  
- })).subscribe((res:any)=>{
 
-   if(res.statusCode===200){
-    this.categoryList=res.result;  
-    console.log("categoryList", this.categoryList);
-   }
- })
-}
+    })).subscribe((res: any) => {
 
-onBudgetBlur(){
-  console.log(this.createDealForm.value['campBudget']);
-  let data={
-    "country" : this.countryName,
-    "campBudget" : this.createDealForm.value['campBudget']
+      if (res.statusCode === 200) {
+        this.categoryList = res.result;
+        console.log("categoryList", this.categoryList);
+      }
+    })
   }
-  this.adminService.getCoinPerBudget(this.userId, data).pipe(finalize(() => {
-  
-  })).subscribe((res:any)=>{
-    console.log(res);
-    if(res.statusCode===200){
-      this.createDealForm.controls['bidPerCoin'].setValue(res.coin.coins);
-      
+
+  onBudgetBlur() {
+    console.log(this.createDealForm.value['campBudget']);
+    let data = {
+      "country": this.countryName,
+      "campBudget": this.createDealForm.value['campBudget']
     }
-    
-  })
-}
+    this.adminService.getCoinPerBudget(this.userId, data).pipe(finalize(() => {
+
+    })).subscribe((res: any) => {
+      console.log(res);
+      if (res.statusCode === 200) {
+        this.createDealForm.controls['bidPerCoin'].setValue(res.coin.coins);
+
+      }
+
+    })
+  }
 
   onSaveDeal() {
 
@@ -441,7 +429,7 @@ onBudgetBlur(){
     if (this.createDealForm.invalid) {
       return;
     }
-   
+
     console.log("DealObj", this.dealImgObj);
     console.log("videoAssetsObj", this.videoAssetsObj);
     let locationData = {
@@ -451,12 +439,17 @@ onBudgetBlur(){
       radius: this.radius
     }
     this.videoAssetsObj = {
-      fileName:this.videoAssetsObjFileName,
-      filePath:this.videoAssetsObjFilePath
+      fileName: this.videoAssetsObjFileName,
+      filePath: this.videoAssetsObjFilePath
+    };
+    this.imageAssetsObj = {
+      fileName: this.imageAssetsFilesObjFileName,
+      filePath: this.imageAssetsFilesObjFilePath
     };
 
     this.createDealForm.value['dealImg'] = this.dealImgObj;
     this.createDealForm.value['vAssets'] = this.videoAssetsObj;
+    this.createDealForm.value['imageAssets'] = this.imageAssetsObj;
     this.createDealForm.value['sharedType'] = this.sharedTypeList;
     this.createDealForm.value['vendorId'] = this.selectedVendorID;
     this.createDealForm.value['dealContent'] = this.dealContentData;

@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   phSubmitted = false;
   errorMsg = '';
   isOtpFormGroup: boolean = false;
+  countryCode: any = [];
   // isMobileVerify: boolean = false;
   constructor(
     private fb: FormBuilder,
@@ -34,7 +35,8 @@ export class LoginComponent implements OnInit {
     this.phoneLoginForm = this.fb.group({
       phone: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$"),
       Validators.minLength(10), Validators.maxLength(10)]],
-      phoneOtp: [null, [Validators.required]]
+      phoneOtp: [null, [Validators.required]],
+      countrycode: ['', [Validators.required]]
     });
 
   }
@@ -43,12 +45,23 @@ export class LoginComponent implements OnInit {
 
 
   ngOnInit(): void {
-
+    this.getCountyCodeList();
   }
 
   // convenience getter for easy access to form fields
   get form() { return this.loginForm.controls; }
   get formph() { return this.phoneLoginForm.controls; }
+
+  getCountyCodeList() {
+    this._loginServices.getCountryCode().subscribe((res: any) => {
+
+      if (res.statusCode === 200) {
+        this.countryCode = res.result;
+        // console.log("Country Codes", this.countryCode);
+      }
+    })
+
+  }
 
 
   onSubmit() {
@@ -95,7 +108,9 @@ export class LoginComponent implements OnInit {
 
     if (this.phoneLoginForm.value['phone'] != null) {
       let data = {
-        phone: this.phoneLoginForm.value['phone']
+        phone: this.phoneLoginForm.value['phone'],
+        countrycode: this.phoneLoginForm.value['countrycode']
+
       }
       this._loginServices.loginVerifyMobile(data).pipe(finalize(() => {
         this.spinner.hide();

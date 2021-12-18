@@ -2,7 +2,7 @@
   <div class="col-12">
     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
       <h4 class="mb-sm-0 font-size-18">{{pageTitle}}</h4>
-     
+
     </div>
   </div>
 </div>
@@ -17,13 +17,15 @@
             <div class="col-md-3">
               <div class="form-group required">
                 <label class="form-label">Select question Type</label>
-                <select class="form-control" (change)="questionType($event)" formControlName="qtnType" placeholder="Select" [ngClass]="{ 'is-invalid': (submitted && form.qtnType.errors) || (form.qtnType.touched && form.qtnType.errors) }">
+                <select class="form-control" (change)="questionType($event)" formControlName="qtnType"
+                  placeholder="Select"
+                  [ngClass]="{ 'is-invalid': (submitted && form.qtnType.errors) || (form.qtnType.touched && form.qtnType.errors) }">
                   <option>-- Select --</option>
                   <option value="TextBox">Text Box</option>
                   <option value="RadioType">Radio Type</option>
                 </select>
 
-              <div *ngIf="submitted||(form.qtnType.touched && form.qtnType.invalid)">
+                <div *ngIf="submitted||(form.qtnType.touched && form.qtnType.invalid)">
                   <small class="form-text error-message" *ngIf="form.qtnType.errors"> Question Type is
                     required</small>
                 </div>
@@ -32,54 +34,55 @@
             <div class="col-md-6">
               <div class="form-group required">
                 <label for="formrow-email-input" class="form-label">Enter Question</label>
-                <input type="text" class="form-control" formControlName="question" [ngClass]="{ 'is-invalid': (submitted && form.question.errors) || (form.question.touched && form.question.errors) }" placeholder="Enter Question">
+                <input type="text" class="form-control" formControlName="question"
+                  [ngClass]="{ 'is-invalid': (submitted && form.question.errors) || (form.question.touched && form.question.errors) }"
+                  placeholder="Enter Question">
                 <div *ngIf="submitted||(form.question.touched && form.question.invalid)">
                   <small class="form-text error-message" *ngIf="form.question.errors"> Question is
                     required</small>
                 </div>
               </div>
             </div>
-           
-           
-            
+
+
+
           </div>
 
 
-              <div class="row" *ngIf='radioType'>
-               
-                <div class="form-group required col-md-3">
-                  <input type="text" formControlName="radios" class="form-control">
-                </div>
-                <div class="col-md-1">
-                  <button class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2" (click)="addPhone()" >Add</button>
-                </div>
-                <div class="col-md-4">
-                  <ul class="list-group queListOptions">
-                    <li class="list-group-item" *ngFor="let row of radioQuestion; let i=index;">
-                      {{row}} 
-                      <a href="javascript:void(0)" (click)="optionRow(row)">
-                        <i class="fa fa-trash" style="color:red;" ></i> </a>
-                      </li>
-                   
-                  </ul>
-                </div>
+          <div class="row" *ngIf='radioType'>
+
+            <div class="form-group required col-md-3">
+              <input type="text" formControlName="radios" class="form-control">
+            </div>
+            <div class="col-md-1">
+              <button class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
+                (click)="addPhone()">Add</button>
+            </div>
+            <div class="col-md-4">
+              <ul class="list-group queListOptions">
+                <li class="list-group-item" *ngFor="let row of radioQuestion; let i=index;">
+                  {{row}}
+                  <a href="javascript:void(0)" (click)="optionRow(row)">
+                    <i class="fa fa-trash" style="color:red;"></i> </a>
+                </li>
+
+              </ul>
+            </div>
 
 
 
-                <!--  -->
-            
+            <!--  -->
+
           </div>
           <div class="col-md-12">
 
             <div class="mb-3 mt-4">
-              <button type="submit"class="btn btn-primary w-md" *ngIf="!isRowEdit" (click)="onSubmit()" 
-                >Submit</button>
-              <button type="submit"  class="btn btn-primary w-md" *ngIf="isRowEdit" (click)="onUpdated()"
-                >Update</button>
-                
+              <button type="submit" class="btn btn-primary w-md" *ngIf="!isRowEdit" (click)="onSubmit()">Submit</button>
+              <button type="submit" class="btn btn-primary w-md" *ngIf="isRowEdit" (click)="onUpdated()">Update</button>
+
             </div>
           </div>
-         
+
         </form>
       </div>
       <!-- end card body -->
@@ -109,8 +112,8 @@
               <tr *ngFor="let row of questionsList; let i = index ">
                 <!-- <td></td> -->
                 <td>{{i+1}}</td>
-                <td>{{row.qtnType}}</td>
                 <td>{{row.question}}</td>
+                <td>{{row.qtnType}}</td>
                 <td>
                   <div class="d-flex gap-3">
                     <a href="javascript:void(0);" class="text-success" (click)="editRow(row)"><i

@@ -30,9 +30,11 @@ export class VendorSignupComponent implements OnInit {
   public searchElementRef!: ElementRef;
   map: any;
   mapClickListener: any;
-  businessCategoryList: any = [{ id: 1, name: "Fashion" }, { id: 2, name: "Grocery" }, { id: 3, name: "Medical" }];
+  // businessCategoryList: any = [{ id: 1, name: "Fashion" }, { id: 2, name: "Grocery" }, { id: 3, name: "Medical" }];
+  businessCategoryList: any = [];
   targetAudienceList: any = [{ id: 1, name: "Male" }, { id: 2, name: "Female" }, { id: 3, name: "All" }];
   audienceAgeList: any = [{ id: 1, name: "0 to 20" }, { id: 2, name: "20 to 40" }, { id: 3, name: "40 to 60" }];
+
   constructor(
     private fb: FormBuilder,
     private _loginServices: LoginService,
@@ -60,10 +62,23 @@ export class VendorSignupComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getCategoryListData();
     this.mapsAPILoader.load().then(() => {
       this.setCurrentLocation();
       this.geoCoder = new google.maps.Geocoder;
     });
+  }
+
+
+  getCategoryListData() {
+    this._loginServices.getCategoryList().subscribe((res: any) => {
+
+      if (res.statusCode === 200) {
+        this.businessCategoryList = res.result;
+        console.log("businessCategoryList", this.businessCategoryList);
+      }
+    })
+
   }
 
   // onChoseLocation(event:any){
@@ -165,9 +180,10 @@ export class VendorSignupComponent implements OnInit {
   onSubmit() {
     // this.spinner.show();
     console.log(this.vendorSignUpForm)
-     this.spinner.show();
+    this.spinner.show();
     this.submitted = true;
     if (this.vendorSignUpForm.invalid) {
+      this.spinner.hide();
       return;
     }
 
