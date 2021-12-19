@@ -34,7 +34,7 @@ export class VendorSignupComponent implements OnInit {
   businessCategoryList: any = [];
   targetAudienceList: any = [{ id: 1, name: "Male" }, { id: 2, name: "Female" }, { id: 3, name: "All" }];
   audienceAgeList: any = [{ id: 1, name: "0 to 20" }, { id: 2, name: "20 to 40" }, { id: 3, name: "40 to 60" }];
-
+  countryCode:any=[];
   constructor(
     private fb: FormBuilder,
     private _loginServices: LoginService,
@@ -55,6 +55,7 @@ export class VendorSignupComponent implements OnInit {
       name: [null, [Validators.required]],
       bLoc: [null],
       phone: [null, [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      countrycode:[null, [Validators.required]],
       role: ['vendor'],
       otp: [null],
 
@@ -67,7 +68,20 @@ export class VendorSignupComponent implements OnInit {
       this.setCurrentLocation();
       this.geoCoder = new google.maps.Geocoder;
     });
+    this.getCountyCodeList();
   }
+
+  getCountyCodeList() {
+    this._loginServices.getCountryCode().subscribe((res: any) => {
+
+      if (res.statusCode === 200) {
+        this.countryCode = res.result;
+        // console.log("Country Codes", this.countryCode);
+      }
+    })
+
+  }
+
 
 
   getCategoryListData() {
@@ -133,11 +147,12 @@ export class VendorSignupComponent implements OnInit {
 
   get form() { return this.vendorSignUpForm.controls; }
   phoneNumberVerify() {
-    this.spinner.show();
+    // this.spinner.show();
     console.log("Phone", this.vendorSignUpForm.value['phone']);
     if (this.vendorSignUpForm.value['phone'] != null) {
       let data = {
-        phone: this.vendorSignUpForm.value['phone']
+        phone: this.vendorSignUpForm.value['phone'],
+        phone_code: this.vendorSignUpForm.value['countrycode']
       }
       this._loginServices.verifyMobile(data).pipe(finalize(() => {
         this.spinner.hide();

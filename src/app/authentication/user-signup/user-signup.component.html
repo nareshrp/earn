@@ -64,6 +64,12 @@
                 <div class="form-group required mb-3">
                   <label for="formrow-firstname-input" class="form-label">Phone</label>
                   <div class="input-group auth-pass-inputgroup">
+                    <div class="input-group-prepend">
+                      <select class="form-control" formControlName="countrycode"
+                        [ngClass]="{ 'is-invalid': (submitted && form.countrycode.errors) || (form.countrycode.touched && form.countrycode.errors) }">
+                        <option *ngFor="let row of countryCode" [value]="row.code">{{row.code}}</option>
+                      </select>
+                    </div>
                     <input type="text" class="form-control" formControlName="phone" placeholder="Enter Mobile Number"
                       [ngClass]="{ 'is-invalid': (submitted && form.phone.errors) || (form.phone.touched && form.phone.errors) }">
                     <button class="btn btn-primary waves-effect waves-light btn-sm" type="button"

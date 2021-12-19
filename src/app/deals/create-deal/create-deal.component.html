@@ -169,7 +169,7 @@
             </div>
           </div>
 
-
+<ng-container  *ngIf="isVideoAssets">
           <div class="row">
             <div class="col-md-12">
               <h4 class="card-title">Dedicated Video Instructions </h4>
@@ -183,7 +183,7 @@
             </div>
           </div>
 
-          <div class="row" *ngIf="isVideoAssets">
+          <div class="row">
             <div class="col-md-12">
               <h4 class="card-title">Video assets for influencers </h4>
             </div>
@@ -209,6 +209,8 @@
             </div>
           </div>
 
+        </ng-container>
+        <ng-container *ngIf="isImageAssets">
           <div class="row">
             <div class="col-md-12">
               <h4 class="card-title">Image Share Instructions</h4>
@@ -220,7 +222,7 @@
                   placeholder="Please write content to share <link><coupon code>"></textarea>
               </div>
             </div>
-            <ng-container *ngIf="isImageAssets">
+           
               <div class="col-md-4">
                 <div class="form-group required">
                   <label class="form-label">Upload image to share</label>
@@ -244,9 +246,10 @@
 
                 </div>
               </div>
-            </ng-container>
+           
 
           </div>
+          </ng-container>
           <div class="row">
             <div class="col-md-4">
               <div class="form-group required">

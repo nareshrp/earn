@@ -40,7 +40,7 @@
                   <h3>{{row.firstName}}{{row.lastName}} </h3>
                   <h4 class="mobile">{{row.phone}}</h4>
                   <span class="email">{{row.emailId}}</span>
-                  <button class="btn btn-sm btn-default userblockAction btn-positionAbs">Block</button>
+                  <button class="btn btn-sm btn-default userblockAction btn-positionAbs" *ngIf="row.status=='active'" (click)="blockUser(row.userId, 'blocked')">Block</button>
                   <button class="btn btn-sm btn-default userblockAction primaryAction"
                     *ngIf="isWithdrawal">Withdrawal</button>
                 </li>

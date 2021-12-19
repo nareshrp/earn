@@ -164,4 +164,9 @@ export class AdminService {
     return this.http.get(environment.apiUrl + "/api/earnin/influencer/" + couponId);
   }
 
+  userBlockAction(userId: any, body: any) {
+    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/block", body);
+  }
+
+
 }

@@ -103,6 +103,23 @@ export class UsersComponent implements OnInit {
 
   }
 
+  blockUser(id:any, action:any){
+    
+    let data={
+      "userId" : id,
+      "status"  :action
+    }
+    this._adminServices.userBlockAction(this.userId, data).pipe(finalize(() => {
+      this.spinner.hide();
+    })).subscribe((res: any) => {
+      if (res.statusCode == 200) {
+        this.toastr.showSuccess(res.message, "Successfully");
+      }
+     
+    })
+    
+  }
+
 
 
   // getWithdrawScreenMsg(){

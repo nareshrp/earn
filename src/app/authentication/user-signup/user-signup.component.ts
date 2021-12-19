@@ -17,7 +17,8 @@ export class UserSignupComponent implements OnInit {
   errorMsg = '';
   isOtp: boolean = false;
   isMobileVerify: boolean = false;
-  rolesList: any = [{ id: 1, role: "admin" }, { id: 2, role: "user" }]
+  rolesList: any = [{ id: 1, role: "admin" }, { id: 2, role: "user" }];
+  countryCode:any=[];
   constructor(
     private fb: FormBuilder,
     private _loginServices: LoginService,
@@ -30,6 +31,7 @@ export class UserSignupComponent implements OnInit {
       emailId: [null, [Validators.required, Validators.email]],
       role: [null, [Validators.required]],
       phone: [null, [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      countrycode:[null, [Validators.required]],
       password: [null, [Validators.required]],
       otp: [null],
 
@@ -37,16 +39,27 @@ export class UserSignupComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.getCountyCodeList();
   }
 
   get form() { return this.userSignUpForm.controls; }
+  getCountyCodeList() {
+    this._loginServices.getCountryCode().subscribe((res: any) => {
+
+      if (res.statusCode === 200) {
+        this.countryCode = res.result;
+        // console.log("Country Codes", this.countryCode);
+      }
+    })
+
+  }
   phoneNumberVerify() {
     this.spinner.show();
     console.log("Phone", this.userSignUpForm.value['phone']);
     if (this.userSignUpForm.value['phone'] != null) {
       let data = {
-        phone: this.userSignUpForm.value['phone']
+        phone: this.userSignUpForm.value['phone'],
+        phone_code: this.userSignUpForm.value['countrycode']
       }
       this._loginServices.verifyMobile(data).pipe(finalize(() => {
         this.spinner.hide();
