@@ -18,7 +18,7 @@ export class VendorsListComponent implements OnInit {
   vendorsList: any;
   errorMsg: any = '';
   statusType:any='pending'
-  statusMaste:any=[{id:1, status:'pending'}, {id:1, status:'active'}]
+  statusMaste:any=[{id:1, status:'pending'}, {id:2, status:'active'}, {id:3, status:'inactive'}]
   constructor(
     private activatedRouterServices: ActivatedRoute,
     private spinner: NgxSpinnerService,
@@ -96,6 +96,24 @@ export class VendorsListComponent implements OnInit {
       }
     
     });
+  }
+
+  blockUser(id:any, action:any){
+    
+    let data={
+      "userId" : id,
+      "status"  :action
+    }
+    this._adminServices.userBlockAction(this.userId, data).pipe(finalize(() => {
+      this.spinner.hide();
+    })).subscribe((res: any) => {
+      if (res.statusCode == 200) {
+        this.toastr.showSuccess(res.message, "Successfully");
+        this.getPendingVendorsList(this.statusType);
+      }
+     
+    })
+    
   }
 
 }
