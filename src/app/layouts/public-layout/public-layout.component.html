@@ -6,7 +6,9 @@
 <div class="container dealContainer" *ngIf="dealData">
   <div class="card">
     <div class="card-header">
-      {{coupon}}
+      <h4>{{coupon}}</h4>
+      <span>{{dealData.fromDate | date :'dd-MMM-yy h:mm:ss'}}</span> -  <span>{{dealData.toDate | date :'dd-MMM-yy h:mm:ss'}}</span> | <span>Used Coins : {{dealData.usedCoin}}</span>
+      <span class="poabs badge">{{dealData.category}}</span>
     </div>
     <div class="card-body">
       <div class="row">
@@ -18,6 +20,26 @@
 
 
           <p [innerHTML]="dealData.dealContent"></p>
+        </div>
+      </div>
+      <div class="row" *ngIf="dealData.vedInstr">
+        <div class="col-md-12">
+          <h3>Video Instructions</h3>
+          <div [innerHTML]="dealData.vedInstr"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+         <hr>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-md-12">
+          <h3>Address</h3>
+          <address>
+            {{dealData.location.address}}
+          </address>
         </div>
       </div>
 

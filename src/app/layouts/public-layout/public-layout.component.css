@@ -1,1 +1,12 @@
 .dealContainer{ width: 50%; margin-top: 100px;}
+.dealContainer .card .card-header{ background-color: #FFF;}
+.dealContainer .card .card-header h4{ font-size: 18px; margin-bottom: 10px; color: #ff7700;}
+.dealContainer .card .card-body h2{ font-size: 22px !important; margin-bottom: 10px; color: #ff7700;}
+.poabs.badge {
+    border: solid 2px #ff7700;
+    padding: 7px 15px;
+    position: absolute;
+    top: 22px;
+    right: 20px;
+    color: #ff7700;
+}

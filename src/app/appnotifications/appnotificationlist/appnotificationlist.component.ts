@@ -51,7 +51,9 @@ updateRowId:any;
     this.adminService.getNotification(this.userId).subscribe((result:any)=>{
       console.log("res", result);
       if(result.statusCode===200){
-      this.messageLiest=result.result;
+        
+      this.messageLiest=result.notifications;
+     
       }
     })
   }

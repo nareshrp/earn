@@ -175,7 +175,7 @@
             <div class="col-md-2">
               <div class="form-group required">
                 <label class="form-label">Views</label>
-                <input type="text" class="form-control" formControlName="threshold"
+                <input type="number" class="form-control" formControlName="threshold"
                   [ngClass]="{ 'is-invalid': (submitted && cform.threshold.errors) || (cform.threshold.touched && cform.threshold.errors) }">
                 <div *ngIf="submitted||(cform.threshold.touched && cform.threshold.invalid)">
                   <small class="form-text error-message" *ngIf="cform.threshold.errors">Views is
@@ -190,7 +190,7 @@
 
                 <div class="input-group">
 
-                  <input type="text" class="form-control" formControlName="coin"
+                  <input type="number" class="form-control" formControlName="coin"
                     [ngClass]="{ 'is-invalid': (submitted && cform.coin.errors) || (cform.coin.touched && cform.coin.errors) }">
                   <select class="form-control" formControlName="currency"
                     [ngClass]="{ 'is-invalid': (submitted && cform.currency.errors) || (cform.currency.touched && cform.currency.errors) }">

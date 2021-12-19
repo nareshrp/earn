@@ -440,3 +440,17 @@ body[data-sidebar-size=small] .footer {
 .modal-header .modal-title{ font-size: 18px;}
 .leftblock-search{ padding:10px; margin-bottom: 20px; background: #eaeaf4;
   border-radius: 3px;}
+  .dealContainer .card .card-body h2{ font-size: 22px !important; margin-bottom: 10px; color: #ff7700;}
+  .dealContainer .card .card-body h3{ font-size: 16px !important; margin-bottom: 0px; color: #ff7700;}
+  .dealContainer .card .card-body ul{
+    margin: 0px; padding: 0px; list-style: none; margin-top: 10px;
+  }
+  .dealContainer .card .card-body ul li{ position: relative; margin-bottom: 5px; padding-left: 20px;}
+  .dealContainer .card .card-body ul li::before{ content: "";
+    width: 10px;
+    height: 10px;
+    background-color: #ff7700;
+    border-radius: 100%;
+    position: absolute;
+    left: 0;
+    top: 5px;}
