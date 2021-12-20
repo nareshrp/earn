@@ -185,27 +185,27 @@
             </div>
             <div class="col-md-2">
               <div class="form-group required">
-                <label class="form-label">Reward Amount</label>
+                <label class="form-label">Reward Coins</label>
 
 
                 <div class="input-group">
 
-                  <input type="number" class="form-control" formControlName="coin"
-                    [ngClass]="{ 'is-invalid': (submitted && cform.coin.errors) || (cform.coin.touched && cform.coin.errors) }">
-                  <select class="form-control" formControlName="currency"
+                  <input type="number" class="form-control" formControlName="rewardCoin"
+                    [ngClass]="{ 'is-invalid': (submitted && cform.rewardCoin.errors) || (cform.rewardCoin.touched && cform.rewardCoin.errors) }">
+                  <!-- <select class="form-control" formControlName="currency"
                     [ngClass]="{ 'is-invalid': (submitted && cform.currency.errors) || (cform.currency.touched && cform.currency.errors) }">
                     <option *ngFor="let row of countryCoinsData" [value]="row.currency">{{row.currency}}</option>
 
-                  </select>
-                  <div *ngIf="submitted||(cform.coin.touched && cform.coin.invalid)">
-                    <small class="form-text error-message" *ngIf="cform.coin.errors">Reward Amount is
+                  </select> -->
+                  <div *ngIf="submitted||(cform.rewardCoin.touched && cform.rewardCoin.invalid)">
+                    <small class="form-text error-message" *ngIf="cform.rewardCoin.errors">Reward Coins is
                       required</small>
                   </div>
 
-                  <div *ngIf="submitted||(cform.currency.touched && cform.currency.invalid)">
+                  <!-- <div *ngIf="submitted||(cform.currency.touched && cform.currency.invalid)">
                     <small class="form-text error-message" *ngIf="cform.currency.errors">Currency is
                       required</small>
-                  </div>
+                  </div> -->
 
                 </div>
               </div>
@@ -268,7 +268,7 @@
                     {{row.threshold}}
                   </li>
                   <li>
-                    {{row.coin}} {{row.currency}} -
+                    {{row.rewardCoin}} -
                     {{row.action=='RHF'?'Release Holded funds' : row.action=='HF'?'Holded funds':'Not applicable'}}
                   </li>
                   <li>
@@ -296,7 +296,7 @@
                     {{row.threshold}}
                   </li>
                   <li>
-                    {{row.coin}} {{row.currency}} -
+                    {{row.rewardCoin}} -
                     {{row.action=='RHF'?'Release Holded funds' : row.action=='HF'?'Holded funds':'Not applicable'}}
                   </li>
                   <li>
@@ -324,7 +324,7 @@
                     {{row.threshold}}
                   </li>
                   <li>
-                    {{row.coin}} {{row.currency}} -
+                    {{row.rewardCoin}} -
                     {{row.action=='RHF'?'Release Holded funds' : row.action=='HF'?'Holded funds':'Not applicable'}}
                   </li>
                   <li>

@@ -62,8 +62,8 @@ export class CoinSettingsComponent implements OnInit {
     this.conditionForm = this.fb.group({
       operator: [null, [Validators.required]],
       threshold: [null, [Validators.required]],
-      coin: [null, [Validators.required]],
-      currency: [null, [Validators.required]],
+      rewardCoin: [null, [Validators.required]],
+      // currency: [null, [Validators.required]],
       action: [null, [Validators.required]],
 
     });
@@ -95,7 +95,7 @@ export class CoinSettingsComponent implements OnInit {
       return item.code === eventVal;
     })[0];
     console.log(filterVal);
-    this.coinsSettingForm.controls['currency'].setValue(filterVal.currency);
+    // this.coinsSettingForm.controls['currency'].setValue(filterVal.currency);
     this.coinsSettingForm.controls['coinVAl'].setValue(filterVal.coinVal);
   }
 
@@ -112,10 +112,10 @@ export class CoinSettingsComponent implements OnInit {
       this.coinsSettingForm.controls['videoDefaultCoin'].setValue(condition.videoDefaultCoin);
       this.onChangeSharetype("imgViewSettings");
       this.dynamicKey = "imgViewSettings";
-      this.conditionForm.controls['coin'].setValue(row.coin);
+      this.conditionForm.controls['rewardCoin'].setValue(row.rewardCoin);
       this.conditionForm.controls['operator'].setValue(row.operator);
       this.conditionForm.controls['threshold'].setValue(row.threshold);
-      this.conditionForm.controls['currency'].setValue(row.currency);
+      // this.conditionForm.controls['currency'].setValue(row.currency);
       this.conditionForm.controls['action'].setValue(row.action);
     } else if (type == 'videoView') {
       this.updatedRowId = row._id;
@@ -124,10 +124,10 @@ export class CoinSettingsComponent implements OnInit {
       this.coinsSettingForm.controls['videoDefaultCoin'].setValue(condition.videoDefaultCoin);
       this.onChangeSharetype("videoViewSettings");
       this.dynamicKey = "videoViewSettings";
-      this.conditionForm.controls['coin'].setValue(row.coin);
+      this.conditionForm.controls['rewardCoin'].setValue(row.rewardCoin);
       this.conditionForm.controls['operator'].setValue(row.operator);
       this.conditionForm.controls['threshold'].setValue(row.threshold);
-      this.conditionForm.controls['currency'].setValue(row.currency);
+      // this.conditionForm.controls['currency'].setValue(row.currency);
       this.conditionForm.controls['action'].setValue(row.action);
     }
     else {
@@ -137,10 +137,10 @@ export class CoinSettingsComponent implements OnInit {
       this.coinsSettingForm.controls['videoDefaultCoin'].setValue(condition.videoDefaultCoin);
       this.onChangeSharetype("linkViewSettings");
       this.dynamicKey = "linkViewSettings";
-      this.conditionForm.controls['coin'].setValue(row.coin);
+      this.conditionForm.controls['rewardCoin'].setValue(row.rewardCoin);
       this.conditionForm.controls['operator'].setValue(row.operator);
       this.conditionForm.controls['threshold'].setValue(row.threshold);
-      this.conditionForm.controls['currency'].setValue(row.currency);
+      // this.conditionForm.controls['currency'].setValue(row.currency);
       this.conditionForm.controls['action'].setValue(row.action);
     }
 

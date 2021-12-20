@@ -25,7 +25,7 @@
                 <th class="align-middle">Deal Name</th>
                 <th class="align-middle">End Date</th>
                 <th class="align-middle">Location</th>
-                <th class="align-middle">No.Of Users Shared</th>
+                <th class="align-middle">No.Of Views</th>
 
                 <th class="align-middle" style="width: 150px;">Actions</th>
               </tr>
@@ -39,7 +39,7 @@
                 <td>{{row.offerTitle}}</td>
                 <td>{{row.toDate | date:'medium'}}</td>
                 <td>{{row.location.address}}</td>
-                <td>0</td>
+                <td><span *ngIf="row.viewCount">{{row.viewCount}}</span> <span *ngIf="!row.viewCount">0</span></td>
 
 
                 <td>

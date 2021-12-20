@@ -37,7 +37,7 @@
               <div class="form-group required">
                 <label class="form-label">Set <strong>1 Coin = {{upDatedCoinVal}} </strong>
                   <span>{{updatedCurrencyVal}}</span> </label>
-                <input type="text" class="form-control" [(ngModel)]="upDatedCoinVal" formControlName="coinVal"
+                <input type="number" class="form-control" [(ngModel)]="upDatedCoinVal" formControlName="coinVal"
                   [ngClass]="{ 'is-invalid': (submitted && form.coinVal.errors) || (form.coinVal.touched && form.coinVal.errors) }">
                 <div *ngIf="submitted||(form.coinVal.touched && form.coinVal.invalid)">
                   <small class="form-text error-message" *ngIf="form.coinVal.errors"> Set Coin is required</small>
@@ -46,21 +46,21 @@
             </div>
             <div class="col-md-2">
               <div class="form-group required">
-                <label class="form-label">Tax</label>
-                <input type="text" class="form-control"  formControlName="tax"
-                  [ngClass]="{ 'is-invalid': (submitted && form.tax.errors) || (form.tax.touched && form.tax.errors) }">
-                <div *ngIf="submitted||(form.tax.touched && form.tax.invalid)">
-                  <small class="form-text error-message" *ngIf="form.coinVal.errors"> Tax is required</small>
+                <label class="form-label">Enter tax type</label>
+                <input type="text" class="form-control"  formControlName="taxType"
+                  [ngClass]="{ 'is-invalid': (submitted && form.taxType.errors) || (form.taxType.touched && form.taxType.errors) }">
+                <div *ngIf="submitted||(form.taxType.touched && form.taxType.invalid)">
+                  <small class="form-text error-message" *ngIf="form.taxType.errors"> Tax type is required</small>
                 </div>
               </div>
             </div>
             <div class="col-md-2">
               <div class="form-group required">
-                <label class="form-label">Vat</label>
-                <input type="text" class="form-control"  formControlName="vat"
+                <label class="form-label">Value</label>
+                <input type="number" class="form-control"  formControlName="vat"
                   [ngClass]="{ 'is-invalid': (submitted && form.vat.errors) || (form.vat.touched && form.vat.errors) }">
                 <div *ngIf="submitted||(form.vat.touched && form.vat.invalid)">
-                  <small class="form-text error-message" *ngIf="form.coinVal.errors"> Vat is required</small>
+                  <small class="form-text error-message" *ngIf="form.vat.errors"> Value is required</small>
                 </div>
               </div>
             </div>
