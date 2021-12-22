@@ -33,7 +33,7 @@ export class VendorSignupComponent implements OnInit {
   // businessCategoryList: any = [{ id: 1, name: "Fashion" }, { id: 2, name: "Grocery" }, { id: 3, name: "Medical" }];
   businessCategoryList: any = [];
   targetAudienceList: any = [{ id: 1, name: "Male" }, { id: 2, name: "Female" }, { id: 3, name: "All" }];
-  audienceAgeList: any = [{ id: 1, name: "0 to 20" }, { id: 2, name: "20 to 40" }, { id: 3, name: "40 to 60" }];
+  audienceAgeList: any = [{ id: 1, name: "0 to 20" }, { id: 2, name: "20 to 40" }, { id: 3, name: "40 to 60" }, { id: 4, name: "everyone" } ];
   countryCode:any=[];
   constructor(
     private fb: FormBuilder,

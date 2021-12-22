@@ -295,17 +295,20 @@ export class CreateDealComponent implements OnInit {
         // this.toastr.showSuccess("File Successfully Created !!", "Successfully");
       })).subscribe((res: any) => {
 
-        if (res.result.statusCode === 200) {
-          this.videoAssetsObjFileName.push(res.result.fileName);
-          this.videoAssetsObjFilePath.push(res.result.filePath);
+        if (res.result.statusCode === 200) {  
+          // console.log("video -------------", res.result);
+          delete res.result.statusCode;
+          this.videoAssetsObjFileName.push(res.result);
+          // this.videoAssetsObjFilePath.push(res.result.filePath);
           this.toastr.showSuccess(res.message, "Successfully");
+
 
         }
       });
     };
 
     console.log("videoAssetsObjFileName -------------------", this.videoAssetsObjFileName);
-    console.log("videoAssetsObjFilePath---------------------", this.videoAssetsObjFilePath);
+    // console.log("videoAssetsObjFilePath---------------------", this.videoAssetsObjFilePath);
 
   }
 
@@ -322,8 +325,9 @@ export class CreateDealComponent implements OnInit {
       })).subscribe((res: any) => {
 
         if (res.result.statusCode === 200) {
-          this.imageAssetsFilesObjFileName.push(res.result.fileName);
-          this.imageAssetsFilesObjFilePath.push(res.result.filePath);
+          delete res.result.statusCode;
+          this.imageAssetsFilesObjFileName.push(res.result);
+          // this.imageAssetsFilesObjFilePath.push(res.result.filePath);
           this.toastr.showSuccess(res.message, "Successfully");
 
         }
@@ -331,7 +335,7 @@ export class CreateDealComponent implements OnInit {
     };
 
     console.log("imageAssetsFilesObjFileName -------------------", this.imageAssetsFilesObjFileName);
-    console.log("imageAssetsFilesObjFilePath---------------------", this.imageAssetsFilesObjFilePath);
+    // console.log("imageAssetsFilesObjFilePath---------------------", this.imageAssetsFilesObjFilePath);
   }
 
   resetBtn(btnName: any) {
@@ -439,18 +443,15 @@ export class CreateDealComponent implements OnInit {
       longitude: this.longitude,
       radius: this.radius
     }
-    this.videoAssetsObj = {
-      fileName: this.videoAssetsObjFileName,
-      filePath: this.videoAssetsObjFilePath
-    };
-    this.imageAssetsObj = {
-      fileName: this.imageAssetsFilesObjFileName,
-      filePath: this.imageAssetsFilesObjFilePath
-    };
+    // this.videoAssetsObj =  this.videoAssetsObjFileName
+    // this.imageAssetsObj = {
+    //   fileName: this.imageAssetsFilesObjFileName,
+    //   filePath: this.imageAssetsFilesObjFilePath
+    // };
 
     this.createDealForm.value['dealImg'] = this.dealImgObj;
-    this.createDealForm.value['vAssets'] = this.videoAssetsObj;
-    this.createDealForm.value['imageAssets'] = this.imageAssetsObj;
+    this.createDealForm.value['vAssets'] =  this.videoAssetsObjFileName;
+    this.createDealForm.value['imageAssets'] = this.imageAssetsFilesObjFileName;
     this.createDealForm.value['sharedType'] = this.sharedTypeList;
     this.createDealForm.value['vendorId'] = this.selectedVendorID;
     this.createDealForm.value['dealContent'] = this.dealContentData;

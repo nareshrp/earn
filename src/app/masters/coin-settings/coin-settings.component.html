@@ -140,6 +140,11 @@
                 </div>
               </div>
             </div>
+            <div class="col-4">
+              <div class="form-group">
+                <button class="btn btn-primary my-4" (click)="onSubmit()">Save</button>
+              </div>
+            </div>
           </div>
         </form>
         <div class="row">
@@ -183,7 +188,22 @@
                 </div>
               </div>
             </div>
+         
             <div class="col-md-2">
+              <div class="form-group required">
+                <label class="form-label">Action </label>
+                <select class="form-control" formControlName="action" (change)="onActionChange()"
+                  [ngClass]="{ 'is-invalid': (submitted && cform.action.errors) || (cform.action.touched && cform.action.errors) }">
+                  <option *ngFor="let row of actionType" [value]="row.action">{{row.desc}}</option>
+                </select>
+                <div *ngIf="submitted||(cform.action.touched && cform.action.invalid)">
+                  <small class="form-text error-message" *ngIf="cform.action.errors">Action is
+                    required</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-2"  *ngIf="isRewardCoins">
               <div class="form-group required">
                 <label class="form-label">Reward Coins</label>
 
@@ -210,19 +230,6 @@
                 </div>
               </div>
 
-            </div>
-            <div class="col-md-2">
-              <div class="form-group required">
-                <label class="form-label">Action </label>
-                <select class="form-control" formControlName="action"
-                  [ngClass]="{ 'is-invalid': (submitted && cform.action.errors) || (cform.action.touched && cform.action.errors) }">
-                  <option *ngFor="let row of actionType" [value]="row.action">{{row.desc}}</option>
-                </select>
-                <div *ngIf="submitted||(cform.action.touched && cform.action.invalid)">
-                  <small class="form-text error-message" *ngIf="cform.action.errors">Action is
-                    required</small>
-                </div>
-              </div>
             </div>
 
             <div class="col-md-2">
@@ -269,7 +276,7 @@
                   </li>
                   <li>
                     {{row.rewardCoin}} -
-                    {{row.action=='RHF'?'Release Holded funds' : row.action=='HF'?'Holded funds':'Not applicable'}}
+                    {{row.action=='RHF'?'Release Holded funds' : row.action=='ADC'?'Add Coins':'Not applicable'}}
                   </li>
                   <li>
                     <a href="javascript:void(0);" class="text-success" (click)="editRow(condition, 'imgView', row)"><i
@@ -297,7 +304,7 @@
                   </li>
                   <li>
                     {{row.rewardCoin}} -
-                    {{row.action=='RHF'?'Release Holded funds' : row.action=='HF'?'Holded funds':'Not applicable'}}
+                    {{row.action=='RHF'?'Release Holded funds' : row.action=='ADC'?'Add Coins':'Not applicable'}}
                   </li>
                   <li>
                     <a href="javascript:void(0);" class="text-success" (click)="editRow(condition, 'videoView', row)"><i
@@ -325,7 +332,7 @@
                   </li>
                   <li>
                     {{row.rewardCoin}} -
-                    {{row.action=='RHF'?'Release Holded funds' : row.action=='HF'?'Holded funds':'Not applicable'}}
+                    {{row.action=='RHF'?'Release Holded funds' : row.action=='ADC'?'Add Coins':'Not applicable'}}
                   </li>
                   <li>
                     <a href="javascript:void(0);" class="text-success" (click)="editRow(condition, 'linkView', row)"><i
