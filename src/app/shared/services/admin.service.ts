@@ -132,6 +132,10 @@ export class AdminService {
     return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/coinsetting/" + cId, body);
   }
 
+  // editCoinSettingDefault(userId: any, body: any) {
+  //   return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/coinsetting/", body);
+  // }
+
   deleteCoinSetting(userId: any, cId: any) {
     return this.http.delete(environment.apiUrl + "/api/earnin/users/" + userId + "/coinsetting/" + cId);
   }

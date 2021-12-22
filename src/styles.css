@@ -402,11 +402,13 @@ body[data-sidebar-size=small] .footer {
   border-bottom: solid 1px #d8d8e3;
   padding-bottom: 10px;
 }
-.conditionsBlock ul li{ display: inline-block; margin-right: 10px; font-size: 15px; width: 12%;
+.conditionsBlock ul li{ display: inline-block; margin-right: 10px; font-size: 15px; 
+  /* width: 12%; */
+  width: 19%;
   font-weight: 500; position: relative;}
  .conditionsBlock ul li:nth-child(3):after {content: "->";position: absolute;top: 0;right: 30px;}
 
- .conditionsBlock ul li:nth-child(4){ width: 30%;}
+ /* .conditionsBlock ul li:nth-child(4){ width: 30%;} */
 
  .badge {
   display: inline-block;

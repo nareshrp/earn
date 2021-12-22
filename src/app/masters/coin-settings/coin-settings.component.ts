@@ -34,6 +34,8 @@ export class CoinSettingsComponent implements OnInit {
   dynamicKey: any;
   updatedRowId: any;
   isRewardCoins:boolean=false;
+  defaultSettingCoins:any;
+  isDefaulCoinsEdit:boolean=false;
   constructor(
     private activatedRouterServices: ActivatedRoute,
     private spinner: NgxSpinnerService,
@@ -106,8 +108,9 @@ export class CoinSettingsComponent implements OnInit {
       this.conditionForm.controls['rewardCoin'].setValidators([Validators.required]);
     }
     else{
-      this.isRewardCoins=false;
       this.conditionForm.controls['rewardCoin'].setValidators(null);
+      this.isRewardCoins=false;
+      
     }
 
     // isRewardCoins
@@ -131,6 +134,13 @@ export class CoinSettingsComponent implements OnInit {
       this.conditionForm.controls['threshold'].setValue(row.threshold);
       // this.conditionForm.controls['currency'].setValue(row.currency);
       this.conditionForm.controls['action'].setValue(row.action);
+      this.onActionChange();
+      if(row.action==='ADC'){
+        
+        this.isRewardCoins=true;
+        this.conditionForm.controls['rewardCoin'].setValidators([Validators.required]);
+      }
+     
     } else if (type == 'videoView') {
       this.updatedRowId = row._id;
       console.log("videoView row", this.updatedRowId);
@@ -143,6 +153,11 @@ export class CoinSettingsComponent implements OnInit {
       this.conditionForm.controls['threshold'].setValue(row.threshold);
       // this.conditionForm.controls['currency'].setValue(row.currency);
       this.conditionForm.controls['action'].setValue(row.action);
+      this.onActionChange();
+      if(row.action==='ADC'){
+        this.isRewardCoins=true;
+        this.conditionForm.controls['rewardCoin'].setValidators([Validators.required]);
+      }
     }
     else {
       this.updatedRowId = row._id;
@@ -156,6 +171,11 @@ export class CoinSettingsComponent implements OnInit {
       this.conditionForm.controls['threshold'].setValue(row.threshold);
       // this.conditionForm.controls['currency'].setValue(row.currency);
       this.conditionForm.controls['action'].setValue(row.action);
+      this.onActionChange();
+      if(row.action==='ADC'){
+        this.isRewardCoins=true;
+        this.conditionForm.controls['rewardCoin'].setValidators([Validators.required]);
+      }
     }
 
   }
@@ -180,10 +200,20 @@ export class CoinSettingsComponent implements OnInit {
       console.log("res", res);
       if (res.statusCode === 200) {
         this.settingCoinsList = res.coinsSetting;
+        this.defaultSettingCoins= res.defaultSettings
         console.log("settingCoinsList", this.settingCoinsList);
       }
     })
   }
+
+  editDefaultCoinSettings(){
+    this.isDefaulCoinsEdit=true;
+    this.coinsSettingForm.controls['imgDefaultCoin'].setValue(this.defaultSettingCoins.imgDefaultCoin);
+    this.coinsSettingForm.controls['videoDefaultCoin'].setValue(this.defaultSettingCoins.videoDefaultCoin);
+
+  
+  }
+
   onSubmit() {
 
     // console.log("form Val", this.coinsForm.value);
@@ -212,8 +242,9 @@ export class CoinSettingsComponent implements OnInit {
       })).subscribe((res: any) => {
         console.log("res", res);
         if (res.statusCode === 200) {
+        
           this.toastr.showSuccess(res.message, 'Success');
-          this.getSettingCoinsDataList();
+          // this.getSettingCoinsDataList();
           this.coinsSettingForm.reset();
           // this.getAllMyCities();
 
@@ -224,6 +255,22 @@ export class CoinSettingsComponent implements OnInit {
 
 
 
+  }
+
+  onUpdateSetting(){
+    this._adminService.addCoinSettings(this.userId, this.coinsSettingForm.value).pipe(finalize(() => {
+      this.spinner.hide();
+    })).subscribe((res: any) => {
+      console.log("res", res);
+      if (res.statusCode === 200) {
+      
+        this.toastr.showSuccess(res.message, 'Success');
+        this.getSettingCoinsDataList();
+        this.coinsSettingForm.reset();
+        // this.getAllMyCities();
+
+      }
+    });
   }
 
   onChangeSharetype(event: any) {
@@ -259,6 +306,7 @@ export class CoinSettingsComponent implements OnInit {
     let newObject = {
       // defaultImageShare: this.coinsSettingForm.value['imgDefaultCoin'],
       // videoDefaultCoin: this.coinsSettingForm.value['videoDefaultCoin'],
+      defaultSettings:  this.defaultSettingCoins,
       [this.dynamicKey]: this.conditionForm.value
     }
     this._adminService.addCoinSettings(this.userId, newObject).pipe(finalize(() => {
@@ -277,7 +325,7 @@ export class CoinSettingsComponent implements OnInit {
 
   updateRow() {
     this.isRowEdit = false;
-
+    this.isRewardCoins=false;
     let newObject = {
       defaultImageShare: this.coinsSettingForm.value['imgDefaultCoin'],
       videoDefaultCoin: this.coinsSettingForm.value['videoDefaultCoin'],
