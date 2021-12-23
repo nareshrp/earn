@@ -148,7 +148,7 @@
             </div>
           </div>
         </form>
-        <div class="row" *ngIf="defaultSettingCoins">
+        <div class="row" *ngIf="defaultCoinData">
           <div class="col-12">
             <table class="table">
               <thead>
@@ -160,13 +160,16 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>{{defaultSettingCoins.imgDefaultCoin}}</td>
-                  <td>{{defaultSettingCoins.videoDefaultCoin}}</td>
+                  <td>{{defaultCoinData.imgDefaultCoin}}</td>
+                  <td>{{defaultCoinData.videoDefaultCoin}}</td>
                   <td>
-                    <a href="javascript:void(0);" class="text-success" (click)="editDefaultCoinSettings()"><i
-                      class="mdi mdi-pencil font-size-18"></i></a>
-                  <!-- <a href="javascript:void(0);" class="text-danger" (click)="rowDelete(row._id)"><i
-                      class="mdi mdi-delete font-size-18"></i></a> -->
+                    <ng-container *ngIf="defaultCoinData.imgDefaultCoin">
+                      <a href="javascript:void(0);" class="text-success" (click)="editDefaultCoinSettings()"><i
+                        class="mdi mdi-pencil font-size-18"></i></a>
+                    <a href="javascript:void(0);" class="text-danger" (click)="deleteDefaultCoin()"><i
+                        class="mdi mdi-delete font-size-18"></i></a>
+                    </ng-container>
+                
                   </td>
                 </tr>
               </tbody>

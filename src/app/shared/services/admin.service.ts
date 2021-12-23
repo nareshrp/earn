@@ -124,12 +124,31 @@ export class AdminService {
     return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/coinsetting", body);
   }
 
+  addDefaultCoin(userId: any, body: any) {
+    return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/defaultcoinsetting", body);
+  }
+
   getCoinData(userId: any) {
     return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/coinsetting");
   }
 
+  getDefaultCoinData(userId: any) {
+    return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/defaultcoinsetting");
+  }
+
+  deleteDefaultCoin(userId: any, msgId: any) {
+    return this.http.delete(environment.apiUrl + "/api/earnin/users/" + userId + "/defaultcoinsetting/" + msgId);
+  }
+
+
+
+
   editCoinSetting(userId: any, cId: any, body: any) {
     return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/coinsetting/" + cId, body);
+  }
+
+  editDefaultCoinSetting(userId: any, dCoinId: any, body: any) {
+    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/defaultcoinsetting/" + dCoinId, body);
   }
 
   // editCoinSettingDefault(userId: any, body: any) {

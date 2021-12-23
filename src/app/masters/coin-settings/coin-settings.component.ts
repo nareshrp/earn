@@ -36,6 +36,8 @@ export class CoinSettingsComponent implements OnInit {
   isRewardCoins:boolean=false;
   defaultSettingCoins:any;
   isDefaulCoinsEdit:boolean=false;
+  defaultCoinData:any=[];
+  
   constructor(
     private activatedRouterServices: ActivatedRoute,
     private spinner: NgxSpinnerService,
@@ -80,6 +82,7 @@ export class CoinSettingsComponent implements OnInit {
     this.getPageTitle();
     this.getCountryListWithCoinsData();
     this.getSettingCoinsDataList();
+    this.getDefaultCoin();
   }
   get form() { return this.coinsSettingForm.controls; }
   get cform() { return this.conditionForm.controls; }
@@ -208,12 +211,31 @@ export class CoinSettingsComponent implements OnInit {
 
   editDefaultCoinSettings(){
     this.isDefaulCoinsEdit=true;
-    this.coinsSettingForm.controls['imgDefaultCoin'].setValue(this.defaultSettingCoins.imgDefaultCoin);
-    this.coinsSettingForm.controls['videoDefaultCoin'].setValue(this.defaultSettingCoins.videoDefaultCoin);
+    this.coinsSettingForm.controls['imgDefaultCoin'].setValue(this.defaultCoinData.imgDefaultCoin);
+    this.coinsSettingForm.controls['videoDefaultCoin'].setValue(this.defaultCoinData.videoDefaultCoin);
 
   
   }
 
+ 
+
+
+  getDefaultCoin(){
+    
+
+    this._adminService.getDefaultCoinData(this.userId).pipe(finalize(() => {
+      this.spinner.hide();
+    })).subscribe((res: any) => {
+      console.log("res", res);
+      if (res.statusCode === 200) {
+        this.defaultCoinData=res.defaultCoin
+        this.toastr.showSuccess(res.message, 'Success');
+       
+        // this.getAllMyCities();
+
+      }
+    });
+  }
   onSubmit() {
 
     // console.log("form Val", this.coinsForm.value);
@@ -237,14 +259,14 @@ export class CoinSettingsComponent implements OnInit {
       this.coinsSettingForm.reset();
 
     } else {
-      this._adminService.addCoinSettings(this.userId, this.coinsSettingForm.value).pipe(finalize(() => {
+      this._adminService.addDefaultCoin(this.userId, this.coinsSettingForm.value).pipe(finalize(() => {
         this.spinner.hide();
       })).subscribe((res: any) => {
         console.log("res", res);
         if (res.statusCode === 200) {
         
           this.toastr.showSuccess(res.message, 'Success');
-          // this.getSettingCoinsDataList();
+          this.getDefaultCoin();
           this.coinsSettingForm.reset();
           // this.getAllMyCities();
 
@@ -258,19 +280,34 @@ export class CoinSettingsComponent implements OnInit {
   }
 
   onUpdateSetting(){
-    this._adminService.addCoinSettings(this.userId, this.coinsSettingForm.value).pipe(finalize(() => {
+    this._adminService.editDefaultCoinSetting(this.userId, this.defaultCoinData.id, this.coinsSettingForm.value).pipe(finalize(() => {
       this.spinner.hide();
     })).subscribe((res: any) => {
       console.log("res", res);
       if (res.statusCode === 200) {
       
         this.toastr.showSuccess(res.message, 'Success');
-        this.getSettingCoinsDataList();
+        // this.getSettingCoinsDataList();
+        this.getDefaultCoin();
         this.coinsSettingForm.reset();
         // this.getAllMyCities();
 
       }
     });
+  }
+
+  deleteDefaultCoin(){
+    this._adminService.deleteDefaultCoin(this.userId, this.defaultCoinData.id,).pipe(finalize(() => {
+
+    })).subscribe((res: any) => {
+      console.log("res", res);
+      if (res.statusCode === 200) {
+        this.coinsSettingForm.reset();
+        this.toastr.showSuccess(res.message, 'Success');
+        this.getDefaultCoin();
+      }
+    })
+  
   }
 
   onChangeSharetype(event: any) {
