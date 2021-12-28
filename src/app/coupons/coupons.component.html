@@ -1,1 +1,71 @@
-<p>coupons works!</p>
+<header id="page-topbar">
+    <div class="navbar-header public-header">
+      <div class="d-flex">
+        <!-- LOGO -->
+        <div class="navbar-brand-box">
+          <a href="index.html" class="logo logo-dark">
+            <span class="logo-sm">
+              <img src="assets/images/small-logo.svg" alt="" height="22">
+            </span>
+            <span class="logo-lg">
+              <img src="assets/images/logo.svg" alt="" height="17">
+            </span>
+          </a>
+  
+          <a href="index.html" class="logo logo-light">
+            <span class="logo-sm">
+              <img src="assets/images/small-logo.svg" alt="" height="44">
+            </span>
+            <span class="logo-lg">
+              <img src="assets/images/logo.svg" alt="" height="42">
+            </span>
+          </a>
+        </div>
+     </div>
+  
+  
+    </div>
+  </header>
+  <div class="container dealContainer" *ngIf="dealData">
+    <div class="card">
+      <div class="card-header">
+        <h4>{{coupon}}</h4>
+        <span>{{dealData.fromDate | date :'dd-MMM-yy h:mm:ss'}}</span> -  <span>{{dealData.toDate | date :'dd-MMM-yy h:mm:ss'}}</span> | <span>Used Coins : {{dealData.usedCoin}}</span>
+        <span class="poabs badge">{{dealData.category}}</span>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <figure class="figure">
+              <img [src]="dealData.dealImg.filePath" class="figure-img img-fluid rounded" alt="...">
+              <!-- <figcaption class="figure-caption text-right">A caption for the above image.</figcaption> -->
+            </figure>
+  
+  
+            <p [innerHTML]="dealData.dealContent"></p>
+          </div>
+        </div>
+        <div class="row" *ngIf="dealData.vedInstr">
+          <div class="col-md-12">
+            <h3>Video Instructions</h3>
+            <div [innerHTML]="dealData.vedInstr"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+           <hr>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-12">
+            <h3>Address</h3>
+            <address>
+              {{dealData.location.address}}
+            </address>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>

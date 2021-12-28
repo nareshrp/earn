@@ -7,7 +7,7 @@ import { CouponsComponent } from './coupons.component';
 
 @NgModule({
   declarations: [
-    CouponsComponent
+    CouponsComponent,
   ],
   imports: [
     CommonModule,

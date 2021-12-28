@@ -5,7 +5,13 @@ import { CouponsComponent } from './coupons.component';
 const routes: Routes = [{
   path: '',
   component: CouponsComponent
-}];
+}
+// {
+//   path: 'views/:id',
+//   component: CouponsComponent,
+
+// }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

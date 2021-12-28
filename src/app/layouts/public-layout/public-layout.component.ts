@@ -14,6 +14,7 @@ export class PublicLayoutComponent implements OnInit {
   couponId: any;
   dealData: any;
   coupon: any;
+  // ipAddress:any;
   constructor(
     private routerServices: Router,
     private activatedRouterServices: ActivatedRoute,
@@ -28,6 +29,7 @@ export class PublicLayoutComponent implements OnInit {
       this.couponId = res.id;
       this.getCouponDetails(this.couponId);
     });
+    // this.getIP();
 
   }
 
@@ -43,6 +45,14 @@ export class PublicLayoutComponent implements OnInit {
     });
 
   }
+
+  // getIP()  
+  // {  
+  //   this._adminService.getIPAddress().subscribe((res:any)=>{  
+  //     this.ipAddress=res.ip;  
+  //     console.log("this.ipAddress", this.ipAddress);
+  //   });  
+  // } 
 
 
 }
