@@ -143,7 +143,8 @@
             <div class="col-4">
               <div class="form-group">
                 <button class="btn btn-primary my-4" *ngIf="!isDefaulCoinsEdit" (click)="onSubmit()">Save</button>
-                <button class="btn btn-primary my-4" *ngIf="isDefaulCoinsEdit" (click)="onUpdateSetting()">Update</button>
+                <button class="btn btn-primary my-4" *ngIf="isDefaulCoinsEdit"
+                  (click)="onUpdateSetting()">Update</button>
               </div>
             </div>
           </div>
@@ -153,10 +154,10 @@
             <table class="table">
               <thead>
                 <tr>
-                <th>Default Image Setting</th>
-                <th>Default Video Setting</th>
-                <th>Action</th>
-              </tr>
+                  <th>Default Image Setting</th>
+                  <th>Default Video Setting</th>
+                  <th>Action</th>
+                </tr>
               </thead>
               <tbody>
                 <tr>
@@ -165,11 +166,11 @@
                   <td>
                     <ng-container *ngIf="defaultCoinData.imgDefaultCoin">
                       <a href="javascript:void(0);" class="text-success" (click)="editDefaultCoinSettings()"><i
-                        class="mdi mdi-pencil font-size-18"></i></a>
-                    <a href="javascript:void(0);" class="text-danger" (click)="deleteDefaultCoin()"><i
-                        class="mdi mdi-delete font-size-18"></i></a>
+                          class="mdi mdi-pencil font-size-18"></i></a>
+                      <a href="javascript:void(0);" class="text-danger" (click)="deleteDefaultCoin()"><i
+                          class="mdi mdi-delete font-size-18"></i></a>
                     </ng-container>
-                
+
                   </td>
                 </tr>
               </tbody>
@@ -217,7 +218,7 @@
                 </div>
               </div>
             </div>
-         
+
             <div class="col-md-2">
               <div class="form-group required">
                 <label class="form-label">Action </label>
@@ -232,7 +233,7 @@
               </div>
             </div>
 
-            <div class="col-md-2"  *ngIf="isRewardCoins">
+            <div class="col-md-2" *ngIf="isRewardCoins">
               <div class="form-group required">
                 <label class="form-label">Reward Coins</label>
 
@@ -371,6 +372,33 @@
                   </li>
                 </ng-container>
 
+              </ul>
+            </ng-container>
+
+            <ng-container *ngIf="condition.couponView && condition.couponView.length>0">
+              <ul>
+                <ng-container *ngFor="let row of condition.couponView">
+                  <li>
+                    Coupon View
+                  </li>
+                  <li>
+                    {{row.operator ==='lt'? '<': row.operator ==='gt'?'>': row.operator ==='eq' ? '=' : row.operator ==='lte' ? '<=' : row.operator ==='gte'?'>=':''}}
+                  </li>
+
+                  <li>
+                    {{row.threshold}}
+                  </li>
+                  <li>
+                    {{row.rewardCoin}} -
+                    {{row.action=='RHF'?'Release Holded funds' : row.action=='ADC'?'Add Coins':'Not applicable'}}
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);" class="text-success"
+                      (click)="editRow(condition, 'couponView', row)"><i class="mdi mdi-pencil font-size-18"></i></a>
+                    <a href="javascript:void(0);" class="text-danger" (click)="rowDelete(row._id)"><i
+                        class="mdi mdi-delete font-size-18"></i></a>
+                  </li>
+                </ng-container>
               </ul>
             </ng-container>
 
