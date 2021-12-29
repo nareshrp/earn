@@ -195,9 +195,8 @@ export class AdminService {
     return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/block", body);
   }
 
-  getIPAddress()  
-  {  
-    return this.http.get("http://api.ipify.org/?format=json");  
+  getIPAddress() {
+    return this.http.get(" https://cors-anywhere.herokuapp.com/http://api.ipify.org/?format=json");
   }
 
   countIp(couponId: any, body: any) {
