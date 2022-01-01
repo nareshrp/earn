@@ -4,11 +4,11 @@ import { DashboardComponent } from './dashboard.component';
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: '',
     component: DashboardComponent,
     data: {
       title: 'Dashboard ',
-      headerDisplay: "none"
+      // headerDisplay: "none"
     }
   }
 ];
