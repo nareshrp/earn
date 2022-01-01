@@ -15,7 +15,11 @@ import { ToastrModule } from 'ngx-toastr';
 import { DEFAULT_TIMEOUT, HttpInterceptorService } from './shared/services/http-interceptor.service';
 import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
 import { HeaderComponent } from './layouts/public-layout/header/header.component';
+import { PerfectScrollbarConfigInterface, PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+  suppressScrollX: true
+};
 
 @NgModule({
   declarations: [
@@ -34,6 +38,7 @@ import { HeaderComponent } from './layouts/public-layout/header/header.component
     BrowserAnimationsModule,
     ToastrModule.forRoot(), // ToastrModule added
     SidebarModule.forRoot(), NgbModule,
+    PerfectScrollbarModule,
     // AgmCoreModule.forRoot({
     //   apiKey: 'AIzaSyAhDYjKC1B1VjPSEgfCtsAjJRDZHbOrlCg',
     //   libraries: ['places']
@@ -42,6 +47,10 @@ import { HeaderComponent } from './layouts/public-layout/header/header.component
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
     { provide: DEFAULT_TIMEOUT, useValue: 60000 },
+    {
+      provide: PERFECT_SCROLLBAR_CONFIG,
+      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
+    }
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]

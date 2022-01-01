@@ -32,7 +32,7 @@
       <div class="vertical-menu">
 
         <div class="h-100">
-
+          <perfect-scrollbar class="side-nav" [disabled]="isFolded">
           <!--- Sidemenu -->
           <div id="sidebar-menu">
             <!-- Left Menu Start -->
@@ -48,7 +48,7 @@
 
                 <li>
                   <a href="javascript: void(0);" class="has-arrow waves-effect">
-                    <i class="bx bx-store"></i>
+                    <i class="fas fa-database"></i>
                     <span>Masters</span>
                   </a>
                   <ul class="sub-menu" aria-expanded="false">
@@ -66,7 +66,7 @@
 
                 <li>
                   <a href="javascript: void(0);" class="has-arrow waves-effect">
-                    <i class="bx bx-receipt"></i>
+                    <i class="fas fa-user-friends"></i>
                     <span key="t-ecommerce">Vendors</span>
                   </a>
                   <ul class="sub-menu" aria-expanded="false">
@@ -75,7 +75,7 @@
                 </li>
                 <li>
                   <a href="javascript: void(0);" class="has-arrow waves-effect">
-                    <i class="bx bx-store"></i>
+                    <i class="fas fa-tags"></i>
                     <span>Deals</span>
                   </a>
                   <ul class="sub-menu" aria-expanded="false">
@@ -88,7 +88,7 @@
                 </li>
                 <li>
                   <a href="javascript: void(0);" class="has-arrow waves-effect">
-                    <i class="bx bx-store"></i>
+                    <i class="fas fa-headset"></i>
                     <span>Questions</span>
                   </a>
                   <ul class="sub-menu" aria-expanded="false">
@@ -97,16 +97,26 @@
                 </li>
                 <li>
                   <a [routerLink]="['/users']" routerLinkActive="router-link-active" class="waves-effect">
-                    <i class="bx bx-store"></i>
+                    <i class="fas fa-users"></i>
                     <span>Users</span>
                   </a>
                 </li>
                 <li>
                   <a [routerLink]="['/notification']" routerLinkActive="router-link-active" class="waves-effect">
-                    <i class="bx bx-store"></i>
+                    <i class="far fa-bell"></i>
                     <span>Notification Message</span>
                   </a>
 
+                </li>
+
+                <li>
+                  <a href="javascript: void(0);" class="has-arrow waves-effect">
+                    <i class="far fa-file-alt"></i>
+                    <span>Reports</span>
+                  </a>
+                  <ul class="sub-menu" aria-expanded="false">
+                    <li><a [routerLink]="['/reports/']" routerLinkActive="router-link-active">Users Report </a></li>
+                  </ul>
                 </li>
 
               </ng-container>
@@ -139,6 +149,7 @@
             </ul>
           </div>
           <!-- Sidebar -->
+          </perfect-scrollbar>
         </div>
       </div>
       <!-- Left Sidebar End -->

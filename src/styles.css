@@ -456,3 +456,7 @@ body[data-sidebar-size=small] .footer {
     position: absolute;
     left: 0;
     top: 5px;}
+    
+    perfect-scrollbar{
+       overflow: inherit !important;
+    }

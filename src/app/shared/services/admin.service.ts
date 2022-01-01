@@ -203,6 +203,8 @@ export class AdminService {
     return this.http.put(environment.apiUrl + "/api/earnin/coupondeal/" + couponId, body);
   }
 
-
+  userReports(userId: any, body: any) {
+    return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/report", body);
+  }
 
 }

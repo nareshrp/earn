@@ -120,6 +120,8 @@ export class CommonLayoutComponent implements OnInit {
       this.isFolded = true;
     }
 
+console.log("isFolded", this.isFolded);
+
   }
 
 

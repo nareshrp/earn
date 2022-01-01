@@ -1,0 +1,141 @@
+<div class="row">
+    <div class="col-12">
+      <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+        <h4 class="mb-sm-0 font-size-18">{{pageTitle}}</h4>
+        <div class="page-title-right">
+          <!-- <button type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
+            (click)="addOrganization()"><i class="mdi mdi-plus me-1"></i> Add New Order</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+             <div class="card-body">
+                <form [formGroup]="userReportForm">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group required">
+                              <label class="form-label">From Date</label>
+                              <input type="date"  class="form-control" formControlName="fromDate" [ngClass]="{ 'is-invalid': (submitted && form.fromDate.errors) || (form.fromDate.touched && form.fromDate.errors) }">
+
+                              <div *ngIf="submitted||(form.fromDate.touched && form.fromDate.invalid)">
+                                <small class="form-text error-message" *ngIf="form.fromDate.errors"> From Date is
+                                  required</small>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="form-group required">
+                              <label class="form-label">To Date</label>
+                              <input type="date"class="form-control" formControlName="toDate" [ngClass]="{ 'is-invalid': (submitted && form.toDate.errors) || (form.toDate.touched && form.toDate.errors) }">
+                              <div *ngIf="submitted||(form.toDate.touched && form.toDate.invalid)">
+                                <small class="form-text error-message" *ngIf="form.toDate.errors"> Todate
+                                  required</small>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-2">
+                            <div class="form-group required">
+                              <label class="form-label">Status</label>
+                              <select class="form-control" formControlName="status" [ngClass]="{ 'is-invalid': (submitted && form.status.errors) || (form.status.touched && form.status.errors) }">
+                                  <option value="active">Active</option>
+                                  <option value="inactive">Inactive</option>
+                              </select>
+                              <div *ngIf="submitted||(form.status.touched && form.status.invalid)">
+                                <small class="form-text error-message" *ngIf="form.status.errors"> Status
+                                  required</small>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-2">
+                            <div class="form-group required">
+                              <label class="form-label">Name</label>
+                              <input type="text"class="form-control" formControlName="toDate">
+                            </div>
+                          </div>
+                          <div class="col-md-2">
+                            <div class="form-group required">
+                             
+                                <button class="btn btn-primary my-4 btn-block" (click)="onSubmit()">Submit</button>
+                            </div>
+                          </div>
+                          
+                    </div> 
+                </form>
+             </div>
+         </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4 class="card-title">Users List</h4>
+                      </div>
+                      <div class="col-md-6 text-right" *ngIf="usersList && usersList.length>0">
+                        <button class="btn btn-primary btn-sm"> Download CSV</button>
+                      </div>
+                </div>
+           
+              
+               
+                <div class="table-responsive">
+                    <table class="table align-middle table-nowrap table-check">
+                        <thead class="table-light">
+                          <tr>
+            
+                          
+                            <th class="align-middle">Name</th>
+                            <th class="align-middle">Email</th>
+                            <th class="align-middle">Mobile</th>
+                            <th class="align-middle">Coupons Used</th>
+                            <th class="align-middle">Earn Coins </th>
+                            <th class="align-middle">Holded Coins </th>
+                            <th class="align-middle">Role </th>
+                            <th class="align-middle">Status </th>
+                         
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <ng-template [ngIf]="usersList?.length == 0">
+                                <tr>
+                                  <td class="text-center" colspan="8">
+                                     
+                                      <div class="alert alert-primary" role="alert">
+                                        No Data Found
+                                      </div>
+                                    </td>
+                                </tr>
+                              </ng-template>
+                              <ng-template [ngIf]="usersList?.length > 0">
+                   
+                            <tr *ngFor="let row of usersList; let i=index">
+            
+                          
+                                <td>{{row.firstName}}</td>
+                                <td>{{row.emailId}}</td>
+                                <td>{{row.phone}}</td>
+                                <td>{{row.couponUsed}}</td>
+                                <td>{{row.earnCoin}}</td>
+                                <td>{{row.holdedCoin}}</td>
+                                <td>{{row.role}}</td>
+                                <td>{{row.status}}</td>
+                           
+                              </tr>
+                            </ng-template>
+                         
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+     </div>
+    </div>
+  </div>
+  <ngx-spinner bdColor="rgba(253,254,255,0.8)" size="medium" color="#0c62db" type="ball-clip-rotate-pulse"
+  [fullScreen]="true">
+  <p style="color: #007bff"> Loading... </p>
+</ngx-spinner>
