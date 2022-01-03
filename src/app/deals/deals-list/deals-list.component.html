@@ -23,6 +23,7 @@
                 <th class="align-middle">Created Date</th>
                 <th class="align-middle">Deal ID</th>
                 <th class="align-middle">Deal Name</th>
+                <th class="align-middle">Vendor</th>
                 <th class="align-middle">End Date</th>
                 <th class="align-middle">Location</th>
                 <th class="align-middle">No.Of Views</th>
@@ -37,6 +38,7 @@
                 <td>{{row.cOn | date:'medium' }}</td>
                 <td>{{row.id}}</td>
                 <td>{{row.offerTitle}}</td>
+                <td>{{row.vendorName}}</td>
                 <td>{{row.toDate | date:'medium'}}</td>
                 <td>{{row.location.address}}</td>
                 <td><span *ngIf="row.viewCount">{{row.viewCount}}</span> <span *ngIf="!row.viewCount">0</span></td>

@@ -196,7 +196,7 @@ export class AdminService {
   }
 
   getIPAddress() {
-    return this.http.get(" https://cors-anywhere.herokuapp.com/http://api.ipify.org/?format=json");
+    return this.http.get("https://secret-ocean-49799.herokuapp.com/http://api.ipify.org/?format=json");
   }
 
   countIp(couponId: any, body: any) {
@@ -205,6 +205,10 @@ export class AdminService {
 
   userReports(userId: any, body: any) {
     return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/report", body);
+  }
+
+  transactionReports(userId: any, body: any) {
+    return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/transaction/report", body);
   }
 
 }

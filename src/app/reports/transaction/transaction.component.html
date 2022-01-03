@@ -13,7 +13,7 @@
     <div class="col-xl-12">
         <div class="card">
              <div class="card-body">
-                <form [formGroup]="userReportForm">
+                <form [formGroup]="transctionReportForm">
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group required">
@@ -40,8 +40,9 @@
                             <div class="form-group required">
                               <label class="form-label">Status</label>
                               <select class="form-control" formControlName="status" [ngClass]="{ 'is-invalid': (submitted && form.status.errors) || (form.status.touched && form.status.errors) }">
-                                  <option value="active">Active</option>
-                                  <option value="inactive">Inactive</option>
+                                  <option value="approved">Approved</option>
+                                  <option value="pending">Pending</option>
+                                  <option value="pending">Rejected</option>
                               </select>
                               <div *ngIf="submitted||(form.status.touched && form.status.invalid)">
                                 <small class="form-text error-message" *ngIf="form.status.errors"> Status
@@ -49,12 +50,12 @@
                               </div>
                             </div>
                           </div>
-                          <div class="col-md-2">
+                          <!-- <div class="col-md-2">
                             <div class="form-group required">
                               <label class="form-label">Name</label>
                               <input type="text"class="form-control" formControlName="toDate">
                             </div>
-                          </div>
+                          </div> -->
                           <div class="col-md-2">
                             <div class="form-group required">
                              
@@ -74,11 +75,9 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <h4 class="card-title">Users List</h4>
+                        <h4 class="card-title">Transctions List</h4>
                       </div>
-                      <div class="col-md-6 text-right" *ngIf="usersList && usersList.length>0">
-                        <!-- <button class="btn btn-primary btn-sm"> Download CSV</button> -->
-                      </div>
+                  
                 </div>
            
               
@@ -92,18 +91,16 @@
                             <th class="align-middle">Name</th>
                             <th class="align-middle">Email</th>
                             <th class="align-middle">Mobile</th>
-                            <th class="align-middle">Coupons Used</th>
-                            <th class="align-middle">Earn Coins </th>
-                            <th class="align-middle">Holded Coins </th>
-                            <th class="align-middle">Role </th>
+                            <th class="align-middle">Bank Account</th>
+                        
                             <th class="align-middle">Status </th>
                          
                           </tr>
                         </thead>
                         <tbody>
-                            <ng-template [ngIf]="usersList?.length == 0">
+                            <ng-template [ngIf]="transctionList?.length == 0">
                                 <tr>
-                                  <td class="text-center" colspan="8">
+                                  <td class="text-center" colspan="5">
                                      
                                       <div class="alert alert-primary" role="alert">
                                         No Data Found
@@ -111,19 +108,30 @@
                                     </td>
                                 </tr>
                               </ng-template>
-                              <ng-template [ngIf]="usersList?.length > 0">
+                              <ng-template [ngIf]="transctionList?.length > 0">
                    
-                            <tr *ngFor="let row of usersList; let i=index">
+                            <tr *ngFor="let row of transctionList; let i=index">
             
                           
-                                <td>{{row.firstName}}</td>
-                                <td>{{row.emailId}}</td>
-                                <td>{{row.phone}}</td>
-                                <td>{{row.couponUsed}}</td>
-                                <td>{{row.earnCoin}}</td>
-                                <td>{{row.holdedCoin}}</td>
-                                <td>{{row.role}}</td>
-                                <td>{{row.status}}</td>
+                                <td>{{row.from.firstName}}</td>
+                                <td>{{row.from.emailId}}</td>
+                                <td>{{row.from.phone}}</td>
+                                <td>{{row.bankAcctNo}}</td>
+                                <td>{{row.status}} 
+
+                                <ng-container *ngIf="row.status=='pending'">
+                                    <button 
+                      class="btn btn-primary btn-sm border-radious30px mr-left"
+                      (click)="approve(row.id)">
+                      Approve </button>
+                    <button 
+                      class="btn btn-danger btn-sm border-radious30px mr-left"
+                      (click)="reject(row.id)">
+                      Rejected </button>
+                                </ng-container>
+                                    
+
+                                </td>
                            
                               </tr>
                             </ng-template>

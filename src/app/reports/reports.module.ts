@@ -5,11 +5,13 @@ import { ReportsRoutingModule } from './reports-routing.module';
 import { UsersComponent } from './users/users.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { TransactionComponent } from './transaction/transaction.component';
 
 
 @NgModule({
   declarations: [
-    UsersComponent
+    UsersComponent,
+    TransactionComponent
   ],
   imports: [
     CommonModule,
