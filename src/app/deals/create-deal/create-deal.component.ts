@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular';
 import { VendorService } from 'src/app/shared/services/vendor.service';
 import { finalize } from 'rxjs/operators';
@@ -17,6 +19,9 @@ import { AdminService } from 'src/app/shared/services/admin.service';
 })
 export class CreateDealComponent implements OnInit {
   public Editor = ClassicEditor;
+  
+
+
   submitted = false;
   errorMsg = '';
   pageTitle: any;
@@ -64,6 +69,8 @@ export class CreateDealComponent implements OnInit {
 
   imageAssetsFilesObjFileName: any = [];
   imageAssetsFilesObjFilePath: any = [];
+  selectedCategory:any;
+  userInfo:any;
 
   constructor(
     private activatedRouterServices: ActivatedRoute,
@@ -76,6 +83,10 @@ export class CreateDealComponent implements OnInit {
     private vendorService: VendorService,
     public adminService: AdminService,
   ) {
+
+  //   this.Editor.builtinPlugins = [
+  //         Base64UploadAdapter                                                          // <--- ADDED
+  // ];
     this.latitude = 17.4264979;
     this.longitude = 78.45113220000007;
     this.createDealForm = this.fb.group({
@@ -94,7 +105,7 @@ export class CreateDealComponent implements OnInit {
       campBudget: [null, [Validators.required]],
       bidPerCoin: [null],
       consentPolicy: [null, [Validators.required]],
-      category: [null, [Validators.required]],
+      category: [null],
       isCoupon: [null],
     })
   }
@@ -102,11 +113,17 @@ export class CreateDealComponent implements OnInit {
   ngOnInit(): void {
     this.role = localStorage.getItem("role");
     this.userId = localStorage.getItem("userId");
+    this.userInfo = localStorage.getItem("userInfo");
+
+   
     this.getPageTitle();
     this.getActiveVendorList();
     this.mapInt();
     if (this.role != 'admin') {
       this.selectedVendorID = this.userId;
+      this.selectedCategory=JSON.parse(this.userInfo).bCategory;
+      console.log("userInfo", this.selectedCategory);
+      this.createDealForm.controls['category'].setValue(this.selectedCategory);
     }
 
     this.getCategoryList();
@@ -227,6 +244,12 @@ export class CreateDealComponent implements OnInit {
   getVendorId(event: any) {
     console.log("vendorIdevent", event.target.value);
     this.selectedVendorID = event.target.value;
+    let vendorCategory= this.vendorList.filter((item:any)=>{
+      return item.userId==this.selectedVendorID;
+    })[0].bCategory;
+    console.log("vendorCategory", vendorCategory);
+       this.selectedCategory=vendorCategory;
+       this.createDealForm.controls['category'].setValue(this.selectedCategory);
   }
 
   /* File Upload Logic */
@@ -457,6 +480,7 @@ export class CreateDealComponent implements OnInit {
     this.createDealForm.value['dealContent'] = this.dealContentData;
     this.createDealForm.value['vedInstr'] = this.vedInstrData;
     this.createDealForm.value['location'] = locationData;
+    this.createDealForm.value['category'] = this.selectedCategory;
     console.log("Form Value", this.createDealForm.value);
     this.spinner.show();
     this.vendorService.createDeal(this.userId, this.createDealForm.value).pipe(finalize(() => {

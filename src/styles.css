@@ -436,7 +436,7 @@ body[data-sidebar-size=small] .footer {
 .qa-list ul li h3{ font-size: 14px; margin-bottom: 0px;}
 .qa-list ul li .an{ font-size: 14px; color: #19743d;}
 .qa-list ul li:last-child{ border-bottom: none;}
-.ck-file-dialog-button {  display: none !important;}
+
 .form-control {  border: solid 2px #ced4da;  height: 43px;}
 .countryCode{ width: 80px;  border: solid 2px #ced4da;  height: 43px;}
 .modal-header .modal-title{ font-size: 18px;}
@@ -460,3 +460,5 @@ body[data-sidebar-size=small] .footer {
     perfect-scrollbar{
        overflow: inherit !important;
     }
+
+    .ck-file-dialog-button {  display: none !important;}
