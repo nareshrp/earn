@@ -12,6 +12,10 @@ import { VendorService } from 'src/app/shared/services/vendor.service';
 import { finalize } from 'rxjs/operators';
 import { AdminService } from 'src/app/shared/services/admin.service';
 
+
+
+
+
 @Component({
   selector: 'app-create-deal',
   templateUrl: './create-deal.component.html',
@@ -20,7 +24,9 @@ import { AdminService } from 'src/app/shared/services/admin.service';
 export class CreateDealComponent implements OnInit {
   public Editor = ClassicEditor;
   
-
+//   public config = {
+//     language: 'de'
+// };
 
   submitted = false;
   errorMsg = '';
@@ -87,6 +93,8 @@ export class CreateDealComponent implements OnInit {
   //   this.Editor.builtinPlugins = [
   //         Base64UploadAdapter                                                          // <--- ADDED
   // ];
+  
+
     this.latitude = 17.4264979;
     this.longitude = 78.45113220000007;
     this.createDealForm = this.fb.group({
