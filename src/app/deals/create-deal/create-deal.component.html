@@ -146,8 +146,8 @@
               <div class="form-group required">
                 <label class="form-label">Page Content</label>
                 <!-- <textarea class="form-control" formControlName="dealContent" ></textarea> -->
-                <ckeditor  [config]="{ removePlugins: ['MediaEmbed'], mediaEmbed: {} }" [editor]="Editor"
-                  formControlName="dealContent" debounce="500" (change)="onChangeDealContent($event)">
+                <ckeditor  [config]="config" [editor]="Editor"
+                  formControlName="dealContent" debounce="500" (ready)="onReady($event)" (change)="onChangeDealContent($event)">
                 </ckeditor>
               </div>
             </div>

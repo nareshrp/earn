@@ -7,10 +7,11 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
-import { ChangeEvent } from '@ckeditor/ckeditor5-angular';
+import { ChangeEvent, CKEditor5 } from '@ckeditor/ckeditor5-angular';
 import { VendorService } from 'src/app/shared/services/vendor.service';
 import { finalize } from 'rxjs/operators';
 import { AdminService } from 'src/app/shared/services/admin.service';
+import { MyUploadAdapter } from './my-upload-adapter';
 
 
 
@@ -22,11 +23,32 @@ import { AdminService } from 'src/app/shared/services/admin.service';
   styleUrls: ['./create-deal.component.css']
 })
 export class CreateDealComponent implements OnInit {
-  public Editor = ClassicEditor;
+Editor = ClassicEditor;
   
 //   public config = {
 //     language: 'de'
 // };
+
+config: CKEditor5.Config = {
+  image: {
+    // image plugin config
+    toolbar: [ 'imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight' ],
+    styles: [
+      'full',
+      'alignLeft',
+      'alignRight'
+    ]
+  },
+  // simpleUpload: {
+  //   // The URL that the images are uploaded to.
+  //   uploadUrl: "https://example.com",
+  //   // Headers sent along with the XMLHttpRequest to the upload server.
+  //   headers: {
+  //    "X-CSRF-TOKEN": "CSFR-Token",
+  //     Authorization: "Bearer <JSON Web Token>"
+  //   }
+  // }
+};
 
   submitted = false;
   errorMsg = '';
@@ -157,12 +179,20 @@ export class CreateDealComponent implements OnInit {
     this.createDealForm.value['dealContent'] = data;
     console.log(data);
   }
+
+
   onChangeVideoInstContent({ editor }: ChangeEvent) {
     const data = editor.getData();
     this.vedInstrData = data;
     this.createDealForm.value['vedInstr'] = data;
     console.log(data);
   }
+
+  onReady(editor:any): void {
+    editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader:any ) => {
+        return new MyUploadAdapter( loader );
+    };
+}
 
   getPageTitle() {
     this.activatedRouterServices.data.subscribe((result: any) => {

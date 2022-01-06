@@ -461,4 +461,4 @@ body[data-sidebar-size=small] .footer {
        overflow: inherit !important;
     }
 
-    .ck-file-dialog-button {  display: none !important;}
+    /* .ck-file-dialog-button {  display: none !important;} */
