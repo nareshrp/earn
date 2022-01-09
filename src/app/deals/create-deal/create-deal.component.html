@@ -146,7 +146,7 @@
               <div class="form-group required">
                 <label class="form-label">Page Content</label>
                 <!-- <textarea class="form-control" formControlName="dealContent" ></textarea> -->
-                <ckeditor  [config]="config" [editor]="Editor"
+                <ckeditor  [config]="config" [editor]="Editor" 
                   formControlName="dealContent" debounce="500" (ready)="onReady($event)" (change)="onChangeDealContent($event)">
                 </ckeditor>
               </div>
@@ -177,8 +177,8 @@
               <div class="form-group required">
                 <label class="form-label">Dedicated Video Instructions and video Content </label>
                 <!-- <textarea class="form-control" formControlName="dealContent"></textarea> -->
-                <ckeditor [config]="{ removePlugins: ['MediaEmbed'], mediaEmbed: {} }" [editor]="Editor"
-                  formControlName="vedInstr" (change)="onChangeVideoInstContent($event)">
+                <ckeditor [config]="config" [editor]="Editor"
+                  formControlName="vedInstr" (ready)="onReadyVideo($event)" (change)="onChangeVideoInstContent($event)">
                 </ckeditor>
               </div>
             </div>

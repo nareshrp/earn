@@ -1,11 +1,12 @@
 import { MapsAPILoader } from '@agm/core';
-import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit, ViewChild, forwardRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NotificationService } from 'src/app/shared/services/notification.service';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-
+// import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import * as customBuild from '../../ckCustomBuild/build/ckeditor';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ChangeEvent, CKEditor5 } from '@ckeditor/ckeditor5-angular';
 import { VendorService } from 'src/app/shared/services/vendor.service';
@@ -15,40 +16,145 @@ import { MyUploadAdapter } from './my-upload-adapter';
 
 
 
-
-
 @Component({
   selector: 'app-create-deal',
   templateUrl: './create-deal.component.html',
-  styleUrls: ['./create-deal.component.css']
+  styleUrls: ['./create-deal.component.css'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => CreateDealComponent),
+      multi: true
+    }
+  ]
 })
 export class CreateDealComponent implements OnInit {
-Editor = ClassicEditor;
-  
-//   public config = {
-//     language: 'de'
-// };
+Editor = customBuild;
+config: CKEditor5.Config ={
+    
+  // image: {
+  //   // image plugin config
+  //  // resizeUnit: 'px',
+  //  styles: [
+  //   'alignLeft', 'alignCenter', 'alignRight'
+  // ],
 
-config: CKEditor5.Config = {
+  // // Configure the available image resize options.
+  // resizeOptions: [
+  //   {
+  //     name: 'resizeImage:original',
+  //     label: 'Original',
+  //     value: null
+  //   },
+  //   {
+  //     name: 'resizeImage:50',
+  //     label: '25%',
+  //     value: '25'
+  //   },
+  //   {
+  //     name: 'resizeImage:50',
+  //     label: '50%',
+  //     value: '50'
+  //   },
+  //   {
+  //     name: 'resizeImage:75',
+  //     label: '75%',
+  //     value: '75'
+  //   }
+  // ],
+
+
+  //   toolbar: [ 
+      
+  //     'imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:full', 
+  //     'imageStyle:alignRight',  'imageResize:75', 'imageResize:original',
+  //   'linkImage', 'resizeImage','toggleImageCaption', 'imageTextAlternative' ,
+  //   'resizeImage:50',
+  //   'resizeImage:75',
+  //   'resizeImage:original',
+  //   'ImageResize',
+  // ],
+  //   // styles: [
+  //   //   'full',
+  //   //   'alignLeft',
+  //   //   'alignRight'
+  //   // ],
+   
+  // },
+  toolbar: {
+    items: [
+      'heading', '|',
+      'fontfamily', 'fontsize',
+      'alignment',
+      'fontColor', 'fontBackgroundColor', '|',
+      'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
+      'link', '|',
+      'outdent', 'indent', '|',
+      'bulletedList', '-', 'numberedList', '|',
+      'code', 'codeBlock', '|',
+      'insertTable', '|', 'imageUpload', 'blockQuote', '|',
+      'todoList',
+      'undo', 'redo', 
+    ],
+    shouldNotGroupWhenFull: true,
+    
+  },
   image: {
-    // image plugin config
-    toolbar: [ 'imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight' ],
+    // Configure the available styles.
     styles: [
-      'full',
-      'alignLeft',
-      'alignRight'
+      'alignLeft', 'alignCenter', 'alignRight'
+    ],
+
+    // Configure the available image resize options.
+    resizeOptions: [
+      {
+        name: 'resizeImage:original',
+        label: 'Original',
+        value: null
+      },
+      {
+        name: 'resizeImage:50',
+        label: '25%',
+        value: '25'
+      },
+      {
+        name: 'resizeImage:50',
+        label: '50%',
+        value: '50'
+      },
+      {
+        name: 'resizeImage:75',
+        label: '75%',
+        value: '75'
+      }
+    ],
+
+    // You need to configure the image toolbar, too, so it shows the new style
+    // buttons as well as the resize buttons.
+    toolbar: [
+      'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight',
+      '|',
+      'ImageResize',
+      '|',
+      'imageTextAlternative',
+      'toggleImageCaption'
     ]
   },
   // simpleUpload: {
-  //   // The URL that the images are uploaded to.
-  //   uploadUrl: "https://example.com",
-  //   // Headers sent along with the XMLHttpRequest to the upload server.
-  //   headers: {
-  //    "X-CSRF-TOKEN": "CSFR-Token",
-  //     Authorization: "Bearer <JSON Web Token>"
-  //   }
-  // }
+  //    The URL that the images are uploaded to.
+  // uploadUrl: 'http://localhost:52536/api/Image/ImageUpload',
+
+  //   Enable the XMLHttpRequest.withCredentials property.
+
+  //},
+
+  language: 'en'
+
+  // plugins: [ Image, ImageResizeEditing, ImageResizeHandles],
+ 
+ 
 };
+
 
   submitted = false;
   errorMsg = '';
@@ -99,6 +205,9 @@ config: CKEditor5.Config = {
   imageAssetsFilesObjFilePath: any = [];
   selectedCategory:any;
   userInfo:any;
+
+  pceImg:any=[];
+  vceImg:any=[];
 
   constructor(
     private activatedRouterServices: ActivatedRoute,
@@ -159,6 +268,7 @@ config: CKEditor5.Config = {
     this.getCategoryList();
 
   }
+  
 
   mapInt() {
     this.mapsAPILoader.load().then(() => {
@@ -189,9 +299,39 @@ config: CKEditor5.Config = {
   }
 
   onReady(editor:any): void {
-    editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader:any ) => {
-        return new MyUploadAdapter( loader );
+
+    if (editor.model.schema.isRegistered('image')) {
+      editor.model.schema.extend('image', { allowAttributes: 'blockIndent' });
+    }
+     editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader:any ) => {
+      loader.on('change:uploadResponse', (evt:any, name:any, val:any, oldval:any) => {
+        if(val){
+          console.log(val)  // object response {default: image_link }
+          delete val.statusCode;
+          this.pceImg.push(val);
+          console.log("this.pceImg", this.pceImg);
+        }
+      })
+      return new MyUploadAdapter(loader)
     };
+    
+}
+
+onReadyVideo(editor:any): void {
+  if (editor.model.schema.isRegistered('image')) {
+    editor.model.schema.extend('image', { allowAttributes: 'blockIndent' });
+  }
+  editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader:any ) => {
+    loader.on('change:uploadResponse', (evt:any, name:any, val:any, oldval:any) => {
+      if(val){
+        console.log(val)  // object response {default: image_link }
+        delete val.statusCode;
+        this.vceImg.push(val);
+        console.log("this.vceImg", this.vceImg);
+      }
+    })
+    return new MyUploadAdapter(loader)
+  };
 }
 
   getPageTitle() {
@@ -519,8 +659,13 @@ config: CKEditor5.Config = {
     this.createDealForm.value['vedInstr'] = this.vedInstrData;
     this.createDealForm.value['location'] = locationData;
     this.createDealForm.value['category'] = this.selectedCategory;
+    this.createDealForm.value['pceImg'] = this.pceImg;
+    this.createDealForm.value['vceImg'] = this.vceImg;
+
     console.log("Form Value", this.createDealForm.value);
+    
     this.spinner.show();
+
     this.vendorService.createDeal(this.userId, this.createDealForm.value).pipe(finalize(() => {
       this.spinner.hide();
 

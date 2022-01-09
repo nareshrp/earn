@@ -1,9 +1,12 @@
 import { environment } from 'src/environments/environment';
 export class MyUploadAdapter {
+
     loader: any;
     xhr: any;
+    userId:any;
     constructor( loader:any ) {
         this.loader = loader;
+        this.userId = localStorage.getItem("userId");
     }
     upload() {
         return this.loader.file
@@ -19,8 +22,9 @@ export class MyUploadAdapter {
         }
     }
     _initRequest() {
+       
         const xhr = this.xhr = new XMLHttpRequest();
-        xhr.open( 'POST', environment.apiUrl+'/upload', true ); // TODO change the URL
+        xhr.open( 'POST', environment.apiUrl+"/api/earnin/users/" + this.userId + "/file", true ); // TODO change the URL
         xhr.responseType = 'json';
     xhr.setRequestHeader("Accept", "application/json");
     }
@@ -32,12 +36,17 @@ export class MyUploadAdapter {
         xhr.addEventListener( 'abort', () => reject() );
         xhr.addEventListener( 'load', () => {
             const response = xhr.response;
+            console.log("response", response);
             if ( !response || response.error ) {
                 return reject( response && response.error ? response.error.message : genericErrorText );
             }
-            resolve( {
-                default: response.url
-            } );
+            resolve( 
+            //     {
+            //     default: response.url
+            // } 
+            response.result
+            
+            );
         } );
         if ( xhr.upload ) {
             xhr.upload.addEventListener( 'progress', (evt:any) => {
@@ -50,7 +59,7 @@ export class MyUploadAdapter {
     }
     _sendRequest( file:any ) {
         const data = new FormData();
-        data.append( 'upload', file );
+        data.append( 'files', file );
         this.xhr.send( data );
     }
 }
