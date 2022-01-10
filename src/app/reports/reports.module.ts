@@ -19,6 +19,8 @@ import { TransactionComponent } from './transaction/transaction.component';
     FormsModule,
     ReactiveFormsModule,
     NgxSpinnerModule,
-  ]
+  ],
+  exports:[ UsersComponent,
+    TransactionComponent]
 })
 export class ReportsModule { }
