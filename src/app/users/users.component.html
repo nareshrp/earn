@@ -97,7 +97,7 @@
             <div class="row">
               <div class="col-4">
                 <div class="pills-block">
-                  <label>Last coins withdrawal </label>
+                  <label>Last Crowns withdrawal </label>
                   <h5>{{filterDataList.lastWithdrawTime | date :'dd-MMM-yy h:mm:ss a '}}</h5>
                 </div>
               </div>
@@ -109,7 +109,7 @@
               </div>
               <div class="col-4">
                 <div class="pills-block no-border">
-                  <label>Coins Earned</label>
+                  <label>Crowns Earned</label>
                   <h5>{{filterDataList.earnCoin}}</h5>
                 </div>
               </div>
@@ -183,11 +183,11 @@
                         <h6>{{deal.viewCnt}}</h6>
                       </li>
                       <li>
-                        <label>Total Coins</label>
+                        <label>Total Crowns</label>
                         <h6>{{deal.totCoin}}</h6>
                       </li>
                       <li>
-                        <label>Used Coins</label>
+                        <label>Used Crowns</label>
                         <h6>{{deal.usedCoin}}</h6>
                       </li>
                       <!-- <li>
@@ -239,7 +239,7 @@
               *ngIf="filterDataList.pendingTransaction && filterDataList.pendingTransaction.length>0">
               <div class="col-12">
                 <div class="deals-block">
-                  <h3>Coins renewed</h3>
+                  <h3>Crowns renewed</h3>
                   <p>Withdrawals requested {{filterDataList.pendingTransaction[0].status}}
                     <button *ngIf="filterDataList.pendingTransaction[0].status"
                       class="btn btn-primary btn-sm border-radious30px mr-left"

@@ -23,6 +23,10 @@ const routes: Routes = [
     loadChildren: () => import('../masters/coins/coins.module').then(m => m.CoinsModule),
   },
   {
+    path: 'tax',
+    loadChildren: () => import('../masters/tax/tax.module').then(m => m.TaxModule),
+  },
+  {
     path: 'coin-settings',
     loadChildren: () => import('../masters/coin-settings/coin-settings.module').then(m => m.CoinSettingsModule),
   },

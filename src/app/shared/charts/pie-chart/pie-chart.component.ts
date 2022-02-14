@@ -3,6 +3,8 @@ import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import am4themes_dark from '@amcharts/amcharts4/themes/dark';
+import { AdminService } from '../../services/admin.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-pie-chart',
@@ -10,10 +12,15 @@ import am4themes_dark from '@amcharts/amcharts4/themes/dark';
   styleUrls: ['./pie-chart.component.css']
 })
 export class PieChartComponent implements OnInit, AfterViewInit {
+  role: any;
+  userId: any;
+usersList:any=[];
+userData:any=[];
+  constructor( private _adminService: AdminService,) { }
 
-  constructor() { }
-
-  ngOnInit(): void {
+  ngOnInit() {
+    this.userId = localStorage.getItem("userId");
+    // this.getUserList();
   }
 
   ngAfterViewInit() {
@@ -27,30 +34,25 @@ export class PieChartComponent implements OnInit, AfterViewInit {
   // Create chart instance
 let chart = am4core.create("piechartdiv", am4charts.PieChart);
 
-    // Add data
-chart.data = [ {
-  "country": "Lithuania",
-  "litres": 501.9
-}, {
-  "country": "Czechia",
-  "litres": 301.9
-}, {
-  "country": "Ireland",
-  "litres": 201.1
-}, {
-  "country": "Germany",
-  "litres": 165.8
-}, {
-  "country": "Australia",
-  "litres": 139.9
-}, {
-  "country": "Austria",
-  "litres": 128.3
-}, {
-  "country": "UK",
-  "litres": 99
-}
-];
+
+
+this._adminService.getUserDataCountryWise(this.userId).pipe(finalize(() => {
+
+})).subscribe((res: any) => {
+
+  if (res.statusCode === 200) {
+    // this.usersList = res.data;
+    console.log("country usersList", this.usersList);
+
+    let result = res.data.map((person:any) => ({ country: person._id, litres: person.totalUser }));
+    chart.data =result;
+    console.log("result this.usersList", this.usersList);
+  }
+})
+
+
+// console.log("SampleData0", this.usersList);
+// chart.data = this.usersList;
 
 // Add and configure Series
 
@@ -68,5 +70,8 @@ pieSeries.hiddenState.properties.startAngle = -90;
 
 chart.hiddenState.properties.radius = am4core.percent(0);
   }
+
+
+
 
 }

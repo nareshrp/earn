@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs/operators';
@@ -7,11 +7,11 @@ import { AdminService } from 'src/app/shared/services/admin.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 
 @Component({
-  selector: 'app-coins',
-  templateUrl: './coins.component.html',
-  styleUrls: ['./coins.component.css']
+  selector: 'app-tax',
+  templateUrl: './tax.component.html',
+  styleUrls: ['./tax.component.css']
 })
-export class CoinsComponent implements OnInit {
+export class TaxComponent implements OnInit {
   pageTitle: any;
   coinsForm: FormGroup;
   role: any;
@@ -36,10 +36,10 @@ export class CoinsComponent implements OnInit {
   ) {
     this.coinsForm = this.fb.group({
       name: [null, [Validators.required]],
-      currency: [null],
-      coinVal: [null, [Validators.required]],
-      // taxType: [null, [Validators.required]],
-      // vat: [null, [Validators.required]],
+      // currency: [null],
+      // coinVal: [null, [Validators.required]],
+      taxType: [null, [Validators.required]],
+      vat: [null, [Validators.required]],
     });
   }
 
@@ -73,7 +73,7 @@ export class CoinsComponent implements OnInit {
   }
 
   getCountryListWithCoinsData() {
-    this._adminService.getCountryWithCoins(this.userId).pipe(finalize(() => {
+    this._adminService.getTax(this.userId).pipe(finalize(() => {
 
     })).subscribe((res: any) => {
 
@@ -91,7 +91,7 @@ export class CoinsComponent implements OnInit {
     this.selectedCountryId = data.id;
     this.countryCode = data.code;
     console.log(this.countryCode);
-    this.coinsForm.controls['currency'].setValue(this.updatedCurrencyVal);
+    // this.coinsForm.controls['currency'].setValue(this.updatedCurrencyVal);
 
   }
   editRow(row: any) {
@@ -105,10 +105,10 @@ export class CoinsComponent implements OnInit {
     // })[0].code;
 
     this.coinsForm.controls['name'].setValue(row.name);
-    this.coinsForm.controls['currency'].setValue(row.currency);
-    this.coinsForm.controls['coinVal'].setValue(row.coinVal);
-    // this.coinsForm.controls['taxType'].setValue(row.tax);
-    // this.coinsForm.controls['vat'].setValue(row.vat);
+    // this.coinsForm.controls['currency'].setValue(row.currency);
+    // this.coinsForm.controls['coinVal'].setValue(row.coinVal);
+    this.coinsForm.controls['taxType'].setValue(row.tax);
+    this.coinsForm.controls['vat'].setValue(row.vat);
     // this.selectCountry(row.name);
     console.log("rowupdated form value", this.coinsForm.value);
 
@@ -123,7 +123,7 @@ export class CoinsComponent implements OnInit {
     //   "currency": this.coinsForm.value['currency'],
     // }
     console.log("set data", this.coinsForm.value);
-    this._adminService.editCountry(this.userId, this.rowId, this.coinsForm.value).subscribe((result: any) => {
+    this._adminService.editTax(this.userId, this.rowId, this.coinsForm.value).subscribe((result: any) => {
       if (result.statusCode === 200) {
         this.toastr.showSuccess(result.message, 'Success');
         this.coinsForm.reset();
@@ -135,7 +135,7 @@ export class CoinsComponent implements OnInit {
   rowDelete(id: any) {
     console.log("delete", id);
 
-    this._adminService.deleteCountry(this.userId, id).subscribe((result: any) => {
+    this._adminService.deleteTax(this.userId, id).subscribe((result: any) => {
       if (result.statusCode === 200) {
         this.toastr.showSuccess(result.message, 'Success');
         this.getCountryListWithCoinsData();
@@ -167,7 +167,7 @@ export class CoinsComponent implements OnInit {
 
     } else {
       this.coinsForm.value['code'] = this.countryCode;
-      this._adminService.upDateCoins(this.userId, this.selectedCountryId, this.coinsForm.value).pipe(finalize(() => {
+      this._adminService.addTax(this.userId, this.coinsForm.value).pipe(finalize(() => {
         this.spinner.hide();
       })).subscribe((res: any) => {
         console.log("res", res);

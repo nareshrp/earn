@@ -27,24 +27,9 @@
                 </div>
               </div>
             </div>
+
+
             <div class="col-md-2">
-              <div class="form-group required">
-                <label class="form-label">Currency</label>
-                <input type="text" class="form-control" formControlName="currency" readonly>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group required">
-                <label class="form-label">Set <strong>1 Crown = {{upDatedCoinVal}} </strong>
-                  <span>{{updatedCurrencyVal}}</span> </label>
-                <input type="number" class="form-control" [(ngModel)]="upDatedCoinVal" formControlName="coinVal"
-                  [ngClass]="{ 'is-invalid': (submitted && form.coinVal.errors) || (form.coinVal.touched && form.coinVal.errors) }">
-                <div *ngIf="submitted||(form.coinVal.touched && form.coinVal.invalid)">
-                  <small class="form-text error-message" *ngIf="form.coinVal.errors"> Set Crown is required</small>
-                </div>
-              </div>
-            </div>
-            <!-- <div class="col-md-2">
               <div class="form-group required">
                 <label class="form-label">Enter tax type</label>
                 <input type="text" class="form-control"  formControlName="taxType"
@@ -53,8 +38,8 @@
                   <small class="form-text error-message" *ngIf="form.taxType.errors"> Tax type is required</small>
                 </div>
               </div>
-            </div> -->
-            <!-- <div class="col-md-2">
+            </div>
+            <div class="col-md-2">
               <div class="form-group required">
                 <label class="form-label">Value</label>
                 <input type="number" class="form-control"  formControlName="vat"
@@ -63,7 +48,7 @@
                   <small class="form-text error-message" *ngIf="form.vat.errors"> Value is required</small>
                 </div>
               </div>
-            </div> -->
+            </div>
             <div class="col-md-2">
               <div class="form-group">
                 <div class="mb-3 mt-4">
@@ -86,17 +71,17 @@
   <div class="col-xl-12">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Crowns List</h4>
+        <h4 class="card-title">Coins List</h4>
         <div class="table-responsive">
           <table class="table align-middle table-nowrap table-check">
             <thead class="table-light">
               <tr>
                 <th class="align-middle">#</th>
                 <th class="align-middle">Country Name</th>
-                <th class="align-middle">Currency</th>
-                <th class="align-middle">Set Crowns</th>
-                <!-- <th class="align-middle">Tax</th>
-                <th class="align-middle">Vat</th> -->
+                <!-- <th class="align-middle">Currency</th>
+                <th class="align-middle">Set Coins</th> -->
+                <th class="align-middle">Tax</th>
+                <th class="align-middle">Vat</th>
                 <th class="align-middle" style="width: 150px;">Actions</th>
               </tr>
             </thead>
@@ -105,16 +90,16 @@
 
                 <td>{{i+1}} </td>
                 <td>{{row.name}}</td>
-                <td>{{row.currency}}</td>
-                <td>{{row.coinVal}}</td>
-                <!-- <td>{{row.tax}}</td>
-                <td>{{row.vat}}</td> -->
+                <!-- <td>{{row.currency}}</td> -->
+                <!-- <td>{{row.coinVal}}</td> -->
+                <td>{{row.tax}}</td>
+                <td>{{row.vat}}</td>
                 <td>
                   <div class="d-flex gap-3">
                     <a href="javascript:void(0);" class="text-success" (click)="editRow(row)"><i
                         class="mdi mdi-pencil font-size-18"></i></a>
-                    <!-- <a href="javascript:void(0);" class="text-danger" (click)="rowDelete(row.id)"><i
-                        class="mdi mdi-delete font-size-18"></i></a> -->
+                    <a href="javascript:void(0);" class="text-danger" (click)="rowDelete(row.id)"><i
+                        class="mdi mdi-delete font-size-18"></i></a>
                   </div>
 
                 </td>

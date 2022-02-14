@@ -84,6 +84,23 @@ export class AdminService {
     return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/country", body);
   }
 
+  getTax(userId: any) {
+    return this.http.get(environment.apiUrl + "/api/earnin/users/" + userId + "/tax");
+  }
+
+
+  addTax(userId: any, body: any) {
+    return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/tax", body);
+  }
+
+  editTax(userId: any, taxId: any, body: any) {
+    return this.http.put(environment.apiUrl + "/api/earnin/users/" + userId + "/tax/" + taxId, body);
+  }
+
+  deleteTax(userId: any, taxId: any) {
+    return this.http.delete(environment.apiUrl + "/api/earnin/users/" + userId + "/tax/" + taxId);
+  }
+
   //Question API Start Here
 
   addQuestions(userId: any, body: any) {
@@ -210,5 +227,10 @@ export class AdminService {
   transactionReports(userId: any, body: any) {
     return this.http.post(environment.apiUrl + "/api/earnin/users/" + userId + "/transaction/report", body);
   }
+
+  getUserDataCountryWise(userId: any) {
+    return this.http.get(environment.apiUrl + "/api/earnin/users/"+userId+"/countrywiseuser");
+  }
+
 
 }
